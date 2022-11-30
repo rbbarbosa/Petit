@@ -1,0 +1,11 @@
+program Simple {
+	integer i
+	double d
+	i = 1
+	d = i + 1.0
+	loop d {
+		a = a + 3 * d / a - 4
+	}
+	print i
+	print a
+}

@@ -46,6 +46,8 @@ void show(struct node *node, int depth) {
         printf("..");
     switch(node->category) {
         case Identifier:
+        case Natural:
+        case Decimal:
             printf("%s(%s)\n", category_name[node->category], node->token);
             break;
         default:

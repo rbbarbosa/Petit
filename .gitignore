@@ -50,3 +50,11 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Specifics
+lex.yy.c
+surf
+y.output
+y.tab.c
+y.tab.h
+y.vcg

@@ -1,8 +1,8 @@
 #ifndef _AST_H
 #define _AST_H
 
-enum category {  Program,   Integer,   Double,   Print,   Loop,   Identifier,   Natural,   Decimal };
-#define names { "Program", "Integer", "Double", "Print", "Loop", "Identifier", "Natural", "Decimal" }
+enum category {  Program,   Integer,   Double,   Print,   Loop,   Identifier,   Natural,   Decimal,   VarList,   StmtList,   Stmt,   Expression,   Assign,   Add,   Subtract,   Multiply,   Divide };
+#define names { "Program", "Integer", "Double", "Print", "Loop", "Identifier", "Natural", "Decimal", "VarList", "StmtList", "Stmt", "Expression", "Assign", "Add", "Subtract", "Multiply", "Divide" }
 
 struct node {
     enum category category;
