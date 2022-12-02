@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include "ast.h"
-
-char *category_name[] = names;
 
 struct node *newnode(enum category category, char *token) {
     struct node *new = malloc(sizeof(struct node));
@@ -39,6 +36,8 @@ int countchildren(struct node *node) {
         i++;
     return i;
 }
+
+char *category_name[] = names;
 
 void show(struct node *node, int depth) {
     int i;
