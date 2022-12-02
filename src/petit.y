@@ -2,10 +2,6 @@
 
 %{
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "y.tab.h"
 #include "ast.h"
 
 int yylex(void);
@@ -33,34 +29,64 @@ struct node *program;
 
 %%
 
-program: PROGRAM IDENTIFIER '{' variablelist statementlist '}'      { $$ = program = newnode(Program, NULL); addchild($$, newnode(Identifier, $2)); addchild($$, $4); addchild($$, $5); }
+program: PROGRAM IDENTIFIER '{' variablelist statementlist '}'
+                                    { $$ = program = newnode(Program, NULL);
+                                      addchild($$, newnode(Identifier, $2));
+                                      addchild($$, $4);
+                                      addchild($$, $5); }
     ;
 
-variablelist: /* empty */                                           { $$ = newnode(VarList, NULL); }
-    | variablelist variable                                         { if($1->category != VarList) { $$ = newnode(VarList, NULL); addchild($$, $2); } else { $$ = $1; addchild($$, $2); } }
+variablelist: /* epsilon */         { $$ = newnode(VarList, NULL); }
+    | variablelist variable         { if($1->category != VarList) {
+                                        $$ = newnode(VarList, NULL);
+                                        addchild($$, $2);
+                                      } else {
+                                        $$ = $1;
+                                        addchild($$, $2);
+                                      } }
     ;
 
-variable: INTEGER IDENTIFIER                                        { $$ = newnode(Integer, $2); }
-    | DOUBLE IDENTIFIER                                             { $$ = newnode(Double, $2); }
+variable: INTEGER IDENTIFIER        { $$ = newnode(Integer, $2); }
+    | DOUBLE IDENTIFIER             { $$ = newnode(Double, $2); }
     ;
 
-statementlist: /* empty */                                          { $$ = newnode(StmtList, NULL); }
-    | statementlist statement                                       { if($1->category != StmtList) { $$ = newnode(StmtList, NULL); addchild($$, $2); } else { $$ = $1; addchild($$, $2); } }
+statementlist: /* epsilon */        { $$ = newnode(StmtList, NULL); }
+    | statementlist statement       { if($1->category != StmtList) {
+                                        $$ = newnode(StmtList, NULL);
+                                        addchild($$, $2);
+                                      } else {
+                                        $$ = $1;
+                                        addchild($$, $2);
+                                      } }
     ;
 
-statement: PRINT expression                                         { $$ = newnode(Print, NULL); addchild($$, $2); }
-    | IDENTIFIER '=' expression                                     { $$ = newnode(Assign, NULL); addchild($$, newnode(Identifier, $1)); addchild($$, $3); }
-    | LOOP expression '{' statementlist '}'                         { $$ = newnode(Loop, NULL); addchild($$, $2); addchild($$, $4); }
+statement: PRINT expression         { $$ = newnode(Print, NULL);
+                                      addchild($$, $2); }
+    | IDENTIFIER '=' expression     { $$ = newnode(Assign, NULL);
+                                      addchild($$, newnode(Identifier, $1));
+                                      addchild($$, $3); }
+    | LOOP expression '{' statementlist '}'
+                                    { $$ = newnode(Loop, NULL);
+                                      addchild($$, $2);
+                                      addchild($$, $4); }
     ;
 
-expression: IDENTIFIER                                              { $$ = newnode(Identifier, $1); }
-    | NATURAL                                                       { $$ = newnode(Natural, $1); }
-    | DECIMAL                                                       { $$ = newnode(Decimal, $1); }
-    | expression '+' expression                                     { $$ = newnode(Add, NULL); addchild($$, $1); addchild($$, $3); }
-    | expression '-' expression                                     { $$ = newnode(Subtract, NULL); addchild($$, $1); addchild($$, $3); }
-    | expression '*' expression                                     { $$ = newnode(Multiply, NULL); addchild($$, $1); addchild($$, $3); }
-    | expression '/' expression                                     { $$ = newnode(Divide, NULL); addchild($$, $1); addchild($$, $3); }
-;
+expression: IDENTIFIER              { $$ = newnode(Identifier, $1); }
+    | NATURAL                       { $$ = newnode(Natural, $1); }
+    | DECIMAL                       { $$ = newnode(Decimal, $1); }
+    | expression '+' expression     { $$ = newnode(Add, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    | expression '-' expression     { $$ = newnode(Subtract, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    | expression '*' expression     { $$ = newnode(Multiply, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    | expression '/' expression     { $$ = newnode(Divide, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    ;
 
 %%
 

@@ -53,7 +53,7 @@ dkms.conf
 
 # Specifics
 lex.yy.c
-surf
+petit
 y.output
 y.tab.c
 y.tab.h
