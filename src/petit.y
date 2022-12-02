@@ -46,8 +46,12 @@ variablelist: /* epsilon */         { $$ = newnode(VarList, NULL); }
                                       } }
     ;
 
-variable: INTEGER IDENTIFIER        { $$ = newnode(Integer, $2); }
-    | DOUBLE IDENTIFIER             { $$ = newnode(Double, $2); }
+variable: INTEGER IDENTIFIER        { $$ = newnode(VarDecl, NULL);
+                                      addchild($$, newnode(Integer, NULL));
+                                      addchild($$, newnode(Identifier, $2)); }
+    | DOUBLE IDENTIFIER             { $$ = newnode(VarDecl, NULL);
+                                      addchild($$, newnode(Double, NULL));
+                                      addchild($$, newnode(Identifier, $2)); }
     ;
 
 statementlist: /* epsilon */        { $$ = newnode(StmtList, NULL); }
