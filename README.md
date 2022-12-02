@@ -1,2 +1,2 @@
-# Surf
-The Surf Programming Language
+# Petit
+The Petit programming language
