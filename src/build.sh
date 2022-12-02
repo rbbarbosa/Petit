@@ -6,7 +6,13 @@ gcc -g *.c -Wall -Wno-unused-function -o petit  # compile and link
 #dot y.dot -Tpng -o y.png                       # LALR automaton in y.png
 
 # run syntax tests
-echo "[syntax tests]"
+echo "[syntax tests]\n"
 ./petit -t < ../test/empty.pti
 echo
 ./petit -t < ../test/simple.pti
+
+# run semantics tests
+echo "[semantics tests]\n"
+./petit -s < ../test/empty.pti
+echo
+./petit -s < ../test/simple.pti

@@ -4,6 +4,7 @@
 
 #include "y.tab.h"  // use specified token values
 #include "ast.h"
+#include "semantics.h"
 
 #define YY_USER_ACTION { syn_line = lex_line; syn_column = lex_column; lex_column += yyleng; }
 #define PASS_TOKEN() yylval.token = strdup(yytext);
@@ -59,6 +60,10 @@ void yyerror(char *type) {
 int main(int argc, char *argv[]) {
 	yyparse();
 	if(argc >= 2 && strcmp(argv[1], "-t") == 0 && errors == 0) {   /* "-t" prints the AST */
+		show(program, 0);
+	}
+	if(argc >= 2 && strcmp(argv[1], "-s") == 0 && errors == 0) {   /* "-t" prints the AST */
+		check_program(program);
 		show(program, 0);
 	}
     deallocate(program);
