@@ -88,5 +88,5 @@ void codegen_program(struct node *program) {
 /* nextup: start directly with simple expressions (with double constants only, disregard integers for now) */
 /* then: vardecl for doubles; assignment for doubles; codegen_identifier for doubles -- give a second program that adds variables with immediates and prints the result */
 
-/* Expression nodes (only Id, Nat, Dec) are annotated with the type */
+/* Expression nodes (only Id, Nat, Dec) are annotated with the type at the previous stage, use this for deciding whether to round expressions in loops */
 
