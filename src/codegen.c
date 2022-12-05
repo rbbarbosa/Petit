@@ -22,12 +22,12 @@ int codegen_decimal(struct node *decimal) {
     return temporary++;
 }
 
-/* Exercise 2.3. implement codegen_identifier(...) assuming double is the only type */
+/* Exercise 2.2. implement codegen_identifier(...) assuming double is the only type */
 
 int codegen_expression(struct node *expression) {
     int tmp = -1;
     switch(expression->category) {
-        /* Exercise 2.3. implement case Identifier */
+        /* Exercise 2.2. implement case Identifier */
         case Decimal:
             tmp = codegen_decimal(expression);
             break;
@@ -45,16 +45,19 @@ void codegen_print(struct node *print) {
     printf("  %%%d = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.fmt_double, i32 0, i32 0), double %%%d)\n", temporary++, tmp);
 }
 
-/* Exercise 2.2. implement codegen_assign(...) assuming double is the only type */
+/* Exercise 2.3. implement codegen_assign(...) assuming double is the only type */
+
+/* Exercise 3. implement codegen_loop(...) for generating loop statements */
 
 void codegen_stmtlist(struct node *stmtlist) {
     struct node_list *stmt = stmtlist->children;
     while((stmt = stmt->next) != NULL) {
         switch(stmt->node->category){
+            /* Exercise 2.3. implement case Assign */
             case Print:
                 codegen_print(stmt->node);
                 break;
-            /* Exercise 2.2. implement case Assign */
+            /* Exercise 3. implement case Loop */
             default:
                 printf("; unimplemented statement\n");
         }
@@ -87,4 +90,3 @@ void codegen_program(struct node *program) {
 
 /* Expression nodes (only Id, Nat, Dec) are annotated with the type */
 
-/* Exercise 4. decide where *you* want to go: implement the loop statement, implement differentiation between doubles and integers, etc. */
