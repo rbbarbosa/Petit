@@ -58,12 +58,16 @@ struct table_element *insert_symbol(char *identifier, enum type type) {
 	new->next = NULL;	
 
 	if(symbol_table != NULL) {
-        struct table_element *curr;
-	    struct table_element *prev;
-		for(curr = symbol_table; curr != NULL; prev = curr, curr = curr->next)
-			if(strcmp(curr->identifier, identifier) == 0)
-				return NULL;
-		prev->next = new;
+        struct table_element *symbol = symbol_table;
+        while(symbol != NULL) {
+            if(strcmp(symbol->identifier, identifier) == 0)
+				return NULL;          /* return NULL if symbol is already inserted */
+            else if(symbol->next == NULL) {
+                symbol->next = new;   /* insert new symbol at the tail of the list */
+                break;
+            }
+            symbol = symbol->next;
+        }
 	}
 	else
 		symbol_table = new;
