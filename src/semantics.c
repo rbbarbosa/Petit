@@ -9,6 +9,7 @@ int semantic_errors = 0;
 
 void check_variable(struct node *variable) {
     if(search_symbol(getchild(variable, 1)->token) != NULL) {
+        /* Exercise 1. modify the overall code so that semantic errors show the line and the column */
         printf("Variable %s already declared\n", getchild(variable, 1)->token);
         semantic_errors++;
     } else {
@@ -23,8 +24,16 @@ void check_variable(struct node *variable) {
                 break;
         }
     }
-    /* Provide: add to symbol table and report "variable already declared" errors -- there may not be two symbols with the same name!! */
-    /*Exercise: usage of undeclared variables (both for assignments and expressions)*/
+}
+
+void check_statement(struct node *statement) {
+    switch(statement->category) {
+        case Assign:
+            /* Exercise 2. report usage of undeclared variables in the left side of assignments */
+            break;
+        default:
+            break;
+    }
 }
 
 void check_varstmtlist(struct node *varstmtlist) {
@@ -33,6 +42,8 @@ void check_varstmtlist(struct node *varstmtlist) {
     while((child = getchild(varstmtlist, i++)) != NULL)
         if(child->category == Variable)
             check_variable(child);
+        else
+            check_statement(child);
 }
 
 int check_program(struct node *program) {

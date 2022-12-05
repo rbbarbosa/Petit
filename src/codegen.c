@@ -6,9 +6,9 @@ int temporary;
 int codegen_expression(struct node *expression);
 
 int codegen_add(struct node *add) {
-    /* Exercise 1. implement code generation for addition
-       e1 = codegen_expression(first child expression)
-       e2 = codegen_expression(second child expression)
+    /* Exercise 1. implement code generation for addition:
+       e1 = codegen_expression(left child expression)
+       e2 = codegen_expression(right child expression)
        new_temporary = result of adding e1 + e2
        return new_temporary and post-increment it by 1 */
     int e1 = codegen_expression(getchild(add, 0));
