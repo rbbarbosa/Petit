@@ -30,28 +30,16 @@ struct node *getchild(struct node *parent, int position) {
     return NULL;
 }
 
-int countchildren(struct node *node) {
-    int i = 0;
-    while(getchild(node, i) != NULL)
-        i++;
-    return i;
-}
-
 char *category_name[] = names;
 
 void show(struct node *node, int depth) {
     int i;
     for(i = 0; i < depth; i++)
-        printf("..");
-    switch(node->category) {
-        case Identifier:
-        case Natural:
-        case Decimal:
-            printf("%s(%s)\n", category_name[node->category], node->token);
-            break;
-        default:
-            printf("%s\n", category_name[node->category]);
-    }
+        printf("__");
+    if(node->token == NULL)
+        printf("%s\n", category_name[node->category]);
+    else
+        printf("%s(%s)\n", category_name[node->category], node->token);
     struct node_list *child = node->children;
     while((child = child->next) != NULL)
         show(child->node, depth+1);

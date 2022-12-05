@@ -1,2 +1,2 @@
 # Petit
-The Petit programming language
+The Petit programming language and compiler

@@ -1,2 +1,4 @@
 program
-    Empty {}
+    Empty
+    {
+    }

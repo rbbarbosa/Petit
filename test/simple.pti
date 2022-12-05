@@ -1,11 +1,13 @@
 program Simple {
 	integer i
 	double d
+	double i
 	i = 1
 	d = i + 1.0
+	integer x
 	loop d {
-		a = a + 3 * d / a - 4
+		x = a + 3 * d / a - 4
 	}
-	print i
-	print a
+	print d
+	print x
 }
