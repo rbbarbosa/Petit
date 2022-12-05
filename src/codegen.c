@@ -22,20 +22,21 @@ int codegen_decimal(struct node *decimal) {
     return temporary++;
 }
 
-/* Exercise 2.2. implement codegen_identifier(...) assuming double is the only type */
+/* Exercise 3.2. implement codegen_identifier(...) assuming double is the only type */
 
 int codegen_expression(struct node *expression) {
     int tmp = -1;
     switch(expression->category) {
-        /* Exercise 2.2. implement case Identifier */
+        /* Exercise 3.2. implement case Identifier */
         case Decimal:
             tmp = codegen_decimal(expression);
             break;
         case Add:
             tmp = codegen_add(expression);
             break;
+        /* Exercise 2. implement support for subtraction, multiplication and division */
         default:
-            printf("; unimplemented expression\n");
+            break;
     }
     return tmp;
 }
@@ -45,21 +46,21 @@ void codegen_print(struct node *print) {
     printf("  %%%d = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.fmt_double, i32 0, i32 0), double %%%d)\n", temporary++, tmp);
 }
 
-/* Exercise 2.3. implement codegen_assign(...) assuming double is the only type */
+/* Exercise 3.3. implement codegen_assign(...) assuming double is the only type */
 
-/* Exercise 3. implement codegen_loop(...) for generating loop statements */
+/* Exercise 4. implement codegen_loop(...) for generating loop statements */
 
 void codegen_stmtlist(struct node *stmtlist) {
     struct node_list *stmt = stmtlist->children;
     while((stmt = stmt->next) != NULL) {
         switch(stmt->node->category){
-            /* Exercise 2.3. implement case Assign */
+            /* Exercise 3.3. implement case Assign */
             case Print:
                 codegen_print(stmt->node);
                 break;
-            /* Exercise 3. implement case Loop */
+            /* Exercise 4. implement case Loop */
             default:
-                printf("; unimplemented statement\n");
+                break;
         }
     }
 }
@@ -67,7 +68,7 @@ void codegen_stmtlist(struct node *stmtlist) {
 void codegen_body(struct node *body) {
     temporary = 1;
     printf("define void @%s() {\n", getchild(body, 0)->token);
-    /* Exercise 2.1. generate code to allocate a stack space for each variable in the symbol table, assuming double is the only type to start */
+    /* Exercise 3.1. generate code to allocate a stack space for each variable in the symbol table, assuming double is the only type to start */
     codegen_stmtlist(getchild(body, 1));
     printf("  ret void\n");
     printf("}\n");
@@ -86,7 +87,9 @@ void codegen_program(struct node *program) {
 }
 
 /* nextup: start directly with simple expressions (with double constants only, disregard integers for now) */
+
 /* then: vardecl for doubles; assignment for doubles; codegen_identifier for doubles -- give a second program that adds variables with immediates and prints the result */
 
 /* Expression nodes (only Id, Nat, Dec) are annotated with the type at the previous stage, use this for deciding whether to round expressions in loops */
 
+/* A "free" exercise would be to support Mul Div Sub... takes 5 minutes, but they need to think */

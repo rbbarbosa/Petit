@@ -26,3 +26,5 @@ echo "\n[code generation tests]\n"
 ./petit < ../test/print.pti
 echo
 ./petit < ../test/simplesum.pti
+echo
+./petit < ../test/varsum.pti
