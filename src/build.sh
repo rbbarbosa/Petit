@@ -12,6 +12,8 @@ echo
 ./petit -t < ../test/simple.pti
 echo
 ./petit -t < ../test/print.pti
+echo
+./petit -t < ../test/variables.pti
 
 # run semantics tests
 echo "\n[semantics tests]\n"
@@ -28,3 +30,5 @@ echo
 ./petit < ../test/simplesum.pti
 echo
 ./petit < ../test/varsum.pti
+echo
+./petit < ../test/variables.pti

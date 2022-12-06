@@ -1,0 +1,14 @@
+program rnd {
+	double random1
+	print  random1
+	double random2
+	print  random2
+	double random3
+	print  random3
+
+	double x double y double z
+	x = 10.0
+	y = x + 10.0
+	z = x + y
+	print 30.0 + z
+}
