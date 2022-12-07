@@ -4,7 +4,7 @@
 
 int temporary;
 
-extern struct table_element *symbol_table;
+extern struct symbol_list *symbol_table;
 
 int codegen_expression(struct node *expression);
 
@@ -20,23 +20,23 @@ int codegen_add(struct node *add) {
     return temporary++;
 }
 
-int codegen_sub(struct node *add) {
-    int e1 = codegen_expression(getchild(add, 0));
-    int e2 = codegen_expression(getchild(add, 1));
+int codegen_sub(struct node *sub) {
+    int e1 = codegen_expression(getchild(sub, 0));
+    int e2 = codegen_expression(getchild(sub, 1));
     printf("  %%%d = fsub double %%%d, %%%d\n", temporary, e1, e2);
     return temporary++;
 }
 
-int codegen_mul(struct node *add) {
-    int e1 = codegen_expression(getchild(add, 0));
-    int e2 = codegen_expression(getchild(add, 1));
+int codegen_mul(struct node *mul) {
+    int e1 = codegen_expression(getchild(mul, 0));
+    int e2 = codegen_expression(getchild(mul, 1));
     printf("  %%%d = fmul double %%%d, %%%d\n", temporary, e1, e2);
     return temporary++;
 }
 
-int codegen_div(struct node *add) {
-    int e1 = codegen_expression(getchild(add, 0));
-    int e2 = codegen_expression(getchild(add, 1));
+int codegen_div(struct node *div) {
+    int e1 = codegen_expression(getchild(div, 0));
+    int e2 = codegen_expression(getchild(div, 1));
     printf("  %%%d = fdiv double %%%d, %%%d\n", temporary, e1, e2);
     return temporary++;
 }

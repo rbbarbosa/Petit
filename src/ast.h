@@ -4,7 +4,7 @@
 enum category {  Program,   Integer,   Double,   Print,   Loop,   Identifier,   Natural,   Decimal,   VarStmtList,   Variable,   Assign,   Add,   Sub,   Mul,   Div };
 #define names { "Program", "Integer", "Double", "Print", "Loop", "Identifier", "Natural", "Decimal", "VarStmtList", "Variable", "Assign", "Add", "Sub", "Mul", "Div" }
 
-enum type {integer_type, double_type};
+enum type {integer_type, double_type, no_type};
 
 struct node {
     enum category category;

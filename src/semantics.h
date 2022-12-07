@@ -5,14 +5,14 @@
 
 int check_program(struct node *program);
 
-struct table_element {
+struct symbol_list {
 	char *identifier;
 	enum type type;
-	struct table_element *next;
+	struct symbol_list *next;
 };
 
-struct table_element *insert_symbol(char *identifier, enum type type);
-struct table_element *search_symbol(char *identifier);
+struct symbol_list *insert_symbol(char *identifier, enum type type);
+struct symbol_list *search_symbol(char *identifier);
 void show_symbol_table();
 
 #endif
