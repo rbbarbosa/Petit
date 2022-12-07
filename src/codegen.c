@@ -46,7 +46,7 @@ int codegen_decimal(struct node *decimal) {
     return temporary++;
 }
 
-/* Exercise 3.2. implement codegen_identifier(...) assuming double is the only type */
+/* Exercise 3.3. implement codegen_identifier(...) assuming double is the only type */
 int codegen_identifier(struct node *identifier) {
     printf("  %%%d = load double, double* %%%s\n", temporary, identifier->token);
     return temporary++;
@@ -55,7 +55,7 @@ int codegen_identifier(struct node *identifier) {
 int codegen_expression(struct node *expression) {
     int tmp = -1;
     switch(expression->category) {
-        /* Exercise 3.2. implement case Identifier */
+        /* Exercise 3.3. implement case Identifier */
         case Identifier:
             tmp = codegen_identifier(expression);
             break;
@@ -86,7 +86,7 @@ void codegen_print(struct node *print) {
     printf("  %%%d = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.fmt_double, i32 0, i32 0), double %%%d)\n", temporary++, tmp);
 }
 
-/* Exercise 3.3. implement codegen_assign(...) assuming double is the only type */
+/* Exercise 3.2. implement codegen_assign(...) assuming double is the only type */
 void codegen_assign(struct node *assign) {
     int e = codegen_expression(getchild(assign, 1));
     printf("  store double %%%d, double* %%%s\n", e, getchild(assign, 0)->token);
@@ -94,18 +94,22 @@ void codegen_assign(struct node *assign) {
 
 /* Exercise 4. implement codegen_loop(...) for generating loop statements */
 
-void codegen_statements(struct node *statements) {
-    struct node_list *stmt = statements->children;
-    while((stmt = stmt->next) != NULL) {
-        switch(stmt->node->category){
-            /* Exercise 3.3. implement case Assign */
+void codegen_varstmtlist(struct node *varstmtlist) {
+    struct node_list *child = varstmtlist->children;
+    while((child = child->next) != NULL) {
+        switch(child->node->category) {
+            /* Exercise 3.1. generate code to allocate a stack space for each variable in the symbol table, assuming double is the only type to start */
+            case Variable:
+                printf("  %%%s = alloca double\n", getchild(child->node, 1)->token);
+                break;
+            /* Exercise 3.2. implement case Assign */
             case Assign:
-                codegen_assign(stmt->node);
+                codegen_assign(child->node);
                 break;
             case Print:
-                codegen_print(stmt->node);
+                codegen_print(child->node);
                 break;
-            /* Exercise 4. implement case Loop */
+            /* Exercise 4. implement case Loop (remove this hint) */
             default:
                 break;
         }
@@ -115,11 +119,7 @@ void codegen_statements(struct node *statements) {
 void codegen_body(struct node *body) {
     temporary = 1;
     printf("define void @%s() {\n", getchild(body, 0)->token);
-    /* Exercise 3.1. generate code to allocate a stack space for each variable in the symbol table, assuming double is the only type to start */
-    struct table_element *symbol;
-    for(symbol = symbol_table; symbol != NULL; symbol = symbol->next)
-	    printf("  %%%s = alloca double\n", symbol->identifier);
-    codegen_statements(getchild(body, 1));
+    codegen_varstmtlist(getchild(body, 1));
     printf("  ret void\n");
     printf("}\n");
 }
