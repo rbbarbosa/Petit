@@ -23,6 +23,8 @@ echo
 echo
 ./petit -s < ../test/print.pti
 echo
+./petit -s < ../test/variables.pti
+echo
 ./petit -s < ../test/loop.pti
 
 # run code generation tests

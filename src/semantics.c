@@ -65,7 +65,7 @@ struct symbol_list *insert_symbol(char *identifier, enum type type) {
     else
         symbol_table = new;
 
-	return new; 
+    return new; 
 }
 
 struct symbol_list *search_symbol(char *identifier) {

@@ -65,10 +65,12 @@ int main(int argc, char *argv[]) {
 	}
 	if(argc >= 2 && strcmp(argv[1], "-s") == 0 && errors == 0) {   /* "-s" prints the annotated AST and symbol tables */
 		errors += check_program(program);
-		show_symbol_table();
-		show(program, 0);
+		if(errors == 0) {
+			show_symbol_table();
+			show(program, 0);
+		}
 	}
-	if(argc <= 1) {
+	if(argc <= 1 && errors == 0) {
 		errors += check_program(program);
 		if(errors == 0)
 			codegen_program(program);
