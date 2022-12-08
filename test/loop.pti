@@ -1,0 +1,7 @@
+program Loop {
+	double i
+	i = 10.0
+	loop i {
+		print i
+	}
+}

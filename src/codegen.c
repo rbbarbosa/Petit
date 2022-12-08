@@ -92,7 +92,29 @@ void codegen_assign(struct node *assign) {
     printf("  store double %%%d, double* %%%s\n", e, getchild(assign, 0)->token);
 }
 
+void codegen_varstmtlist(struct node *varstmtlist);
+
 /* Exercise 4. implement codegen_loop(...) for generating loop statements */
+void codegen_loop(struct node *loop) {
+    int loop_number = temporary;
+    printf("  br label %%L%dentry\n"
+           "L%dentry:\n", loop_number, loop_number);
+    int e = codegen_expression(getchild(loop, 0));
+    printf("  %%%d = fptosi double %%%d to i32\n", temporary, e);   // bitcast if i32
+    printf("  br label %%L%dtest\n"
+           "L%dtest:\n"
+           "  %%%d = phi i32 [0, %%L%dentry], [%%%d, %%L%dbody]\n"
+           "  %%%d = add i32 %%%d, 1\n",
+           loop_number, loop_number, temporary+1, loop_number, temporary+2, loop_number, temporary+2, temporary+1);
+    printf("  %%%d = icmp eq i32 %%%d, %%%d\n"
+           "  br i1 %%%d, label %%L%dend, label %%L%dbody\n"
+           "L%dbody:\n",
+           temporary+3, temporary+1, temporary, temporary+3, loop_number, loop_number, loop_number);
+    temporary += 4;
+    codegen_varstmtlist(getchild(loop, 1));
+    printf("  br label %%L%dtest\n"
+           "L%dend:\n", loop_number, loop_number);
+}
 
 void codegen_varstmtlist(struct node *varstmtlist) {
     struct node_list *child = varstmtlist->children;
@@ -109,7 +131,10 @@ void codegen_varstmtlist(struct node *varstmtlist) {
             case Print:
                 codegen_print(child->node);
                 break;
-            /* Exercise 4. implement case Loop (remove this hint) */
+            /* Exercise 4. implement case Loop */
+            case Loop:
+                codegen_loop(child->node);
+                break;
             default:
                 break;
         }
@@ -135,11 +160,3 @@ void codegen_program(struct node *program) {
 
     codegen_body(program);
 }
-
-/* nextup: start directly with simple expressions (with double constants only, disregard integers for now) */
-
-/* then: vardecl for doubles; assignment for doubles; codegen_identifier for doubles -- give a second program that adds variables with immediates and prints the result */
-
-/* Expression nodes (only Id, Nat, Dec) are annotated with the type at the previous stage, use this for deciding whether to round expressions in loops */
-
-/* A "free" exercise would be to support Mul Div Sub... takes 5 minutes, but they need to think */

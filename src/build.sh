@@ -22,6 +22,8 @@ echo
 ./petit -s < ../test/simple.pti
 echo
 ./petit -s < ../test/print.pti
+echo
+./petit -s < ../test/loop.pti
 
 # run code generation tests
 echo "\n[code generation tests]\n"
@@ -32,3 +34,5 @@ echo
 ./petit < ../test/varsum.pti
 echo
 ./petit < ../test/variables.pti
+echo
+./petit < ../test/loop.pti
