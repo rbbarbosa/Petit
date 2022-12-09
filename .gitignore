@@ -60,3 +60,9 @@ y.tab.h
 y.vcg
 .DS_Store
 *.ll
+*.save
+*.log
+*.aux
+*.log
+*.pdf
+*.synctex.gz

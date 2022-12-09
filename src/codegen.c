@@ -9,11 +9,6 @@ extern struct symbol_list *symbol_table;
 int codegen_expression(struct node *expression);
 
 int codegen_add(struct node *add) {
-    /* Exercise 1. implement code generation for addition:
-       e1 = codegen_expression(left child)
-       e2 = codegen_expression(right child)
-       new_temporary = result of adding e1 + e2
-       return new_temporary and post-increment it by 1 */
     int e1 = codegen_expression(getchild(add, 0));
     int e2 = codegen_expression(getchild(add, 1));
     printf("  %%%d = fadd double %%%d, %%%d\n", temporary, e1, e2);
@@ -28,6 +23,11 @@ int codegen_sub(struct node *sub) {
 }
 
 int codegen_mul(struct node *mul) {
+    /* Exercise 1. implement code generation for multiplication:
+       e1 = codegen_expression(left child)
+       e2 = codegen_expression(right child)
+       new_temporary = result of adding e1 + e2
+       return new_temporary and post-increment it by 1 */
     int e1 = codegen_expression(getchild(mul, 0));
     int e2 = codegen_expression(getchild(mul, 1));
     printf("  %%%d = fmul double %%%d, %%%d\n", temporary, e1, e2);
@@ -46,7 +46,7 @@ int codegen_decimal(struct node *decimal) {
     return temporary++;
 }
 
-/* Exercise 3.3. implement codegen_identifier(...) assuming double is the only type */
+/* Exercise 3.c. implement codegen_identifier(...) assuming double is the only type */
 int codegen_identifier(struct node *identifier) {
     printf("  %%%d = load double, double* %%%s\n", temporary, identifier->token);
     return temporary++;
@@ -55,17 +55,17 @@ int codegen_identifier(struct node *identifier) {
 int codegen_expression(struct node *expression) {
     int tmp = -1;
     switch(expression->category) {
-        /* Exercise 3.3. implement case Identifier */
+        /* Exercise 3.c. implement case Identifier */
         case Identifier:
             tmp = codegen_identifier(expression);
             break;
         case Decimal:
             tmp = codegen_decimal(expression);
             break;
+        /* Exercise 2. implement support for addition, subtraction and division */
         case Add:
             tmp = codegen_add(expression);
             break;
-        /* Exercise 2. implement support for subtraction, multiplication and division */
         case Sub:
             tmp = codegen_sub(expression);
             break;
@@ -86,7 +86,7 @@ void codegen_print(struct node *print) {
     printf("  %%%d = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.fmt_double, i32 0, i32 0), double %%%d)\n", temporary++, tmp);
 }
 
-/* Exercise 3.2. implement codegen_assign(...) assuming double is the only type */
+/* Exercise 3.b. implement codegen_assign(...) assuming double is the only type */
 void codegen_assign(struct node *assign) {
     int e = codegen_expression(getchild(assign, 1));
     printf("  store double %%%d, double* %%%s\n", e, getchild(assign, 0)->token);
@@ -120,11 +120,11 @@ void codegen_varstmtlist(struct node *varstmtlist) {
     struct node_list *child = varstmtlist->children;
     while((child = child->next) != NULL) {
         switch(child->node->category) {
-            /* Exercise 3.1. generate code to allocate a stack space for each variable in the symbol table, assuming double is the only type to start */
+            /* Exercise 3.a. generate code to allocate a stack space for each variable, assuming double is the only type for now */
             case Variable:
                 printf("  %%%s = alloca double\n", getchild(child->node, 1)->token);
                 break;
-            /* Exercise 3.2. implement case Assign */
+            /* Exercise 3.b. implement case Assign */
             case Assign:
                 codegen_assign(child->node);
                 break;
