@@ -26,7 +26,7 @@ int codegen_mul(struct node *mul) {
     /* Exercise 1. implement code generation for multiplication:
        e1 = codegen_expression(left child)
        e2 = codegen_expression(right child)
-       new_temporary = result of adding e1 + e2
+       new_temporary = result of multiplying e1 * e2
        return new_temporary and post-increment it by 1 */
     int e1 = codegen_expression(getchild(mul, 0));
     int e2 = codegen_expression(getchild(mul, 1));
