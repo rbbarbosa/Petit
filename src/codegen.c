@@ -106,7 +106,7 @@ void codegen_loop(struct node *loop) {
            "  %%%d = phi i32 [0, %%L%dentry], [%%%d, %%L%dbody]\n"
            "  %%%d = add i32 %%%d, 1\n",
            loop_number, loop_number, temporary+1, loop_number, temporary+2, loop_number, temporary+2, temporary+1);
-    printf("  %%%d = icmp eq i32 %%%d, %%%d\n"
+    printf("  %%%d = icmp sge i32 %%%d, %%%d\n"
            "  br i1 %%%d, label %%L%dend, label %%L%dbody\n"
            "L%dbody:\n",
            temporary+3, temporary+1, temporary, temporary+3, loop_number, loop_number, loop_number);

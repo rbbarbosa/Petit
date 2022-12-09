@@ -38,3 +38,5 @@ echo
 ./petit < ../test/variables.pti
 echo
 ./petit < ../test/loop.pti
+echo
+./petit < ../test/circle.pti

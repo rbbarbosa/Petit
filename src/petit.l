@@ -2,7 +2,7 @@
 
 %{
 
-#include "y.tab.h"  // use specified token values
+#include "y.tab.h"
 #include "ast.h"
 #include "semantics.h"
 #include "codegen.h"
