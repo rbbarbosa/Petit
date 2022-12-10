@@ -7,7 +7,7 @@
 #include "semantics.h"
 #include "codegen.h"
 
-#define YY_USER_ACTION { syn_line = lex_line; syn_column = lex_column; lex_column += yyleng; }
+#define YY_USER_ACTION { yylloc.first_line = syn_line = lex_line; yylloc.first_column = syn_column = lex_column; lex_column += yyleng; }
 #define PASS_TOKEN() yylval.token = strdup(yytext);
 
 int yyparse(void);

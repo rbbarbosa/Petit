@@ -9,6 +9,7 @@ enum type {integer_type, double_type, no_type};
 struct node {
     enum category category;
     char *token;
+    int token_line, token_column;
     enum type type;
     struct node_list *children;
 };

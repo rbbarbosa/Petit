@@ -23,6 +23,11 @@ struct node *program;
     struct node *node;
 }
 
+%locations
+%{
+#define LOCATE(node, line, column) { node->token_line = line; node->token_column = column; }
+%}
+
 /* END definitions section */
 
 /* START grammar rules section -- BNF grammar */
@@ -44,17 +49,20 @@ varstmtlist: /* epsilon */          { $$ = newnode(VarStmtList, NULL); }
 
 variable: INTEGER IDENTIFIER        { $$ = newnode(Variable, NULL);
                                       addchild($$, newnode(Integer, NULL));
-                                      addchild($$, newnode(Identifier, $2)); }
+                                      addchild($$, newnode(Identifier, $2));
+                                      LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
     | DOUBLE IDENTIFIER             { $$ = newnode(Variable, NULL);
                                       addchild($$, newnode(Double, NULL));
-                                      addchild($$, newnode(Identifier, $2)); }
+                                      addchild($$, newnode(Identifier, $2));
+                                      LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
     ;
 
 statement: PRINT expression         { $$ = newnode(Print, NULL);
                                       addchild($$, $2); }
     | IDENTIFIER '=' expression     { $$ = newnode(Assign, NULL);
                                       addchild($$, newnode(Identifier, $1));
-                                      addchild($$, $3); }
+                                      addchild($$, $3);
+                                      LOCATE(getchild($$, 0), @2.first_line, @2.first_column); }
     | LOOP expression '{' varstmtlist '}'
                                     { $$ = newnode(Loop, NULL);
                                       addchild($$, $2);
