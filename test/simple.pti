@@ -10,4 +10,6 @@ program Simple {
 	}
 	print d
 	print x
+	xyz = d * x
+	x = xyz + i
 }

@@ -14,7 +14,7 @@ void check_variable(struct node *variable) {
         else
             insert_symbol(getchild(variable, 1)->token, double_type);
     } else {
-        /* Exercise 2. modify the overall code so that semantic errors show the line and the column */
+        /* Exercise 2. modify the overall code so that semantic errors show the line and the column (yylloc) */
         printf("Variable %s already declared\n", getchild(variable, 1)->token);
         semantic_errors++;
     }
@@ -24,6 +24,8 @@ void check_statement(struct node *statement) {
     switch(statement->category) {
         case Assign:
             /* Exercise 1. show errors on assignments to undeclared variables */
+            if(search_symbol(getchild(statement, 0)->token) == NULL)
+                printf("Undeclared variable %s\n", getchild(statement, 0)->token);
             break;
             /* Exercise 3. show a compiler warning when assigning a double value to an integer variable */
         default:
