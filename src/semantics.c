@@ -25,6 +25,7 @@ void check_statement(struct node *statement) {
         case Assign:
             /* Exercise 1. show errors on assignments to undeclared variables */
             break;
+            /* Exercise 3. show a compiler warning when assigning a double value to an integer variable */
         default:
             break;
     }
@@ -79,5 +80,5 @@ struct symbol_list *search_symbol(char *identifier) {
 void show_symbol_table() {
     struct symbol_list *symbol;
     for(symbol = symbol_table; symbol != NULL; symbol = symbol->next)
-        printf("| Identifier %s | Type %d |\n", symbol->identifier, symbol->type);
+        printf("Symbol %s : %s\n", symbol->identifier, symbol->type == integer_type ? "integer" : "double");
 }
