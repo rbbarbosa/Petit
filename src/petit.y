@@ -62,7 +62,7 @@ statement: PRINT expression         { $$ = newnode(Print, NULL);
     | IDENTIFIER '=' expression     { $$ = newnode(Assign, NULL);
                                       addchild($$, newnode(Identifier, $1));
                                       addchild($$, $3);
-                                      LOCATE(getchild($$, 0), @2.first_line, @2.first_column); }
+                                      LOCATE(getchild($$, 0), @1.first_line, @1.first_column); }
     | LOOP expression '{' varstmtlist '}'
                                     { $$ = newnode(Loop, NULL);
                                       addchild($$, $2);

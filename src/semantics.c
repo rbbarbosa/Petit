@@ -21,6 +21,23 @@ void check_variable(struct node *variable) {
     }
 }
 
+void check_expression(struct node *expression) {
+    switch(expression->category) {
+        case Identifier:
+            if(search_symbol(expression->token) != NULL)
+                expression->type = search_symbol(expression->token)->type;
+            break;
+        case Decimal:
+            expression->type = double_type;
+            break;
+        case Natural:
+            expression->type = integer_type;
+            break;
+        default:
+            break;
+    }
+}
+
 void check_statement(struct node *statement) {
     switch(statement->category) {
         case Assign:
@@ -29,8 +46,14 @@ void check_statement(struct node *statement) {
                 struct node *id = getchild(statement, 0);
                 printf("Undeclared variable %s (%d:%d)\n", id->token, id->token_line, id->token_column);
             }
-            break;
             /* Exercise 3. show a compiler warning when assigning a double value to an integer variable */
+            check_expression(getchild(statement, 1));
+            if(search_symbol(getchild(statement, 0)->token) != NULL) {
+                struct node *id = getchild(statement, 0);
+                if(search_symbol(id->token)->type == integer_type && getchild(statement, 1)->type == double_type)
+                    printf("Warning: implicit conversion from double to integer (%d:%d)\n", id->token_line, id->token_column);
+            }
+            break;
         default:
             break;
     }
@@ -85,5 +108,5 @@ struct symbol_list *search_symbol(char *identifier) {
 void show_symbol_table() {
     struct symbol_list *symbol;
     for(symbol = symbol_table; symbol != NULL; symbol = symbol->next)
-        printf("Symbol %s : %s\n", symbol->identifier, symbol->type == integer_type ? "integer" : "double");
+        printf("Symbol %s : %s\n", symbol->identifier, type_name(symbol->type));
 }

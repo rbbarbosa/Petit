@@ -5,6 +5,7 @@ enum category {  Program,   Integer,   Double,   Print,   Loop,   Identifier,   
 #define names { "Program", "Integer", "Double", "Print", "Loop", "Identifier", "Natural", "Decimal", "VarStmtList", "Variable", "Assign", "Add", "Sub", "Mul", "Div" }
 
 enum type {integer_type, double_type, no_type};
+#define type_name(type) (type == integer_type ? "integer" : (type == double_type ? "double" : "none"))
 
 struct node {
     enum category category;
