@@ -84,9 +84,10 @@ expression: IDENTIFIER              { $$ = newnode(Identifier, $1); }
     | expression '/' expression     { $$ = newnode(Div, NULL);
                                       addchild($$, $1);
                                       addchild($$, $3); }
+    | '(' expression ')'            { $$ = $2; }  
     ;
 
-%%       /*prepare a nice demo of gdb...*/
+%%
 
 /* END grammar rules section */
 

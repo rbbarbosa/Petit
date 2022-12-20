@@ -3,5 +3,5 @@ program VarSum {
 	double x
 	d = 1.0
 	x = 2.0
-	print d + x + 3.0
+	print d * (x + 3.0)
 }
