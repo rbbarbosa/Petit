@@ -57,9 +57,8 @@ variable: INTEGER IDENTIFIER        { $$ = newnode(Variable, NULL);
                                       LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
     ;
 
-statement: PRINT expression         { $$ = newnode(Print, NULL);
-                                      addchild($$, $2); }
-    | IDENTIFIER '=' expression     { $$ = newnode(Assign, NULL);
+statement: IDENTIFIER '=' expression
+                                    { $$ = newnode(Assign, NULL);
                                       addchild($$, newnode(Identifier, $1));
                                       addchild($$, $3);
                                       LOCATE(getchild($$, 0), @1.first_line, @1.first_column); }
