@@ -1,2 +1,2 @@
-complete(integer i, double d) =
-	(1 + i) * 2.5 / if i then d else complete(i-1, d)
+complete(integer i, double d, integer x) =
+	(1 + i) * 2.5 / if i then d else complete(i-1, d, i)

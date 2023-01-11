@@ -7,6 +7,6 @@ gcc ast.c semantics.c codegen.c lex.yy.c y.tab.c -Wall -Wno-unused-function -o p
 
 # run syntax tests
 echo "\n[syntax tests]\n"
-./petit -g < ../test/factorial.pti
-./petit -g < ../test/fibonacci.pti
-./petit -g < ../test/fullgrammar.pti
+./petit -t < ../test/factorial.pti
+./petit -t < ../test/fibonacci.pti
+./petit -t < ../test/fullgrammar.pti
