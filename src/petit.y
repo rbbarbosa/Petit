@@ -39,16 +39,12 @@ program: IDENTIFIER '(' parameters ')' '=' expression
                                     { }
     ;
 
-parameters: parameters ',' parameter{ }
-    | parameter                     { }
+parameters: parameter               { }
+    | parameters ',' parameter      { }
     ;
 
 parameter: INTEGER IDENTIFIER       { }
     | DOUBLE IDENTIFIER             { }
-    ;
-
-arguments: arguments ',' expression { }
-    | expression                    { }
     ;
 
 expression: IDENTIFIER              { }
@@ -62,6 +58,10 @@ expression: IDENTIFIER              { }
     | expression '*' expression     { }
     | expression '/' expression     { }
     | '(' expression ')'            { }  
+    ;
+
+arguments: expression               { }
+    | arguments ',' expression      { }
     ;
 
 %%
