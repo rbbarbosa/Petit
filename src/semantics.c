@@ -40,7 +40,7 @@ void check_expression(struct node *expression) {
 
 void check_statement(struct node *statement) {
     switch(statement->category) {
-        case Assign:
+        case /*Assign*/Program/*FIX*/:
             /* Exercise 1. show errors on assignments to undeclared variables */
             if(search_symbol(getchild(statement, 0)->token) == NULL) {
                 struct node *id = getchild(statement, 0);
@@ -62,7 +62,7 @@ void check_statement(struct node *statement) {
 void check_varstmtlist(struct node *varstmtlist) {
     struct node_list *child = varstmtlist->children;
     while((child = child->next) != NULL)
-        if(child->node->category == Variable)
+        if(child->node->category == /*Variable*/Program/*FIX*/)
             check_variable(child->node);
         else
             check_statement(child->node);

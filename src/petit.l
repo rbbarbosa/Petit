@@ -34,11 +34,11 @@ DECIMAL [0-9]+"."[0-9]+
 
 %%
 
-program     { return PROGRAM; }
 integer     { return INTEGER; }
 double      { return DOUBLE; }
-print       { return PRINT; }
-loop        { return LOOP; }
+if			{ return IF; }
+then		{ return THEN; }
+else		{ return ELSE; }
 {ID}        { PASS_TOKEN(); return IDENTIFIER; }
 {NATURAL}   { PASS_TOKEN(); return NATURAL; }
 {DECIMAL}   { PASS_TOKEN(); return DECIMAL; }
@@ -60,6 +60,9 @@ void yyerror(char *type) {
 
 int main(int argc, char *argv[]) {
 	yyparse();
+	if(argc >= 2 && strcmp(argv[1], "-g") == 0 && errors == 0) {
+		printf("No syntax errors.\n");
+	}
 	if(argc >= 2 && strcmp(argv[1], "-t") == 0 && errors == 0) {   /* "-t" prints the AST */
 		show(program, 0);
 	}

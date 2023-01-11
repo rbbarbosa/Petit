@@ -121,20 +121,20 @@ void codegen_varstmtlist(struct node *varstmtlist) {
     while((child = child->next) != NULL) {
         switch(child->node->category) {
             /* Exercise 3.a. generate code to allocate a stack space for each variable, assuming double is the only type for now */
-            case Variable:
+            /*case Variable:
                 printf("  %%%s = alloca double\n", getchild(child->node, 1)->token);
-                break;
+                break;*/
             /* Exercise 3.b. implement case Assign */
-            case Assign:
+            /*case Assign:
                 codegen_assign(child->node);
-                break;
-            case Print:
+                break;*/
+            /*case Print:
                 codegen_print(child->node);
-                break;
+                break;*/
             /* Exercise 4. implement case Loop */
-            case Loop:
+            /*case Loop:
                 codegen_loop(child->node);
-                break;
+                break;*/
             default:
                 break;
         }

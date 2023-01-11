@@ -11,10 +11,11 @@ struct node *program;
 
 %}
 
-%token PROGRAM INTEGER DOUBLE PRINT LOOP
+%token INTEGER DOUBLE IF THEN ELSE
 %token<token> IDENTIFIER NATURAL DECIMAL
-%type<node> program varstmtlist variable statement expression
+%type<node> program parameters expression
 
+%left least
 %left '+' '-'
 %left '*' '/'
 
@@ -34,56 +35,33 @@ struct node *program;
 
 %%
 
-program: PROGRAM IDENTIFIER '{' varstmtlist '}'
-                                    { $$ = program = newnode(Program, NULL);
-                                      addchild($$, newnode(Identifier, $2));
-                                      addchild($$, $4); }
+program: IDENTIFIER '(' parameters ')' '=' expression
+                                    { }
     ;
 
-varstmtlist: /* epsilon */          { $$ = newnode(VarStmtList, NULL); }
-    | varstmtlist variable          { $$ = $1;
-                                      addchild($$, $2); }
-    | varstmtlist statement         { $$ = $1;
-                                      addchild($$, $2); }
+parameters: parameters ',' parameter{ }
+    | parameter                     { }
     ;
 
-variable: INTEGER IDENTIFIER        { $$ = newnode(Variable, NULL);
-                                      addchild($$, newnode(Integer, NULL));
-                                      addchild($$, newnode(Identifier, $2));
-                                      LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
-    | DOUBLE IDENTIFIER             { $$ = newnode(Variable, NULL);
-                                      addchild($$, newnode(Double, NULL));
-                                      addchild($$, newnode(Identifier, $2));
-                                      LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
+parameter: INTEGER IDENTIFIER       { }
+    | DOUBLE IDENTIFIER             { }
     ;
 
-statement: IDENTIFIER '=' expression
-                                    { $$ = newnode(Assign, NULL);
-                                      addchild($$, newnode(Identifier, $1));
-                                      addchild($$, $3);
-                                      LOCATE(getchild($$, 0), @1.first_line, @1.first_column); }
-    | LOOP expression '{' varstmtlist '}'
-                                    { $$ = newnode(Loop, NULL);
-                                      addchild($$, $2);
-                                      addchild($$, $4); }
+arguments: arguments ',' expression { }
+    | expression                    { }
     ;
 
-expression: IDENTIFIER              { $$ = newnode(Identifier, $1); }
-    | NATURAL                       { $$ = newnode(Natural, $1); }
-    | DECIMAL                       { $$ = newnode(Decimal, $1); }
-    | expression '+' expression     { $$ = newnode(Add, NULL);
-                                      addchild($$, $1);
-                                      addchild($$, $3); }
-    | expression '-' expression     { $$ = newnode(Sub, NULL);
-                                      addchild($$, $1);
-                                      addchild($$, $3); }
-    | expression '*' expression     { $$ = newnode(Mul, NULL);
-                                      addchild($$, $1);
-                                      addchild($$, $3); }
-    | expression '/' expression     { $$ = newnode(Div, NULL);
-                                      addchild($$, $1);
-                                      addchild($$, $3); }
-    | '(' expression ')'            { $$ = $2; }  
+expression: IDENTIFIER              { }
+    | NATURAL                       { }
+    | DECIMAL                       { }
+    | IDENTIFIER '(' arguments ')'  { }
+    | IF expression THEN expression ELSE expression  %prec least
+                                    { }
+    | expression '+' expression     { }
+    | expression '-' expression     { }
+    | expression '*' expression     { }
+    | expression '/' expression     { }
+    | '(' expression ')'            { }  
     ;
 
 %%

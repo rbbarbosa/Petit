@@ -7,36 +7,6 @@ gcc ast.c semantics.c codegen.c lex.yy.c y.tab.c -Wall -Wno-unused-function -o p
 
 # run syntax tests
 echo "\n[syntax tests]\n"
-./petit -t < ../test/empty.pti
-echo
-./petit -t < ../test/simple.pti
-echo
-./petit -t < ../test/print.pti
-echo
-./petit -t < ../test/variables.pti
-
-# run semantics tests
-echo "\n[semantics tests]\n"
-./petit -s < ../test/empty.pti
-echo
-./petit -s < ../test/simple.pti
-echo
-./petit -s < ../test/print.pti
-echo
-./petit -s < ../test/variables.pti
-echo
-./petit -s < ../test/loop.pti
-
-# run code generation tests
-echo "\n[code generation tests]\n"
-./petit < ../test/print.pti
-echo
-./petit < ../test/simplesum.pti
-echo
-./petit < ../test/varsum.pti
-echo
-./petit < ../test/variables.pti
-echo
-./petit < ../test/loop.pti
-echo
-./petit < ../test/circle.pti
+./petit -g < ../test/factorial.pti
+./petit -g < ../test/fibonacci.pti
+./petit -g < ../test/fullgrammar.pti
