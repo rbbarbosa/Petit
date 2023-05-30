@@ -37,9 +37,20 @@ struct node *program;
 
 program: IDENTIFIER '(' parameters ')' '=' expression
                                     { $$ = program = newnode(Program, NULL);
-                                      addchild($$, newnode(Identifier, $1));
-                                      addchild($$, $3);
-                                      addchild($$, $6); }
+                                      struct node *function = newnode(Function, NULL);
+                                      addchild(function, newnode(Identifier, $1));
+                                      addchild(function, $3);
+                                      addchild(function, $6);
+                                      addchild($$, function);
+                                      LOCATE(getchild(function, 0), @1.first_line, @1.first_column); }
+    | program IDENTIFIER '(' parameters ')' '=' expression
+                                    { $$ = $1;
+                                      struct node *function = newnode(Function, NULL);
+                                      addchild(function, newnode(Identifier, $2));
+                                      addchild(function, $4);
+                                      addchild(function, $7);
+                                      addchild($$, function);
+                                      LOCATE(getchild(function, 0), @2.first_line, @2.first_column); }
     ;
 
 parameters: parameter               { $$ = newnode(Parameters, NULL);
@@ -50,13 +61,16 @@ parameters: parameter               { $$ = newnode(Parameters, NULL);
 
 parameter: INTEGER IDENTIFIER       { $$ = newnode(Parameter, NULL);
                                       addchild($$, newnode(Integer, NULL));
-                                      addchild($$, newnode(Identifier, $2)); }
+                                      addchild($$, newnode(Identifier, $2)); 
+                                      LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
     | DOUBLE IDENTIFIER             { $$ = newnode(Parameter, NULL);
                                       addchild($$, newnode(Double, NULL));
-                                      addchild($$, newnode(Identifier, $2)); }
+                                      addchild($$, newnode(Identifier, $2));
+                                      LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
     ;
 
-expression: IDENTIFIER              { $$ = newnode(Identifier, $1); }
+expression: IDENTIFIER              { $$ = newnode(Identifier, $1);
+                                      LOCATE($$, @1.first_line, @1.first_column); }
     | NATURAL                       { $$ = newnode(Natural, $1); }
     | DECIMAL                       { $$ = newnode(Decimal, $1); }
     | IDENTIFIER '(' arguments ')'  { $$ = newnode(Call, NULL);

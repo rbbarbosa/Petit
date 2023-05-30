@@ -8,11 +8,12 @@ int check_program(struct node *program);
 struct symbol_list {
 	char *identifier;
 	enum type type;
+	struct node *node;
 	struct symbol_list *next;
 };
 
-struct symbol_list *insert_symbol(char *identifier, enum type type);
-struct symbol_list *search_symbol(char *identifier);
+struct symbol_list *insert_symbol(struct symbol_list *symbol_table, char *identifier, enum type type, struct node *node);
+struct symbol_list *search_symbol(struct symbol_list *symbol_table, char *identifier);
 void show_symbol_table();
 
 #endif

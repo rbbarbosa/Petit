@@ -34,17 +34,17 @@ DECIMAL [0-9]+"."[0-9]+
 
 %%
 
-integer     { return INTEGER; }
-double      { return DOUBLE; }
+integer		{ return INTEGER; }
+double		{ return DOUBLE; }
 if			{ return IF; }
 then		{ return THEN; }
 else		{ return ELSE; }
-{ID}        { PASS_TOKEN(); return IDENTIFIER; }
-{NATURAL}   { PASS_TOKEN(); return NATURAL; }
-{DECIMAL}   { PASS_TOKEN(); return DECIMAL; }
-[\t ]+      /* ignore whitespace */
+{ID}		{ PASS_TOKEN(); return IDENTIFIER; }
+{NATURAL}	{ PASS_TOKEN(); return NATURAL; }
+{DECIMAL}	{ PASS_TOKEN(); return DECIMAL; }
+[\t ]+		/* ignore whitespace */
 \n			{ lex_line++; lex_column = 1; }
-.           { return yytext[0]; }
+.			{ return yytext[0]; }
 <<EOF>>     { return 0; }
 
 %%

@@ -1,2 +1,5 @@
 complete(integer i, double d, integer x) =
 	(1 + i) * 2.5 / if i then d else complete(i-1, d, i)
+
+main(integer k) =
+	complete(k, 0.0, k)

@@ -1,6 +1,6 @@
-% the first exercise should be a manual LLVM IR implementation
+% the first exercise should be a manual LLVM IR implementation: an interesting one would be manual gcd implementation that then is the test case they need their compiler to compile at the end of the class
 
-We shall consider only type double for all of the following exercises.
+Restriction: We shall consider only type integer for all of the following exercises. We ignore the existence of doubles althogether.
 \begin{enumerate}
 \item Implement code generation for multiplication.
 \item Implement code generation for the other three arithmetic operations.
@@ -12,3 +12,8 @@ We shall consider only type double for all of the following exercises.
 \end{enumerate}
 \item According to the language semantics, it is possible to assign integer values to double variables and \textit{vice versa}. In both cases it is necessary to make the appropriate conversion. Natural constants must be converted to double before assigning their value to a variable of double type; and Decimal constants must be converted to integer before assigning their value to an integer variable. Implement these two cases.
 \end{enumerate}
+
+% show a simple loop in llvm?
+% show how to link a Petit program to read() and write() functions written in C
+
+% code for If: we could use llvm ir 'select' but that's not general (it would specifically work here)

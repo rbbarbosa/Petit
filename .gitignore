@@ -66,3 +66,5 @@ y.vcg
 *.log
 *.pdf
 *.synctex.gz
+test/gcd
+test/factorial

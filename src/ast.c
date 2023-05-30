@@ -23,6 +23,7 @@ void addchild(struct node *parent, struct node *child) {
     children->next = new;
 }
 
+// get a pointer to a specific child, numbered 0, 1, 2, ...
 struct node *getchild(struct node *parent, int position) {
     struct node_list *children = parent->children;
     while((children = children->next) != NULL)

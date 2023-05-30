@@ -1,0 +1,5 @@
+mod(integer m, integer n) = m-m/n*n
+
+gcd(integer a, integer b) = if mod(a, b) then gcd(b, mod(a, b)) else b
+
+main(integer i) = write(gcd(366, 60))
