@@ -1,3 +1,3 @@
-func(integer func) = func
+func(double var, integer func) = func + var(func(var))
 
-func(double func) = func(func) + uNkNoWn + func
+func(double func, integer var) = func(func, var, 1) + uNkNoWn + func

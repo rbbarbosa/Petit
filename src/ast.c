@@ -32,6 +32,13 @@ struct node *getchild(struct node *parent, int position) {
     return NULL;
 }
 
+int countchildren(struct node *node) {
+    int i = 0;
+    while(getchild(node, i) != NULL)
+        i++;
+    return i;
+}
+
 char *category_name[] = names;
 
 void show(struct node *node, int depth) {

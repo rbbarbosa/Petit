@@ -1,6 +1,6 @@
 % the first exercise should be a manual LLVM IR implementation: an interesting one would be manual gcd implementation that then is the test case they need their compiler to compile at the end of the class
 
-Restriction: We shall consider only type integer for all of the following exercises. We ignore the existence of doubles althogether.
+Restriction: We shall consider only type integer for all of the following exercises. We ignore the existence of doubles altogether.
 \begin{enumerate}
 \item Implement code generation for multiplication.
 \item Implement code generation for the other three arithmetic operations.
@@ -17,3 +17,5 @@ Restriction: We shall consider only type integer for all of the following exerci
 % show how to link a Petit program to read() and write() functions written in C
 
 % code for If: we could use llvm ir 'select' but that's not general (it would specifically work here)
+
+% read and write functions are only added here for code generation; not before; with the note to add to the symbol table and that we need to 'define'

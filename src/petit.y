@@ -75,7 +75,8 @@ expression: IDENTIFIER              { $$ = newnode(Identifier, $1);
     | DECIMAL                       { $$ = newnode(Decimal, $1); }
     | IDENTIFIER '(' arguments ')'  { $$ = newnode(Call, NULL);
                                       addchild($$, newnode(Identifier, $1));
-                                      addchild($$, $3); }
+                                      addchild($$, $3);
+                                      LOCATE(getchild($$, 0), @1.first_line, @1.first_column); }
     | IF expression THEN expression ELSE expression  %prec least
                                     { $$ = newnode(If, NULL);
                                       addchild($$, $2);
