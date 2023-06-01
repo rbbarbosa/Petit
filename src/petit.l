@@ -24,6 +24,8 @@ extern struct node *program;
 
 %option noyywrap
 
+%X COMMENT
+
 ID      [a-zA-Z][a-zA-Z0-9]*
 NATURAL [0-9]+
 DECIMAL [0-9]+"."[0-9]+
@@ -42,8 +44,15 @@ else		{ return ELSE; }
 {ID}		{ PASS_TOKEN(); return IDENTIFIER; }
 {NATURAL}	{ PASS_TOKEN(); return NATURAL; }
 {DECIMAL}	{ PASS_TOKEN(); return DECIMAL; }
-[\t ]+		/* ignore whitespace */
-\n			{ lex_line++; lex_column = 1; }
+
+"/*"				{ BEGIN(COMMENT); }
+<COMMENT>"*/"		{ BEGIN(INITIAL); }
+<COMMENT>\n|\r|\r\n	{ lex_line++; lex_column = 1; }
+<COMMENT>.			{}
+<COMMENT><<EOF>>	{ BEGIN(INITIAL); }
+
+[\t ]+		{}
+\n|\r|\r\n	{ lex_line++; lex_column = 1; }
 .			{ return yytext[0]; }
 <<EOF>>		{ return 0; }
 
@@ -55,7 +64,7 @@ else		{ return ELSE; }
 
 void yyerror(char *type) {
 	errors++;
-	printf("Line %d, column %d: %s '%s'\n", syn_line, syn_column, type, yytext);
+	printf("Found %s '%s' (%d,%d)\n", type, yytext, syn_line, syn_column);
 }
 
 int main(int argc, char *argv[]) {

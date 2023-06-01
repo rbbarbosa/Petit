@@ -19,3 +19,9 @@ Restriction: We shall consider only type integer for all of the following exerci
 % code for If: we could use llvm ir 'select' but that's not general (it would specifically work here)
 
 % read and write functions are only added here for code generation; not before; with the note to add to the symbol table and that we need to 'define'
+
+%    /* Exercise N. implement code generation for multiplication:
+%       e1 = codegen_expression(left child)
+%       e2 = codegen_expression(right child)
+%       new_temporary = result of multiplying e1 * e2
+%       return new_temporary and post-increment it by 1 */
