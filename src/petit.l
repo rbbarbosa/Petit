@@ -45,7 +45,7 @@ else		{ return ELSE; }
 [\t ]+		/* ignore whitespace */
 \n			{ lex_line++; lex_column = 1; }
 .			{ return yytext[0]; }
-<<EOF>>     { return 0; }
+<<EOF>>		{ return 0; }
 
 %%
 

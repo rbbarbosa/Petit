@@ -25,11 +25,6 @@ int codegen_sub(struct node *sub) {
 }
 
 int codegen_mul(struct node *mul) {
-    /* Exercise N. implement code generation for multiplication:
-       e1 = codegen_expression(left child)
-       e2 = codegen_expression(right child)
-       new_temporary = result of multiplying e1 * e2
-       return new_temporary and post-increment it by 1 */
     int e1 = codegen_expression(getchild(mul, 0));
     int e2 = codegen_expression(getchild(mul, 1));
     printf("  %%%d = mul i32 %%%d, %%%d\n", temporary, e1, e2);
@@ -80,10 +75,10 @@ int codegen_call(struct node *call) {
     return temporary++;
 }
 
+/* Even more advanced exercise */
 int codegen_ifthenelse(struct node *ifthenelse) {
     int label_id = temporary;
     int e = codegen_expression(getchild(ifthenelse, 0));
-//    printf("L%dif:\n", label_id);
     printf("  %%%d = icmp ne i32 %%%d, 0\n", temporary, e);
     printf("  br i1 %%%d, label %%L%dthen, label %%L%delse\n", temporary++, label_id, label_id);
     printf("L%dthen:\n", label_id);
