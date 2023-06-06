@@ -13,7 +13,6 @@
 int yyparse(void);
 void yyerror(char *kind);
 
-int return_tokens = 0;
 int lex_line = 1, lex_column = 1;
 int syn_line = -1, syn_column = -1;
 int errors = 0;
@@ -36,25 +35,25 @@ DECIMAL [0-9]+"."[0-9]+
 
 %%
 
-integer		{ return INTEGER; }
-double		{ return DOUBLE; }
-if			{ return IF; }
-then		{ return THEN; }
-else		{ return ELSE; }
-{ID}		{ PASS_TOKEN(); return IDENTIFIER; }
-{NATURAL}	{ PASS_TOKEN(); return NATURAL; }
-{DECIMAL}	{ PASS_TOKEN(); return DECIMAL; }
+integer             { return INTEGER; }
+double              { return DOUBLE; }
+if                  { return IF; }
+then                { return THEN; }
+else                { return ELSE; }
+{ID}                { PASS_TOKEN(); return IDENTIFIER; }
+{NATURAL}           { PASS_TOKEN(); return NATURAL; }
+{DECIMAL}           { PASS_TOKEN(); return DECIMAL; }
 
-"/*"				{ BEGIN(COMMENT); }
-<COMMENT>"*/"		{ BEGIN(INITIAL); }
-<COMMENT>\n|\r|\r\n	{ lex_line++; lex_column = 1; }
-<COMMENT>.			{}
-<COMMENT><<EOF>>	{ BEGIN(INITIAL); }
+"/*"                { BEGIN(COMMENT); }
+<COMMENT>"*/"       { BEGIN(INITIAL); }
+<COMMENT>\n|\r|\r\n { lex_line++; lex_column = 1; }
+<COMMENT>.          {}
+<COMMENT><<EOF>>    { return 0; }
 
-[\t ]+		{}
-\n|\r|\r\n	{ lex_line++; lex_column = 1; }
-.			{ return yytext[0]; }
-<<EOF>>		{ return 0; }
+[\t ]+              {}
+\n|\r|\r\n          { lex_line++; lex_column = 1; }
+.                   { return yytext[0]; }
+<<EOF>>             { return 0; }
 
 %%
 
