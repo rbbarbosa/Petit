@@ -154,19 +154,19 @@ void codegen_function(struct node *function) {
     /* Exercise: generate code for expressions */
     codegen_expression(getchild(function, 2));
     printf("  ret i32 %%%d\n", temporary-1);
-    printf("}\n");
+    printf("}\n\n");
 }
 
 // code generation begins here, with the AST root node
 void codegen_program(struct node *program) {
-    printf("declare i32 @_write(i32)\n");
     printf("declare i32 @_read(i32)\n");
+    printf("declare i32 @_write(i32)\n\n");
 
     // generate the entry point which calls main(integer)
     printf("define i32 @main() {\n"
            "  call i32 @_main(i32 0)\n"
            "  ret i32 0\n"
-           "}\n");
+           "}\n\n");
 
     struct node_list *function = program->children;
     while((function = function->next) != NULL)

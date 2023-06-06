@@ -51,7 +51,8 @@ __main:                                 ; @_main
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -8
 	.cfi_offset w29, -16
-	mov	w0, #12
+	mov	w0, wzr
+	bl	__read
 	bl	__factorial
 	bl	__write
 	ldp	x29, x30, [sp], #16             ; 16-byte Folded Reload
