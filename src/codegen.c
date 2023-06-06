@@ -162,15 +162,15 @@ void codegen_program(struct node *program) {
     printf("declare i32 @_read(i32)\n");
     printf("declare i32 @_write(i32)\n\n");
 
+    struct node_list *function = program->children;
+    while((function = function->next) != NULL)
+        codegen_function(function->node);
+
     // generate the entry point which calls main(integer)
     printf("define i32 @main() {\n"
            "  call i32 @_main(i32 0)\n"
            "  ret i32 0\n"
-           "}\n\n");
-
-    struct node_list *function = program->children;
-    while((function = function->next) != NULL)
-        codegen_function(function->node);
+           "}\n");
 }
 
 /* at the very end, Exercise: support for double parameters...? */

@@ -1,11 +1,6 @@
 declare i32 @_read(i32)
 declare i32 @_write(i32)
 
-define i32 @main() {
-  call i32 @_main(i32 0)
-  ret i32 0
-}
-
 define i32 @_mod(i32 %m, i32 %n) {
   %1 = add i32 %m, 0
   %2 = add i32 %m, 0
@@ -46,3 +41,7 @@ define i32 @_main(i32 %i) {
   ret i32 %4
 }
 
+define i32 @main() {
+  call i32 @_main(i32 0)
+  ret i32 0
+}
