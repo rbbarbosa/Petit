@@ -7,7 +7,7 @@
 #include "semantics.h"
 #include "codegen.h"
 
-#define YY_USER_ACTION { yylloc.first_line = syn_line = lex_line; yylloc.first_column = syn_column = lex_column; lex_column += yyleng; }
+#define YY_USER_ACTION { syn_line = yylloc.first_line = lex_line; syn_column = yylloc.first_column = lex_column; lex_column += yyleng; }
 #define PASS_TOKEN() yylval.token = strdup(yytext);
 
 int yyparse(void);
@@ -25,9 +25,8 @@ extern struct node *program;
 
 %X COMMENT
 
-ID      [a-zA-Z][a-zA-Z0-9]*
-NATURAL [0-9]+
-DECIMAL [0-9]+"."[0-9]+
+digit   [0-9]
+letter  [a-zA-Z]
 
 /* END definitions section */
 
@@ -35,25 +34,25 @@ DECIMAL [0-9]+"."[0-9]+
 
 %%
 
-integer             { return INTEGER; }
-double              { return DOUBLE; }
-if                  { return IF; }
-then                { return THEN; }
-else                { return ELSE; }
-{ID}                { PASS_TOKEN(); return IDENTIFIER; }
-{NATURAL}           { PASS_TOKEN(); return NATURAL; }
-{DECIMAL}           { PASS_TOKEN(); return DECIMAL; }
+integer                     { return INTEGER; }
+double                      { return DOUBLE; }
+if                          { return IF; }
+then                        { return THEN; }
+else                        { return ELSE; }
+{letter}({letter}|{digit})* { PASS_TOKEN(); return IDENTIFIER; }
+{digit}+                    { PASS_TOKEN(); return NATURAL; }
+{digit}*"."{digit}+         { PASS_TOKEN(); return DECIMAL; }
 
-"/*"                { BEGIN(COMMENT); }
-<COMMENT>"*/"       { BEGIN(INITIAL); }
-<COMMENT>\n|\r|\r\n { lex_line++; lex_column = 1; }
-<COMMENT>.          {}
-<COMMENT><<EOF>>    { return 0; }
+"/*"                        { BEGIN(COMMENT); }
+<COMMENT>"*/"               { BEGIN(INITIAL); }
+<COMMENT>\n|\r|\r\n         { lex_line++; lex_column = 1; }
+<COMMENT>.                  {;}
+<COMMENT><<EOF>>            { return 0; }
 
-[\t ]+              {}
-\n|\r|\r\n          { lex_line++; lex_column = 1; }
-.                   { return yytext[0]; }
-<<EOF>>             { return 0; }
+[\t ]+                      {;}
+\n|\r|\r\n                  { lex_line++; lex_column = 1; }
+.                           { return yytext[0]; }
+<<EOF>>                     { return 0; }
 
 %%
 

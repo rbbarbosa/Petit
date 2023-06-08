@@ -1,8 +1,6 @@
 #ifndef _AST_H
 #define _AST_H
 
-// ToDo: consider Function in AST construction
-
 enum category {  Program,   Function,   Parameters,   Parameter,   Integer,   Double,   Identifier,   Natural,   Decimal,   Call,   If,   Add,   Sub,   Mul,   Div,   Arguments };
 #define names { "Program", "Function", "Parameters", "Parameter", "Integer", "Double", "Identifier", "Natural", "Decimal", "Call", "If", "Add", "Sub", "Mul", "Div", "Arguments" }
 
