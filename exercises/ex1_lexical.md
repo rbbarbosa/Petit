@@ -63,11 +63,11 @@ The resulting executable file ``lexer`` reads from ``stdin`` and writes to ``std
 
 Try it with integers, decimals and other tokens.
 
-A bit of theory: The transition table which represents the lexical analysis DFA is stored in the ``lex.yy.c`` file (around source line ~300). If it weren't for _lex_ we would have to manually create these tables.
+A bit of theory: The transition table which represents the lexical analysis DFA is stored in the ``lex.yy.c`` file (around source line ~400). If it weren't for _lex_ we would have to manually create these tables.
 
 ## Regular expressions
 
-Strong knowledge of regular expressions is necessary to write the rules.
+When it comes to regular expressions, different tools may have slight variations in notation. For example, _lex_ use a notation where special characters are preceded by a backslash. The table below summarises the main notations used by _lex_.
 
 | Expression | Description                          | Examples              |
 | -----------| ------------------------------------ | --------------------- |
@@ -76,7 +76,7 @@ Strong knowledge of regular expressions is necessary to write the rules.
 | ``"xy"``   | xy, even if x or y are lex operators | ``".", "*", "/*"``    |
 | ``[x-z]``  | Any character from x to z            | ``[0-9]``, ``[a-z]``  |
 | ``[xy]``   | Either character x or y              | ``[abc], [01], [eE]`` |
-| ``xx|yy``  | Either xx or yy                      | ``cat|dog, if|else``  |
+| ``xx``<code>&#124;</code>``yy``  | Either xx or yy                      | ``cat``<code>&#124;</code>``dog, if``<code>&#124;</code>``else``  |
 | ``[^x]``   | Any character except x               | ``[^\n], [^a]``       |
 | ``.``      | Any character except newline         |                       |
 | ``^x``     | x, at the start of a line            |                       |
@@ -91,19 +91,19 @@ Strong knowledge of regular expressions is necessary to write the rules.
 
 ## Exercises
 
-The following exercises start with the above code in file ``lexer.l`` and the final result is a lexical analyser for a miniature programming language called Petit.
+The following exercises start with the above code in file ``lexer.l`` and the final result is a lexical analyser for a miniature programming language.
 
 1. Modify the above code to print the token _value_ along with the token class. It should, for example, print ``NATURAL(10)`` when given ``10`` as input (and similarly for decimals). Notice that _lex_ provides an external variable named ``yytext`` that points to the current string matched by the lexer.
 
 2. In programming languages, the names of variables and functions are generically referred to as _identifiers_. Modify the code to print ``IDENTIFIER(x)`` whenever an identifier ``'x'`` is found. Identifiers consist of non-empty sequences of letters and digits, starting with a letter.
 
-3. _Keywords_ are reserved and cannot be used as identifiers. Modify the code to recognize the following tokens: ``integer``, ``double``, ``if``, ``then`` and ``else``. The key is to understand that _lex_ always looks for the longest match and, in case there is a tie, it chooses the rule that comes first in the specification.
-
-4. Programming languages use punctuation marks with specific meanings. Modify the code to recognize the following tokens: ``( ) = , + - * /``
+3. _Keywords_ are reserved and cannot be used as identifiers. Modify the code to recognize the following tokens: ``integer``, ``double``, ``if``, ``then`` and ``else``. The key is to understand that _lex_ always looks for the longest match and, in case there is a tie, it chooses the rule that comes first.
 
 5. Whitespace is ignored in most languages (Python is a notable exception). Modify the code to ignore whitespace characters: spaces, tabs and newlines. This can be achieved by matching those characters to an empty action ``{;}`` that simply does nothing.
 
-6. A final rule is included to match any other character that could not be recognized. This rule must necessarily be the last one. Modify the code to show an error message whenever an unrecognized character is found. The key is to add a rule for `` . { printf("error..."); } `` that will match any single character that has not been matched by other rules. The error message should show the line and column numbers. For this, you will need to add variables to the declarations section, which may include C code delimited by ``%{ ... %}``, and update the column according to the external variable ``yyleng`` that stores the length of the token pointed to by ``yytext``.
+4. Programming languages use punctuation marks with specific meanings. Modify the code to recognize the following tokens: ``( ) = , + - * /``
+
+6. A final rule is included to match any other character that could not be recognized. This rule must necessarily be the last one. Modify the code to show an error message whenever an unrecognized character is found. The key is to add a rule for `` . { printf("error..."); } `` that will match _any single character that has not been matched by other rules_. The error message should show the line and column numbers. For this, you will need to add variables to the declarations section, which may include C code delimited by ``%{ ... %}``, and update the column according to the external variable ``yyleng`` that stores the length of the token pointed to by ``yytext``.
 
 Finally, test the complete lexical analyser on the following input:
 
@@ -111,7 +111,21 @@ Finally, test the complete lexical analyser on the following input:
         if n then n * factorial(n-1) else 1
         #
 
-The lexer should output all 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character.
+The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character:
+
+    IDENTIFIER(factorial)
+    (
+    INTEGER
+    IDENTIFIER(n)
+    )
+    =
+    IF
+    IDENTIFIER(n)
+    THEN
+
+    ...
+
+    Unrecognized character '#' (line 3, column 5)
 
 ## Author
 
