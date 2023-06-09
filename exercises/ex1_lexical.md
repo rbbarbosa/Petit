@@ -67,7 +67,7 @@ A bit of theory: The transition table which represents the lexical analysis DFA 
 
 ## Regular expressions
 
-When it comes to regular expressions, different tools may have slight variations in notation. For example, _lex_ use a notation where special characters are preceded by a backslash. The table below summarises the main notations used by _lex_.
+When it comes to regular expressions, different tools may have slight variations in notation. For example, _lex_ uses a notation where special characters are preceded by a backslash. The table below summarises the main notations used by _lex_.
 
 | Expression | Description                          | Examples              |
 | -----------| ------------------------------------ | --------------------- |
