@@ -1,6 +1,6 @@
 # Petit
 
-The Petit programming language and compiler
+Petit programming language and compiler
 
 ## Example
 
@@ -31,8 +31,7 @@ The Petit programming language and compiler
               | expression '/' expression
               | '(' expression ')'
 
-## Exercises
+## Tutorials and exercises
 
-1. [Lexical analysis](/exercises/ex1_lexical_analysis.md)
-3. [Syntactic analysis](/exercises/ex3_syntactic_analysis.md)
-
+1. [Compilers tutorial I: Lexical analysis](/tutorial/ex1_lexical_analysis.md)
+3. [Compilers tutorial III: Syntactic analysis](/tutorial/ex3_syntactic_analysis.md)

@@ -1,4 +1,4 @@
-# Compiler exercises I: Lexical analysis
+# Compilers tutorial I: Lexical analysis
 
 _Lex_ is a powerful tool commonly used in text processing and compiler construction. It is designed to generate lexical analysers, also known as lexers or tokenisers. By specifying patterns using regular expressions, lex allows us to instruct the analysers to recognise and process specific tokens in the input text.
 
