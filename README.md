@@ -17,6 +17,9 @@ The Petit programming language and compiler
     parameter: INTEGER IDENTIFIER
              | DOUBLE IDENTIFIER
 
+    arguments: expression
+             | arguments ',' expression
+
     expression: IDENTIFIER
               | NATURAL
               | DECIMAL
@@ -28,5 +31,8 @@ The Petit programming language and compiler
               | expression '/' expression
               | '(' expression ')'
 
-    arguments: expression
-              | arguments ',' expression
+## Exercises
+
+1. [Lexical analysis](/exercises/ex1_lexical_analysis.md)
+3. [Syntactic analysis](/exercises/ex3_syntactic_analysis.md)
+

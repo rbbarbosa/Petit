@@ -21,7 +21,7 @@ The _rules_ section contains our lexical specification: regular expressions matc
     %%
     [0-9]+                      { printf("NATURAL\n"); }
 
-This _lex_ specification matches sequences of digits, found in the input text, and the corresponding action is to print the word ``NATURAL`` each time. Any other unspecified patterns are directly copied to the output without modification.
+This _lex_ specification matches natural numbers, found in the input text, and the corresponding action is to print the word ``NATURAL`` each time. Any other unspecified patterns are directly copied to the output without modification.
 
 We can add a rule for decimal numerals:
 
@@ -35,8 +35,8 @@ In the _definitions_ section that comes before the rules, we can place abbreviat
 
     digit   [0-9]
     %%
-    {digit}+                    { printf("NATURAL\n"); }
-    {digit}*"."{digit}+         { printf("DECIMAL\n"); }
+    {digit}+                { printf("NATURAL\n"); }
+    {digit}*"."{digit}+     { printf("DECIMAL\n"); }
     %%
     extern int yylex();
     int main() {
@@ -47,7 +47,7 @@ In the _definitions_ section that comes before the rules, we can place abbreviat
         return 1;
     }
 
-## Generating and running a lexical analyser
+## Generating and running the lexical analyser
 
 Having the above specification in a file named ``lexer.l``, we obtain the C code for the lexical analyser by entering:
 
@@ -63,7 +63,7 @@ The resulting executable file ``lexer`` reads from ``stdin`` and writes to ``std
 
 Try it with integers, decimals and other tokens.
 
-A bit of theory: The transition table which represents the lexical analysis DFA is stored in the ``lex.yy.c`` file (around source line ~400). If it weren't for _lex_ we would have to manually create these tables.
+A bit of theory: The transition table which represents the lexical analysis DFA is placed in the ``lex.yy.c`` file (around source line ~400). If it weren't for _lex_ we would have to manually create those tables.
 
 ## Regular expressions
 
@@ -75,7 +75,7 @@ When it comes to regular expressions, different tools may have slight variations
 | ``\x``     | x, if x is a lex operator            | ``\", \\``            |
 | ``"xy"``   | xy, even if x or y are lex operators | ``".", "*", "/*"``    |
 | ``[x-z]``  | Any character from x to z            | ``[0-9]``, ``[a-z]``  |
-| ``[xy]``   | Either character x or y              | ``[abc], [01], [eE]`` |
+| ``[xy]``   | Either character x or y              | ``[abc], [-+], [eE]`` |
 | ``xx``<code>&#124;</code>``yy``  | Either xx or yy                      | ``cat``<code>&#124;</code>``dog, if``<code>&#124;</code>``else``  |
 | ``[^x]``   | Any character except x               | ``[^\n], [^a]``       |
 | ``.``      | Any character except newline         |                       |
@@ -84,7 +84,7 @@ When it comes to regular expressions, different tools may have slight variations
 | ``x*``     | x, repeated 0 or more times          | ``[0-9]*, a*``        |
 | ``x+``     | x, repeated 1 or more times          | ``[a-z]+, [01]+``     |
 | ``x?``     | Optional x                           | ``ab?c, [+-]?``       |
-| ``(x)``    | x, forcing association               | ``(aa|bb)+``          |
+| ``(x)``    | x, forcing association               | ``(aa``<code>&#124;</code>``bb)+``          |
 | ``x{n}``   | n occurrences of x                   | ``[0-9]{2}``          |
 | ``x{n,m}`` | m to n occurrences of x              | ``a{2,5}b*``          |
 | ``{xx}``   | Expand xx from the definitions       | ``{digit}``           |
@@ -101,7 +101,7 @@ The following exercises start with the above code in file ``lexer.l`` and the fi
 
 5. Whitespace is ignored in most languages (Python is a notable exception). Modify the code to ignore whitespace characters: spaces, tabs and newlines. This can be achieved by matching those characters to an empty action ``{;}`` that simply does nothing.
 
-4. Programming languages use punctuation marks with specific meanings. Modify the code to recognize the following tokens: ``( ) = , + - * /``
+4. Programming languages use punctuation marks with specific meanings. Modify the code to recognize the following tokens: ``( ) = , * / + -``
 
 6. A final rule is included to match any other character that could not be recognized. This rule must necessarily be the last one. Modify the code to show an error message whenever an unrecognized character is found. The key is to add a rule for `` . { printf("error..."); } `` that will match _any single character that has not been matched by other rules_. The error message should show the line and column numbers. For this, you will need to add variables to the declarations section, which may include C code delimited by ``%{ ... %}``, and update the column according to the external variable ``yyleng`` that stores the length of the token pointed to by ``yytext``.
 
@@ -111,7 +111,7 @@ Finally, test the complete lexical analyser on the following input:
         if n then n * factorial(n-1) else 1
         #
 
-The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character:
+The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character. The following output is expected:
 
     IDENTIFIER(factorial)
     (
@@ -137,6 +137,6 @@ Niemann, T. (2016) Lex & Yacc. https://epaperpress.com/lexandyacc
 
 Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
 
-Aho, A. V. (2006). Compilers: principles, techniques and tools, 2nd edition. Pearson Education.
+Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
 
 Barbosa, R. (2023). The Petit programming language and compiler. https://github.com/rbbarbosa/Petit

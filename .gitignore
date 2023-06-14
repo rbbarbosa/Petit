@@ -67,3 +67,6 @@ y.vcg
 *.synctex.gz
 test/gcd
 test/factorial
+*.zip
+lexer
+calc

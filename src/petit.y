@@ -5,7 +5,7 @@
 #include "ast.h"
 
 int yylex(void);
-void yyerror(char *kind);
+void yyerror(char *);
 
 struct node *program;
 
@@ -15,7 +15,7 @@ struct node *program;
 %token<token> IDENTIFIER NATURAL DECIMAL
 %type<node> program parameters parameter expression arguments
 
-%left least
+%left LOW
 %left '+' '-'
 %left '*' '/'
 
@@ -69,6 +69,12 @@ parameter: INTEGER IDENTIFIER       { $$ = newnode(Parameter, NULL);
                                       LOCATE(getchild($$, 1), @2.first_line, @2.first_column); }
     ;
 
+arguments: expression               { $$ = newnode(Arguments, NULL);
+                                      addchild($$, $1); }
+    | arguments ',' expression      { $$ = $1;
+                                      addchild($$, $3); }
+    ;
+
 expression: IDENTIFIER              { $$ = newnode(Identifier, $1);
                                       LOCATE($$, @1.first_line, @1.first_column); }
     | NATURAL                       { $$ = newnode(Natural, $1); }
@@ -77,7 +83,7 @@ expression: IDENTIFIER              { $$ = newnode(Identifier, $1);
                                       addchild($$, newnode(Identifier, $1));
                                       addchild($$, $3);
                                       LOCATE(getchild($$, 0), @1.first_line, @1.first_column); }
-    | IF expression THEN expression ELSE expression  %prec least
+    | IF expression THEN expression ELSE expression  %prec LOW
                                     { $$ = newnode(If, NULL);
                                       addchild($$, $2);
                                       addchild($$, $4);
@@ -95,12 +101,6 @@ expression: IDENTIFIER              { $$ = newnode(Identifier, $1);
                                       addchild($$, $1);
                                       addchild($$, $3); }
     | '(' expression ')'            { $$ = $2; }  
-    ;
-
-arguments: expression               { $$ = newnode(Arguments, NULL);
-                                      addchild($$, $1); }
-    | arguments ',' expression      { $$ = $1;
-                                      addchild($$, $3); }
     ;
 
 %%

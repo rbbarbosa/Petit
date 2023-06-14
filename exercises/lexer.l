@@ -1,7 +1,7 @@
 digit   [0-9]
 %%
-{digit}+                    { printf("NATURAL\n"); }
-{digit}*"."{digit}+         { printf("DECIMAL\n"); }
+{digit}+                { printf("NATURAL\n"); }
+{digit}*"."{digit}+     { printf("DECIMAL\n"); }
 %%
 extern int yylex();
 int main() {
