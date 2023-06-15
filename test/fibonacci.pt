@@ -3,3 +3,8 @@ fib(integer n) =
         if (n-2) then fib(n-2) + fib(n-1)
 		else 1
 	else 1
+
+seq(integer v) =
+    if v then seq(v-1)+write(fib(v))*0 else 0
+
+main(integer i) = seq(20)

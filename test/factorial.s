@@ -5,24 +5,29 @@
 __factorial:                            ; @_factorial
 	.cfi_startproc
 ; %bb.0:
-	cbz	w0, LBB0_2
-; %bb.1:                                ; %L1then
-	stp	x20, x19, [sp, #-32]!           ; 16-byte Folded Spill
-	stp	x29, x30, [sp, #16]             ; 16-byte Folded Spill
-	.cfi_def_cfa_offset 32
+	sub	sp, sp, #48
+	stp	x20, x19, [sp, #16]             ; 16-byte Folded Spill
+	stp	x29, x30, [sp, #32]             ; 16-byte Folded Spill
+	.cfi_def_cfa_offset 48
 	.cfi_offset w30, -8
 	.cfi_offset w29, -16
 	.cfi_offset w19, -24
 	.cfi_offset w20, -32
+	cbz	w0, LBB0_2
+; %bb.1:                                ; %L1then
 	mov	w19, w0
 	sub	w0, w0, #1
 	bl	__factorial
-	ldp	x29, x30, [sp, #16]             ; 16-byte Folded Reload
-	mul	w0, w19, w0
-	ldp	x20, x19, [sp], #32             ; 16-byte Folded Reload
-	ret
+	mul	w8, w19, w0
+	b	LBB0_3
 LBB0_2:                                 ; %L1else
-	mov	w0, #1
+	mov	w8, #1
+LBB0_3:                                 ; %L1end
+	ldp	x29, x30, [sp, #32]             ; 16-byte Folded Reload
+	str	w8, [sp, #12]
+	mov	w0, w8
+	ldp	x20, x19, [sp, #16]             ; 16-byte Folded Reload
+	add	sp, sp, #48
 	ret
 	.cfi_endproc
                                         ; -- End function

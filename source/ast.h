@@ -1,8 +1,8 @@
 #ifndef _AST_H
 #define _AST_H
 
-enum category {  Program,   Function,   Parameters,   Parameter,   Integer,   Double,   Identifier,   Natural,   Decimal,   Call,   If,   Add,   Sub,   Mul,   Div,   Arguments };
-#define names { "Program", "Function", "Parameters", "Parameter", "Integer", "Double", "Identifier", "Natural", "Decimal", "Call", "If", "Add", "Sub", "Mul", "Div", "Arguments" }
+enum category {  Program,   Function,   Parameters,   Parameter,   Arguments,   Integer,   Double,   Identifier,   Natural,   Decimal,   Call,   If,   Add,   Sub,   Mul,   Div };
+#define names { "Program", "Function", "Parameters", "Parameter", "Arguments", "Integer", "Double", "Identifier", "Natural", "Decimal", "Call", "If", "Add", "Sub", "Mul", "Div" }
 
 enum type {integer_type, double_type, no_type};
 #define type_name(type) (type == integer_type ? "integer" : (type == double_type ? "double" : "none"))

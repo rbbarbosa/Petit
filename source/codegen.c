@@ -77,18 +77,21 @@ int codegen_call(struct node *call) {
 
 /* Even more advanced exercise */
 int codegen_ifthenelse(struct node *ifthenelse) {
-    int label_id = temporary;
+    int label_id = temporary++;
+    printf("  %%%d = alloca i32\n", label_id);
     int e = codegen_expression(getchild(ifthenelse, 0));
     printf("  %%%d = icmp ne i32 %%%d, 0\n", temporary, e);
     printf("  br i1 %%%d, label %%L%dthen, label %%L%delse\n", temporary++, label_id, label_id);
     printf("L%dthen:\n", label_id);
     int e1 = codegen_expression(getchild(ifthenelse, 1));
+    printf("  store i32 %%%d, i32* %%%d\n", e1, label_id);
     printf("  br label %%L%dend\n", label_id);
     printf("L%delse:\n", label_id);
     int e2 = codegen_expression(getchild(ifthenelse, 2));
+    printf("  store i32 %%%d, i32* %%%d\n", e2, label_id);
     printf("  br label %%L%dend\n", label_id);  
     printf("L%dend:\n", label_id);
-    printf("  %%%d = phi i32 [%%%d, %%L%dthen], [%%%d, %%L%delse]\n", temporary, e1, label_id, e2, label_id);
+    printf("  %%%d = load i32, i32* %%%d\n", temporary, label_id);
     return temporary++;
 }
 
