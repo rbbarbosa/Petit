@@ -129,7 +129,7 @@ The lexer should output the 19 tokens, followed by an error message on line 3, c
 
 ## Author
 
-Raul Barbosa [<rbarbosa@dei.uc.pt>](mailto:rbarbosa@dei.uc.pt)
+Raul Barbosa [(University of Coimbra)](https://apps.uc.pt/mypage/faculty/uc26844)
 
 ## References
 
@@ -139,4 +139,4 @@ Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
 
 Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
 
-Barbosa, R. (2023). The Petit programming language and compiler. https://github.com/rbbarbosa/Petit
+Barbosa, R. (2023). Petit programming language and compiler. https://github.com/rbbarbosa/Petit

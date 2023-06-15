@@ -46,7 +46,7 @@ A grammar rule has a single nonterminal on the left-hand side of a production, f
 
 The parser maintains two stacks: a _parse stack_ and a _value stack_. The parse stack represents the current state of the parser, consisting of terminals and nonterminals. The value stack associates a value with each element of the parse stack. For instance, when the parser _shifts_ a ``NATURAL`` token to the parse stack, the corresponding ``yylval`` is pushed to the value stack.
 
-When the parser _reduces_ its stack, by popping the right-hand side of a production and pushing back the left-hand side nonterminal, the corresponding action is executed. For example, when the rule ``expression: expression '+' expression`` is applied, it will pop the three elements ``expression '+' expression`` and push back ``expression``.
+When the parser _reduces_ its stack, by popping the right-hand side of a production and pushing back the left-hand side nonterminal, the corresponding action is executed. For example, when the rule ``expression: expression '+' expression`` is applied, it will pop the three elements ``expression '+' expression`` and push back ``expression``. Action ``{ $$ = $1 + $3; }`` will be executed.
 
 Notice that the C code of actions can reference positions in the value stack, by using ``$1, $2, $3, ..., $n`` to reference the values of the right-hand side of the production, that is, the ``n`` values popped from the stack. Moreover, ``$$`` references the new value to be placed at the top of the stack. Therefore, the action ``{ $$ = $1 + $3; }`` adds the values of two expressions and pushes back the resulting sum. This way, the two stacks remain synchronized.
 
@@ -86,7 +86,7 @@ The conflicts are due to the unspecified associativity and precedence of operato
 
 1. Modify the specification in ``calc.y`` to allow for the usage of parentheses to explicitly specify the order of evaluation in expressions.
 
-2. The grammar is ambiguous and the calculations are often incorrect. Test the program with ``4*3-2``, for example. Solve all of the shift/reduce conflicts using _yacc_ keywords ``%left`` and ``%right``.
+2. The grammar is ambiguous and the calculations are often incorrect. Test the program with ``4*3-2``, for example. Solve all of the shift/reduce conflicts by specifying the precedence and associativity of operators.
 
 We can specify the _precedence_ and _associativity_ of operators, simultaneously, using the keywords ``%left``, ``%right`` and ``%nonassoc`` in the definitions section. For instance, ``%left '+' '-'`` states that the operators ``'+'`` and ``'-'`` are left associative and have equal precedence. Right associative operators use ``%right`` and non-associative operators use ``%nonassoc``. Consider this example:
 
@@ -106,7 +106,7 @@ Notice that this modification introduces shift/reduce conflicts which can be sol
 
 ## Author
 
-Raul Barbosa [<rbarbosa@dei.uc.pt>](mailto:rbarbosa@dei.uc.pt)
+Raul Barbosa [(University of Coimbra)](https://apps.uc.pt/mypage/faculty/uc26844)
 
 ## References
 
@@ -116,4 +116,4 @@ Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
 
 Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
 
-Barbosa, R. (2023). The Petit programming language and compiler. https://github.com/rbbarbosa/Petit
+Barbosa, R. (2023). Petit programming language and compiler. https://github.com/rbbarbosa/Petit

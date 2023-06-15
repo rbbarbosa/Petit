@@ -4,7 +4,8 @@ Petit programming language and compiler
 
 ## Example
 
-    factorial(integer n) = if n then n * factorial(n-1) else 1
+    factorial(integer n) =
+        if n then n * factorial(n-1) else 1
 
 ## Grammar
 

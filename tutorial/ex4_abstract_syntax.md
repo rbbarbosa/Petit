@@ -14,6 +14,16 @@ To use _yacc_, we provide a grammar with snippets of C code, called actions, att
 
 we PRINTFd but now we must RETURN (actually, yylex() should return)
 
+AST nodes, data structures, key functions in ast.h, ...
+
+## Author
+
+Raul Barbosa [(University of Coimbra)](https://apps.uc.pt/mypage/faculty/uc26844)
+
 ## References
 
-Dragon Book
+Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
+
+Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
+
+Barbosa, R. (2023). Petit programming language and compiler. https://github.com/rbbarbosa/Petit
