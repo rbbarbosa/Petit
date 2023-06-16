@@ -12,8 +12,14 @@ llc gcd.ll -o gcd.s
 clang gcd.s ../source/io.c -o gcd
 ./gcd
 
+echo "[primes]"
+../source/petit < primes.pt > primes.ll
+llc primes.ll -o primes.s
+clang primes.s ../source/io.c -o primes
+./primes
+
 echo "[factorial]"
 ../source/petit < factorial.pt > factorial.ll
 llc factorial.ll -o factorial.s
 clang factorial.s ../source/io.c -o factorial
-./factorial
+#./factorial

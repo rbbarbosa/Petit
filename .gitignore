@@ -68,6 +68,7 @@ y.vcg
 test/gcd
 test/factorial
 test/fibonacci
+test/primes
 *.zip
 lexer
 calc
