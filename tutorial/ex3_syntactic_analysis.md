@@ -106,7 +106,7 @@ Notice that this modification introduces shift/reduce conflicts which can be sol
 
 ## Author
 
-Raul Barbosa [(University of Coimbra)](https://apps.uc.pt/mypage/faculty/uc26844)
+Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844))
 
 ## References
 

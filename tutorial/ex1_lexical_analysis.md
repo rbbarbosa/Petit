@@ -129,7 +129,7 @@ The lexer should output the 19 tokens, followed by an error message on line 3, c
 
 ## Author
 
-Raul Barbosa [(University of Coimbra)](https://apps.uc.pt/mypage/faculty/uc26844)
+Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844))
 
 ## References
 

@@ -13,7 +13,7 @@ struct node *program;
 
 %token INTEGER DOUBLE IF THEN ELSE
 %token<token> IDENTIFIER NATURAL DECIMAL
-%type<node> program parameters parameter expression arguments
+%type<node> program parameters parameter arguments expression
 
 %left LOW
 %left '+' '-'
@@ -28,8 +28,6 @@ struct node *program;
 %{
 #define LOCATE(node, line, column) { node->token_line = line; node->token_column = column; }
 %}
-
-/* END definitions section */
 
 /* START grammar rules section -- BNF grammar */
 
@@ -105,10 +103,6 @@ expression: IDENTIFIER              { $$ = newnode(Identifier, $1);
 
 %%
 
-/* END grammar rules section */
-
 /* START subroutines section */
 
-/* all user-defined functions needed are collected in the .l and ast.* files */
-
-/* END subroutines section */
+// all needed functions are collected in the .l and ast.* files

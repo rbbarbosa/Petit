@@ -1,5 +1,7 @@
 #!/bin/sh
 
+rm -f fibonacci gcd primes factorial
+
 echo "[fibonacci]"
 ../source/petit < fibonacci.pt > fibonacci.ll
 llc fibonacci.ll -o fibonacci.s

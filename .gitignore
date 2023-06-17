@@ -72,3 +72,5 @@ test/primes
 *.zip
 lexer
 calc
+*.ll
+*.s

@@ -1,4 +1,4 @@
-# Compiler exercises IV: Code generation
+# Compiler exercises VI: Code generation
 
 Code generation is the final phase of the compilation process where the compiler translates the validated and analysed input program into executable code. The resulting code can be in machine language, assembly language, or a higher-level intermediate representation depending on the target platform.
 
@@ -6,7 +6,9 @@ A bit of theory: The code generation algorithm typically performs a depth-first 
 
 ## Code generation
 
+## Author
 
+Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844))
 
 ## References
 

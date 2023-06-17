@@ -28,8 +28,6 @@ extern struct node *program;
 digit   [0-9]
 letter  [a-zA-Z]
 
-/* END definitions section */
-
 /* START rules section -- regular expressions for pattern matching */
 
 %%
@@ -57,38 +55,31 @@ else                        { return ELSE; }
 
 %%
 
-/* END rules section */
-
 /* START subroutines section -- user functions */
 
 void yyerror(char *error) {
-	errors++;
-	printf("Found %s '%s' (%d,%d)\n", error, yytext, syn_line, syn_column);
+    errors++;
+    printf("Found %s '%s' (%d,%d)\n", error, yytext, syn_line, syn_column);
 }
 
 int main(int argc, char *argv[]) {
-	yyparse();
-	if(argc >= 2 && strcmp(argv[1], "-g") == 0 && errors == 0) {
-		printf("No syntax errors.\n");
-	}
-	if(argc >= 2 && strcmp(argv[1], "-t") == 0 && errors == 0) {   /* "-t" prints the AST */
-		show(program, 0);
-	}
-	if(argc >= 2 && strcmp(argv[1], "-s") == 0 && errors == 0) {   /* "-s" prints the annotated AST and symbol tables */
-		errors += check_program(program);
-		if(errors == 0) {
-			show_symbol_table();
-			show(program, 0);
-		}
-	}
-	if(argc <= 1 && errors == 0) {
-		errors += check_program(program);
-		if(errors == 0)
-			codegen_program(program);
-	}
+    yyparse();
+    if(argc >= 2 && strcmp(argv[1], "-t") == 0 && errors == 0) {   /* "-t" prints the AST */
+        show(program, 0);
+    }
+    if(argc >= 2 && strcmp(argv[1], "-s") == 0 && errors == 0) {   /* "-s" prints the AST and symbol table */
+        errors += check_program(program);
+        if(errors == 0) {
+            show_symbol_table();
+            show(program, 0);
+        }
+    }
+    if(argc <= 1 && errors == 0) {
+        errors += check_program(program);
+        if(errors == 0)
+            codegen_program(program);
+    }
     deallocate(program);
     yylex_destroy();
-	return 0;
+    return 0;
 }
-
-/* END subroutines section */
