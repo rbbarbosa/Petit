@@ -10,6 +10,8 @@ Type and scope.
 
 ## Exercises
 
+Restrictions and assumptions: identifiers are globally scoped.
+
 1. Modify the code to show the line and column numbers where semantic errors are identified. There are several possibilities: lexical analysis returns a token struct which includes the line and the column of the token; use locations.
 
 ## Author

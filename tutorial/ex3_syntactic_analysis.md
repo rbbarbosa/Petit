@@ -98,7 +98,7 @@ Operations are listed in order of increasing precedence. Operations listed on th
 
 3. Modify the grammar to allow for the calculation of multiple independent expressions separated by commas. For example, entering ``3-2-1,4*3-2,5*5/1*4`` should output ``0`` followed by ``10`` followed by ``100``.
 
-4. Modify the grammar to accept if-then-else expressions that behave like the ternary operator ``?:`` existing in C, Java and other programming languages. The syntax is: ``if`` _expression_ ``then`` _expression_ ``else`` _expression_ (we need the tokens ``IF``, ``THEN`` and ``ELSE`` from the first set of exercises).
+4. Modify the grammar to accept if-then-else expressions that behave like the ternary operator ``?:`` existing in C, Java and other programming languages. The syntax is: ``if`` _expression_ ``then`` _expression_ ``else`` _expression_ (we need the tokens ``IF``, ``THEN`` and ``ELSE`` from the lexical analysis exercises).
 
 Notice that this modification introduces shift/reduce conflicts which can be solved by using the keyword ``%prec`` associated to the new grammar rule. Specifically, ``%prec`` appears after the rule, followed by a token or literal, and specifies that the precedence of the rule should be the precedence of the token or literal. In this case, the if-then-else rule should have the lowest precedence.
 
