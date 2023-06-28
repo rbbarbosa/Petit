@@ -5,6 +5,6 @@ fib(integer n) =
 	else 1
 
 seq(integer v) =
-    if v then seq(v-1)+write(fib(v))*0 else 0
+    if v then seq(v-1) + write(fib(v)) else 0
 
 main(integer i) = seq(20)

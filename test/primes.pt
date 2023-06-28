@@ -12,7 +12,7 @@ prime(integer n, integer divisor) =
 list(integer m) =
     if m then
         if prime(m, 2) then
-            list(m-1) + 0*write(m)
+            list(m-1) + write(m)
         else list(m-1)
     else 0
 
