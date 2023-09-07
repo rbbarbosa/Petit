@@ -1,8 +1,9 @@
 fib(integer n) =
     if (n-1) then
-        if (n-2) then fib(n-2) + fib(n-1)
-		else 1
-	else 1
+        if (n-2) then
+            fib(n-1) + fib(n-2)
+        else 1
+    else 1
 
 seq(integer v) =
     if v then seq(v-1) + write(fib(v)) else 0

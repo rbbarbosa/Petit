@@ -6,7 +6,7 @@ A bit of theory: _Lex_ takes the user-specified regular expressions as input and
 
 ## Using _lex_
 
-To use _lex_, we specify patterns using regular expressions, along with corresponding actions. _Lex_ then transforms these rules into a C program that functions as the lexical analyser. When the lexical analyser is executed, it scans the input text, recognises the patterns specified in the rules and triggers the corresponding actions which are user-written code snippets.
+To use _lex_, we specify patterns using regular expressions, along with corresponding actions. _Lex_ then transforms these rules into a C program that functions as the lexical analyser. When the lexical analyser is executed, it scans the input text, recognises the patterns specified in the rules and triggers the corresponding actions which are user-written code fragments.
 
 A _lex_ source file has three sections separated with the `%%` delimiter:
 
@@ -16,7 +16,7 @@ A _lex_ source file has three sections separated with the `%%` delimiter:
     %% 
     ...subroutines...
 
-The _rules_ section contains our lexical specification: regular expressions matching the patterns we are interested in, paired with snippets of C code. A simple specification is:
+The _rules_ section contains our lexical specification: regular expressions matching the patterns we are interested in, paired with fragments of C code. A simple specification is:
 
     %%
     [0-9]+                      { printf("NATURAL\n"); }

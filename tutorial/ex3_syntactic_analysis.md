@@ -30,7 +30,7 @@ With this rule, _lex_ returns the character value for any of those single-charac
 
 ## A simple calculator example
 
-To use _yacc_, we write a grammar with snippets of C code enclosed within curly braces, called actions, attached to the grammar rules. Those code snippets are executed whenever a rule is used during the parsing of a sequence of tokens.
+To use _yacc_, we write a grammar with fragments of C code enclosed within curly braces, called actions, attached to the grammar rules. Those code fragments are executed whenever a rule is used during the parsing of a sequence of tokens.
 
 A grammar rule has a single nonterminal on the left-hand side of a production, followed by ``:`` and followed by the right-hand side of the rule, possibly followed by alternative rules using ``|`` as a separator. To illustrate this with an example, consider a small calculator capable of evaluating expressions such as ``2+3*4`` and printing the result. The rules section consists of the following grammar:
 
@@ -46,7 +46,7 @@ A grammar rule has a single nonterminal on the left-hand side of a production, f
 
 The parser maintains two stacks: a _parse stack_ and a _value stack_. The parse stack represents the current state of the parser, consisting of terminals and nonterminals. The value stack associates a value with each element of the parse stack. For instance, when the parser _shifts_ a ``NATURAL`` token to the parse stack, the corresponding ``yylval`` is pushed to the value stack.
 
-When the parser _reduces_ its stack, by popping the right-hand side of a production and pushing back the left-hand side nonterminal, the corresponding action is executed. For example, when the rule ``expression: expression '+' expression`` is applied, it will pop the three elements ``expression '+' expression`` and push back ``expression``. Action ``{ $$ = $1 + $3; }`` will be executed.
+When the parser _reduces_ its stack, by popping the right-hand side of a production and pushing back the left-hand side nonterminal, the corresponding action is executed. For example, when the rule ``expression: expression '+' expression`` is applied, it will pop the three elements ``expression '+' expression`` and push back ``expression``. The action ``{ $$ = $1 + $3; }`` will be executed.
 
 Notice that the C code of actions can reference positions in the value stack, by using ``$1, $2, $3, ..., $n`` to reference the values of the right-hand side of the production, that is, the ``n`` values popped from the stack. Moreover, ``$$`` references the new value to be placed at the top of the stack. Therefore, the action ``{ $$ = $1 + $3; }`` adds the values of two expressions and pushes back the resulting sum. This way, the two stacks remain synchronized.
 
@@ -80,7 +80,7 @@ The above grammar is ambiguous. For example, it allows for ``3-2-1`` to be parse
 
 The command ``yacc -dv calc.y`` includes the ``v`` option, so it produces an extra text file with extension ``.output`` that gives verbose details on the LALR(1) states and all the conflicts. By inspecting the ``.output`` file it is possible to look at individual states and the operation done for each look-ahead token.
 
-The conflicts are due to the unspecified associativity and precedence of operators. Arithmetic operators are generally _left associative_ following the convention of evaluating expressions in a left-to-right manner. Another convention establishes that the multiplication ``'*'`` and division ``'/'`` operators have higher _precedence_ than the addition ``'+'`` and subtraction ``'-'`` operators. Imposing these conventions can be achieved by rewriting the grammar to introduce terms and factors; more conveniently, _yacc_ provides a way to specify how to solve conflicts without modifying the grammar, which we examine in the exercises below.
+The conflicts are due to the unspecified _associativity_ and _precedence_ of operators. Arithmetic operators are generally _left associative_ following the convention of evaluating expressions in a left-to-right manner. Another convention establishes that the multiplication ``'*'`` and division ``'/'`` operators have higher _precedence_ than the addition ``'+'`` and subtraction ``'-'`` operators. Imposing these conventions could be achieved by rewriting the grammar to introduce terms and factors; more conveniently, _yacc_ provides a way to specify how to solve conflicts without modifying the grammar, which we examine in the exercises below.
 
 ## Exercises
 
@@ -96,7 +96,7 @@ We can specify the _precedence_ and _associativity_ of operators, simultaneously
 
 Operations are listed in order of increasing precedence. Operations listed on the same line have the same precedence. Therefore, this example specifies that ``LOW`` has a lower precedence than ``'+'`` and ``'-'``, which in turn have a lower precedence than ``HIGH``.
 
-3. Modify the grammar to allow for the calculation of multiple independent expressions separated by commas. For example, entering ``3-2-1,4*3-2,5*5/1*4`` should output ``0`` followed by ``10`` followed by ``100``.
+3. Modify the grammar to allow for the calculation of multiple independent expressions separated by commas. For example, entering ``3-2-1,4*3-2,5*5/1*4`` should output ``0``, ``10``, ``100``.
 
 4. Modify the grammar to accept if-then-else expressions that behave like the ternary operator ``?:`` existing in C, Java and other programming languages. The syntax is: ``if`` _expression_ ``then`` _expression_ ``else`` _expression_ (we need the tokens ``IF``, ``THEN`` and ``ELSE`` from the lexical analysis exercises).
 

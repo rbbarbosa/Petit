@@ -4,6 +4,8 @@ Petit programming language and compiler
 
 ## Example
 
+Petit is an educational programming language for learning compilers. Here's an example:
+
     factorial(integer n) =
         if n then n * factorial(n-1) else 1
 
@@ -36,3 +38,4 @@ Petit programming language and compiler
 
 1. [Compilers tutorial I: Lexical analysis](/tutorial/ex1_lexical_analysis.md)
 3. [Compilers tutorial III: Syntactic analysis](/tutorial/ex3_syntactic_analysis.md)
+7. [Solutions for most exercises](/source/)
