@@ -36,6 +36,7 @@ Petit is an educational programming language for learning compilers. Here's an e
 
 ## Tutorials and exercises
 
-1. [Compilers tutorial I: Lexical analysis](/tutorial/ex1_lexical_analysis.md)
-3. [Compilers tutorial III: Syntactic analysis](/tutorial/ex3_syntactic_analysis.md)
+1. [Compilers tutorial I: Lexical analysis](/tutorial/p1_lexical_analysis.md)
+2. [Compilers tutorial II: Advanced lex features](/tutorial/p2_advanced_lex.md)
+3. [Compilers tutorial III: Syntactic analysis](/tutorial/p3_syntactic_analysis.md)
 7. [Solutions for most exercises](/source/)
