@@ -1,119 +1,76 @@
 # Compiler exercises II: Advanced _lex_ features
 
-Start conditions are used to specify different states in which the lexical analyzer can be, based on specific rules and patterns. Each start condition represents a distinct set of rules that are active when that condition is triggered. By using start conditions, _Lex_ allows for more flexible and modular specification of token recognition based on the current lexical context.
+_Start conditions_ are used to specify different _states_ in which the lexical analyzer can be, based on specific rules and patterns. Each start condition includes a distinct set of regular expressions that are active when that condition is triggered. By using start conditions, _lex_ allows for more flexible and modular specification of token recognition based on the lexical context.
 
-Start conditions & YY_USER_ACTION
+To declare new start conditions, place their names in the declarations section of the _lex_ source file:
 
-## Pre-declared functions and variables
+    %X STATE1 STATE2
 
-Summary of the most relevant
+To use a start condition in the rules section, enclose its name in ``<>`` at the beginning of a rule (the expression is only matched if the automaton is in that state):
 
-| Name                | Description                          |
-| ------------------- | ------------------------------------ |
-| ``int yylex(void)`` | Call the lexical analyser            |
-| ``char *yytext`` 	  | Pointer to the matched token        |
-| ``yyleng``          | Length of the matched token         |
-| ``yylval``          | Semantic value associated with a token |
-| ``YY_USER_ACTION``  | Macro executed before every matched rule's action |
-| ECHO | Print the matched string |
-| int yywrap(void) | Called on end-of-file, return 1 to stop |
-| BEGIN condition | Switch to a specific start condition |
-| INITIAL |	The initial start condition (same as 0) |
-| %X condition(s) | Declare the names of exclusive start conditions |
+    <STATE1>expression    { printf("found expression in state 1"); }
 
+To move _lex_ to a specific start condition, execute ``BEGIN(condition)`` in the action of a rule. To return to the default initial state of _lex_, execute ``BEGIN(INITIAL)`` or simply ``BEGIN(0)``. Notice that you may remove the parentheses and simply write ``BEGIN condition`` and ``BEGIN 0``, if you prefer.
 
+## An example
 
+To exemplify the usage of _lex_ states, consider the following specification:
 
-
-To use _lex_, we specify patterns using regular expressions, along with corresponding actions. _Lex_ then transforms these rules into a C program that functions as the lexical analyser. When the lexical analyser is executed, it scans the input text, recognises the patterns specified in the rules and triggers the corresponding actions which are user-written code snippets.
-
-A _lex_ source file has three sections separated with the `%%` delimiter:
-
-    ...definitions...
-    %% 
-    ...rules...
-    %% 
-    ...subroutines...
-
-The _rules_ section contains our lexical specification: regular expressions matching the patterns we are interested in, paired with snippets of C code. A simple specification is:
-
+    %X COMMENT
     %%
-    [0-9]+                      { printf("NATURAL\n"); }
-
-This _lex_ specification matches sequences of digits, found in the input text, and the corresponding action is to print the word ``NATURAL`` each time. Any other unspecified patterns are directly copied to the output without modification.
-
-We can add a rule for decimal numerals:
-
-    %%
-    [0-9]+                      { printf("NATURAL\n"); }
-    [0-9]*"."[0-9]+             { printf("DECIMAL\n"); }
-
-If we ran this analyser, it would replace all naturals with the word ``NATURAL`` and all decimals with the word ``DECIMAL``, leaving any other characters unchanged.
-
-In the _definitions_ section that comes before the rules, we can place abbreviations to avoid repetitions and make specifications easier to read. For example, we can use ``{digit}`` instead of ``[0-9]`` by placing ``digit`` in the definitions section. In the _subroutines_ section that comes after the rules, we write any C functions we need, typically including functions ``main()`` and ``yywrap()``. Therefore, our first complete example is as follows:
-
-    digit   [0-9]
-    %%
-    {digit}+                    { printf("NATURAL\n"); }
-    {digit}*"."{digit}+         { printf("DECIMAL\n"); }
+    .                       {;}
+    "/*"                    { BEGIN(COMMENT); }
+    <COMMENT>.              { ECHO; }
+    <COMMENT>\n             { printf(" "); }
+    <COMMENT>"*/"           { BEGIN(INITIAL); }
     %%
     extern int yylex();
     int main() {
-        yylex();    /* run the lexical analysis automaton */
+        yylex();
         return 0;
     }
-    int yywrap() {  /* called on EOF, return 1 to terminate */
+    int yywrap() {
         return 1;
     }
 
-## Generating and running a lexical analyser
+This _lex_ specification ignores everything _except_ comments. We could use this to check the spelling of text in code comments.
 
-Having the above specification in a file named ``lexer.l``, we obtain the C code for the lexical analyser by entering:
+The first rule discards any character (except newline). The second rule matches ``/*`` and moves the lexical analyser to the ``COMMENT`` state. In that state, any character (except newline) is printed while newline characters are replaced by spaces. Finally, when the closing ``*/`` is matched, the analyser moves back to the initial state.
 
-    $ lex lexer.l
+## Pre-declared functions and variables
 
-The generated source code is written to a file called ``lex.yy.c`` by default. We simply compile it using a C compiler:
+For reference, the following table summarises the most relevant features of _lex_.
 
-    $ cc lex.yy.c -o lexer
+| Name                 | Description                                       |
+| -------------------- | ------------------------------------------------- |
+| ``int yylex(void)``  | Call the lexical analyser                         |
+| ``char *yytext`` 	   | Pointer to the matched token                      |
+| ``yyleng``           | Length of the matched token                       |
+| ``yylval``           | Semantic value associated with a token            |
+| ``YY_USER_ACTION``   | Macro executed before every matched rule's action |
+| ``ECHO``             | Print the matched string                          |
+| ``int yywrap(void)`` | Called on end-of-file, return 1 to stop           |
+| ``BEGIN condition``  | Switch to a specific start condition              |
+| ``INITIAL``          | The default initial start condition (same as 0)   |
+| ``%X condition(s)``  | Declare the names of exclusive start conditions   |
 
-The resulting executable file ``lexer`` reads from ``stdin`` and writes to ``stdout``. We can then run the analyser:
-
-    $ ./lexer
-
-Try it with integers, decimals and other tokens.
-
-A bit of theory: The transition table which represents the lexical analysis DFA is stored in the ``lex.yy.c`` file (around source line ~400). If it weren't for _lex_ we would have to manually create these tables.
-
+All of these features should be familiar to _lex_ users. An advanced feature that can simplify _lex_ specifications is the ``YY_USER_ACTION`` macro: if we ``#define`` this macro, the corresponding code will be executed before every single action. Therefore, it is useful when the same code is repeated in all actions.
 
 ## Exercises
 
-The following exercises start with the solution to the previous exercises in file ``lexer.l``.
+The following exercises start with _your_ solution to the previous exercises in file ``lexer.l``. Alternatively, you could also use the original ``lexer.l`` file.
 
-1. Comments of the type /* ... */ keeping line and column correctly updated. unterminated ones are allowed
+1. Many programming languages have block comments delimited by ``/* ... */`` that are allowed to span multiple lines. Modify the lexical analyser to support block comments. Specifically, it should discard all comments while maintaining the line and column numbers correctly updated. For simplicity, unterminated comments are allowed in our miniature programming language.
 
-2. final exercise on illegal strings, to work on states; single line (no line border crossing) and C like backslash escape valid/invalid 
-
-Finally, test the complete lexical analyser on the following input:
+Test the lexical analyser on the following input:
 
     factorial(integer n) =
-        if n then n * factorial(n-1) else 1
-        #
+        if n then n * factorial(n-1) else 1  /* recursive factorial
+     */ #
 
-The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character:
+The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character.
 
-    IDENTIFIER(factorial)
-    (
-    INTEGER
-    IDENTIFIER(n)
-    )
-    =
-    IF
-    IDENTIFIER(n)
-    THEN
-
-    ...
-
-    Unrecognized character '#' (line 3, column 5)
+2. Modify the lexical analyser to recognize strings. It should, for example, print ``STRLIT("hello\n")`` when given ``"hello\n"`` as input. Strings are sequences of characters (except "carriage return", "newline" and double quotation marks) and/or "escape sequences" delimited by double quotation marks. Escape sequences ``\f``, ``\n``, ``\r``, ``\t``, ``\\`` and ``\"`` are allowed, while any other escape sequences should show an error message.
 
 ## Author
 

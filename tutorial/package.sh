@@ -9,6 +9,7 @@ zip p1_lexical_analysis.zip p1_lexical_analysis.pdf lexer.l
 
 # package exercises II in a zip file
 pandoc p2_advanced_lex.md -o p2_advanced_lex.pdf
+zip p2_advanced_lex.zip p2_advanced_lex.pdf lexer.l
 
 # package exercises III in a zip file
 pandoc p3_syntactic_analysis.md -o p3_syntactic_analysis.pdf
