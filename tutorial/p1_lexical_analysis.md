@@ -86,7 +86,7 @@ When it comes to regular expressions, different tools may have slight variations
 | ``x?``     | Optional x                           | ``ab?c, [+-]?``       |
 | ``(x)``    | x, forcing association               | ``(aa``<code>&#124;</code>``bb)+``          |
 | ``x{n}``   | n occurrences of x                   | ``[0-9]{2}``          |
-| ``x{n,m}`` | m to n occurrences of x              | ``a{2,5}b*``          |
+| ``x{n,m}`` | n to m occurrences of x              | ``a{2,5}b*``          |
 | ``{xx}``   | Expand xx from the definitions       | ``{digit}``           |
 
 ## Exercises
@@ -125,7 +125,7 @@ The lexer should output the 19 tokens, followed by an error message on line 3, c
 
     ...
 
-    Unrecognized character '#' (line 3, column 5)
+    Line 3, column 5: unrecognized character (#)
 
 ## Author
 

@@ -1,3 +1,6 @@
+%{
+    /* place here any C variables and definitions */
+%}
 digit   [0-9]
 %%
 {digit}+                { printf("NATURAL\n"); }
