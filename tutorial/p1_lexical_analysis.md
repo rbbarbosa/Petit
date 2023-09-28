@@ -97,7 +97,7 @@ The following exercises start with the above code in file ``lexer.l`` and the fi
 
 2. In programming languages, the names of variables and functions are generically referred to as _identifiers_. Modify the code to print ``IDENTIFIER(x)`` whenever an identifier ``'x'`` is found. Identifiers consist of non-empty sequences of letters and digits, starting with a letter.
 
-3. _Keywords_ are reserved and cannot be used as identifiers. Modify the code to recognize the following tokens: ``integer``, ``double``, ``if``, ``then`` and ``else``. The key is to understand that _lex_ always looks for the longest match and, in case there is a tie, it chooses the rule that comes first.
+3. _Keywords_ are reserved and cannot be used as identifiers. Modify the code to recognize the following tokens: ``integer``, ``double``, ``if``, ``then`` and ``else``. It should output ``INTEGER``, ``DOUBLE``, and so on. The key is to understand that _lex_ always looks for the longest match and, in case there is a tie, it chooses the rule that comes first.
 
 5. Whitespace is ignored in most languages (Python is a notable exception). Modify the code to ignore whitespace characters: spaces, tabs and newlines. This can be achieved by matching those characters to an empty action ``{;}`` that simply does nothing.
 
@@ -111,7 +111,7 @@ Finally, test the complete lexical analyser on the following input:
         if n then n * factorial(n-1) else 1
         #
 
-The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character. The following output is expected:
+The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character preceded by 4 spaces. The following output is expected:
 
     IDENTIFIER(factorial)
     (
