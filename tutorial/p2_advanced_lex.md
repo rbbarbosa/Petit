@@ -70,7 +70,9 @@ Test the lexical analyser on the following input:
 
 The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character.
 
-2. Modify the lexical analyser to recognize strings. It should, for example, print ``STRLIT("hello\n")`` when given ``"hello\n"`` as input. Strings are sequences of characters (except "carriage return", "newline" and double quotation marks) and/or "escape sequences" delimited by double quotation marks. Escape sequences ``\f``, ``\n``, ``\r``, ``\t``, ``\\`` and ``\"`` are allowed, while any other escape sequences should show an error message.
+2. Modify the lexical analyser to recognize strings. For example, it should print ``STRLIT("hello\n")`` when given ``"hello\n"`` as input. Strings are sequences of characters (except "carriage return", "newline" and double quotation marks) and/or "escape sequences" delimited by double quotation marks. Escape sequences ``\f``, ``\n``, ``\r``, ``\t``, ``\\`` and ``\"`` are allowed, while any other escape sequences should show an error message like:
+
+    ``Line x, column y: invalid escape sequence (\z)``
 
 ## Author
 
