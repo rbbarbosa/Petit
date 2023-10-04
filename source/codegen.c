@@ -48,13 +48,11 @@ int codegen_decimal(struct node *decimal) {
     return temporary++;
 }
 
-/* Exercise 3.c. implement codegen_identifier(...) assuming integer is the only type */
 int codegen_identifier(struct node *identifier) {
     printf("  %%%d = add i32 %%%s, 0\n", temporary, identifier->token);
     return temporary++;
 }
 
-/* Advanced exercise: implement codegen_call(...) state the kind of instruction */
 int codegen_call(struct node *call) {
     struct node *arguments = getchild(call, 1);
     char *arguments_str = malloc(1);
@@ -75,7 +73,6 @@ int codegen_call(struct node *call) {
     return temporary++;
 }
 
-/* Even more advanced exercise */
 int codegen_ifthenelse(struct node *ifthenelse) {
     int label_id = temporary++;
     printf("  %%%d = alloca i32\n", label_id);
@@ -98,26 +95,21 @@ int codegen_ifthenelse(struct node *ifthenelse) {
 int codegen_expression(struct node *expression) {
     int tmp = -1;
     switch(expression->category) {
-        /* Exercise 3.c. implement case Identifier */
         case Identifier:
             tmp = codegen_identifier(expression);
             break;
         case Natural:
-            /* Exercise 1: generate expression for func(integer i) = 10 */
             tmp = codegen_natural(expression);
             break;
         case Decimal:
             tmp = codegen_decimal(expression);
             break;
         case Call:
-                    /* Exercise: implement Call and use it below to generate the call to the function */
             tmp = codegen_call(expression);
             break;
         case If:
-            /*Exercise: implement If*/
             tmp = codegen_ifthenelse(expression);
             break;
-        /* Exercise 2. implement support for addition, subtraction and division */
         case Add:
             tmp = codegen_add(expression);
             break;
@@ -136,9 +128,6 @@ int codegen_expression(struct node *expression) {
     return tmp;
 }
 
-/* given code starts below this line */
-
-/* Exercise: generate code for parameters (maybe this is given) and the call to codegen_expression is not */
 void codegen_parameters(struct node *parameters) {
     struct node *parameter;
     int curr = 0;
@@ -154,7 +143,6 @@ void codegen_function(struct node *function) {
     printf("define i32 @_%s(", getchild(function, 0)->token);
     codegen_parameters(getchild(function, 1));
     printf(") {\n");
-    /* Exercise: generate code for expressions */
     codegen_expression(getchild(function, 2));
     printf("  ret i32 %%%d\n", temporary-1);
     printf("}\n\n");
