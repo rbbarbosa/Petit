@@ -150,6 +150,7 @@ void codegen_function(struct node *function) {
 
 // code generation begins here, with the AST root node
 void codegen_program(struct node *program) {
+    // pre-declared I/O functions
     printf("declare i32 @_read(i32)\n");
     printf("declare i32 @_write(i32)\n\n");
 
@@ -162,7 +163,7 @@ void codegen_program(struct node *program) {
     struct symbol_list *entry = search_symbol(symbol_table, "main");
     if(entry != NULL && entry->node->category == Function)
         printf("define i32 @main() {\n"
-               "  call i32 @_main(i32 0)\n"
-               "  ret i32 0\n"
+               "  %%1 = call i32 @_main(i32 0)\n"
+               "  ret i32 %%1\n"
                "}\n");
 }
