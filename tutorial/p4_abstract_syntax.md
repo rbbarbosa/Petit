@@ -79,6 +79,8 @@ category_name could be an array or a function
 
 3. Modify the grammar to allow for multiple functions.
 
+Test your final code with the following example:
+
 ## Author
 
 Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844))
@@ -89,4 +91,5 @@ Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pea
 
 Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
 
-Barbosa, R. (2023). Petit programming language and compiler. https://github.com/rbbarbosa/Petit
+Barbosa, R. (2023). Petit programming language and compiler.  
+https://github.com/rbbarbosa/Petit

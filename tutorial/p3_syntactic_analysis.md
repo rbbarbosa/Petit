@@ -2,7 +2,7 @@
 
 _Yacc_ is a powerful tool for automating the creation of parsers, also known as syntactic analysers, mainly used in language processing and compiler construction. It transforms formal grammars into executable code, making it invaluable for language analysis and processing. It primarily supports context-free grammars.
 
-A bit of theory: _Yacc_ takes the user-specified grammar rules and algorithmically constructs the corresponding LR parsing table. Specifically, it constructs an LALR(1) parser, that is, a look ahead left-to-right rightmost derivation parser. The parser takes as input the sequence of tokens passed by the lexical analyser (_lex_) and moves according to the parsing table. If it completes the derivation of the input sequence, reaching an accepting state, then the input is in the language of the grammar. Otherwise, a syntax error is found.
+A bit of theory: _Yacc_ takes the user-specified grammar rules and algorithmically constructs the corresponding LR parsing table. Specifically, it constructs an LALR(1) parser, that is, a Look Ahead Left-to-right Rightmost derivation parser. The parser takes as input the sequence of tokens passed by the lexical analyser (_lex_) and moves according to the parsing table. If it completes the derivation of the input sequence, reaching an accepting state, then the input is in the language of the grammar. Otherwise, a syntax error is found.
 
 ## Using _lex_ and _yacc_ together
 
@@ -114,6 +114,7 @@ Niemann, T. (2016) Lex & Yacc. https://epaperpress.com/lexandyacc
 
 Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
 
-Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
+Barbosa, R. (2023). Petit programming language and compiler.  
+https://github.com/rbbarbosa/Petit
 
-Barbosa, R. (2023). Petit programming language and compiler. https://github.com/rbbarbosa/Petit
+Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.

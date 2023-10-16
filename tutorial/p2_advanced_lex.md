@@ -82,8 +82,9 @@ Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844)
 
 Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
 
-Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
-
 Niemann, T. (2016) Lex & Yacc. https://epaperpress.com/lexandyacc
 
-Barbosa, R. (2023). Petit programming language and compiler. https://github.com/rbbarbosa/Petit
+Barbosa, R. (2023). Petit programming language and compiler.  
+https://github.com/rbbarbosa/Petit
+
+Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
