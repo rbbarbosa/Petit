@@ -1,4 +1,4 @@
-# Compiler tutorial IV: Abstract syntax
+# Compilers tutorial IV: Abstract syntax
 
 _Yacc_ is a powerful tool for generating parsers, by transforming formal grammars into executable code. In this tutorial we explore how to construct an abstract syntax tree (AST), which is a kind of parse tree which discards irrelevant details while fully preserving the meaning of the original program.
 
@@ -65,53 +65,87 @@ Consider the following _yacc_ specification (which you will complete). Notice th
         | expression '-' expression     { /* ... */ }
         | expression '*' expression     { /* ... */ }
         | expression '/' expression     { /* ... */ }
-        | '(' expression ')'            { /* ... */ }  
+        | '(' expression ')'            { $$ = $2; }  
         ;
 
 When the first production is used, the right-hand side contains a _function_ with its ``parameters`` and ``expression``. Parsing will be finishing there. The corresponding action executes 6 statements, in the following order: _(1)_ the AST's root node ``Program`` is created; _(2)_ a new ``Function`` node is created; _(3)_ a new ``Identifier`` node is created, with the function name, and becomes a child of the ``Function`` node; _(4)_ the ``parameters`` node ``$3`` becomes a child of the ``Function`` node; _(5)_ the ``expression`` node ``$6`` becomes a child of the ``Function`` node; and _(6)_ the new ``Function`` node becomes a child of the ``Program`` node.
 
-# Token types and unions
+# Token types and ``%union``
 
-Summarize this from the previous tutorial: The _definitions_ section contains C code delimited by ``%{ ... %}`` and token declarations. The _rules_ section contains the grammar, in a notation similar to BNF (Backus-Naur form). The _subroutines_ section contains any C functions needed. Integrating _lex_ and _yacc_ is achieved by placing ``%token`` declarations in the definitions section of the _yacc_ source file:
-
-    %token NATURAL
-
-By default, in yacc, yylval has type of int. So does the value stack.
+As seen in the previous tutorial, the semantic value of a token must be stored in global variable ``yylval``, which has type ``int`` by default. Token declarations use:
 
     %token INTEGER DOUBLE IF THEN ELSE
-    %token<token> IDENTIFIER NATURAL DECIMAL
-    %type<node> program parameters parameter arguments expression
+
+When we need to use multiple data types, the ``%union`` declaration allows us to specify the distinct types that might be stored in ``yylval``. In our case:
 
     %union{
         char *token;
         struct node *node;
     }
 
-yylval.token = strdup(yytext);
+This ``%union`` declaration modifies the type of ``yylval`` so that it may hold a _token_ (``char *``) or a _node_ (``struct node *``). In other words, ``yylval`` might be a string or an AST node, and a C union encapsulates the two alternatives.
 
-we PRINTFd but now we must RETURN (actually, yylex() should return)
+Then, when we declare a token, the C type is specified as follows:
 
-What $$, $1 and $2 mean... with the respective type.
+    %token<token> IDENTIFIER NATURAL DECIMAL
 
+Identifiers, naturals and decimals require their semantic value (the ``char *`` to the original string) to be stored. The _lex_ specification should copy the semantic value by executing ``yylval.token = strdup(yytext);`` before returning any of these tokens.
+
+Furthermore, syntactic variables (i.e., nonterminals) are specified using the ``%type`` declaration:
+
+    %type<node> program parameters parameter arguments expression
+
+This way, the type of ``$$``, ``$1``, ``$2``, etc., is correctly handled during parsing.
 
 ## Exercises
 
-1. Complete the code marked with \texttt{/* ... */} so that an AST is constructed for each program, using only the supplied functions \texttt{newnode()} and \texttt{addchild()}.
+Begin by carefully examining the file [``petit.y``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/petit.y) and the AST construction functions in files [``ast.h``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.h) and [``ast.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.c).
 
-2. Print the syntax tree
+1. Complete the actions marked with \texttt{/* ... */} so that an AST is constructed, for each program, using the supplied functions \texttt{newnode} and \texttt{addchild}.
 
-    void show(struct node *node, int depth) {
-        ...
-    }
+2. Write a function to recursively traverse the AST and show its content. The goal is to call that function immediately after ``yyparse()`` to check that the AST is correct. Consider the following pseudocode:
 
-category_name could be an array or a function
+```
+     show(struct node *node, int depth) {
+         print(node->category, node->token, depth)
+         foreach child in node->children show(child, depth+1)
+     }
+```
 
-3. Modify the grammar to allow for multiple functions.
+Taking ``factorial(integer n) = if n then n * factorial(n-1) else 1`` as input, the solution to exercises 1 and 2 should have the following output:
 
-    program: IDENTIFIER '(' parameters ')' '=' expression
-           | program IDENTIFIER '(' parameters ')' '=' expression
+    Program
+    __Function
+    ____Identifier(factorial)
+    ____Parameters
+    ______Parameter
+    ________Integer
+    ________Identifier(n)
+    ____If
+    ______Identifier(n)
+    ______Mul
+    ________Identifier(n)
+    ________Call
+    __________Identifier(factorial)
+    __________Arguments
+    ____________Sub
+    ______________Identifier(n)
+    ______________Natural(1)
+    ______Natural(1)
 
-Test your final code with the following example: factorial (complete)
+3. Modify the grammar to allow for multiple functions, using the productions that follow, and implement the necessary action to construct the AST.
+
+```
+     program: IDENTIFIER '(' parameters ')' '=' expression
+            | program IDENTIFIER '(' parameters ')' '=' expression
+```
+
+Test your solution with the following example, found in file [``factorial.pt``](https://github.com/rbbarbosa/Petit/blob/main/test/factorial.pt):
+
+    factorial(integer n) = if n then n * factorial(n-1) else 1
+    main(integer i) = write(factorial(read(0)))
+
+The file [``factorial.ast``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/factorial.ast) contains the expected AST for this program.
 
 ## Author
 
@@ -122,6 +156,8 @@ Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844)
 Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
 
 Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
+
+Niemann, T. (2016) Lex & Yacc. https://epaperpress.com/lexandyacc
 
 Barbosa, R. (2023). Petit programming language and compiler.  
 https://github.com/rbbarbosa/Petit

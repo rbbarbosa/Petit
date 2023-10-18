@@ -47,7 +47,7 @@ Most instructions return a value that is typically assigned to a temporary regis
 
 The ``call`` instruction is used for simple function calls, with explicit arguments, and the ``ret`` instruction is used for returning control flow (and often a value) back to the caller. Examples can be found above, in the ``main`` and ``avg`` functions, as well as below, in the ``factorial`` function.
 
-## External declaration of functions
+## Declaration of functions
 
 The ``declare`` keyword allows us to declare functions without specifying their implementation (i.e., without a function body). This allows us to divide big programs into modules that will be combined together by the linker. It also allows us to declare external functions such as those provided by the standard C library (``printf``, ``puts``, etc.).
 
