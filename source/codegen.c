@@ -3,12 +3,11 @@
 #include <string.h>
 #include "ast.h"
 #include "semantics.h"
+#include "codegen.h"
 
 int temporary;
 
 extern struct symbol_list *symbol_table;
-
-int codegen_expression(struct node *expression);
 
 int codegen_add(struct node *add) {
     int e1 = codegen_expression(getchild(add, 0));

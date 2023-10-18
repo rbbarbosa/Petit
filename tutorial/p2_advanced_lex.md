@@ -1,4 +1,4 @@
-# Compiler exercises II: Advanced _lex_ features
+# Compiler tutorial II: Advanced _lex_ features
 
 _Start conditions_ are used to specify different _states_ in which the lexical analyzer can be, based on specific rules and patterns. Each start condition includes a distinct set of regular expressions that are active when that condition is triggered. By using start conditions, _lex_ allows for more flexible and modular specification of token recognition based on the lexical context.
 

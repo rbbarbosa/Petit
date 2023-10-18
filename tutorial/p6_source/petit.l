@@ -64,22 +64,18 @@ void yyerror(char *error) {
 
 int main(int argc, char *argv[]) {
     yyparse();
-    if(argc >= 2 && strcmp(argv[1], "-t") == 0 && errors == 0) {   /* "-t" prints the AST */
-        show(program, 0);
-    }
-    if(argc >= 2 && strcmp(argv[1], "-s") == 0 && errors == 0) {   /* "-s" prints the AST and symbol table */
-        errors += check_program(program);
-        if(errors == 0) {
-            show_symbol_table();
-            show(program, 0);
-        }
-    }
-    if(argc <= 1 && errors == 0) {
-        errors += check_program(program);
-        if(errors == 0)
-            codegen_program(program);
-    }
-    deallocate(program);
-    yylex_destroy();
+
+//    show(program, 0);                 // print the AST
+
+//    errors += check_program(program); // print the symbol table and the AST
+//    if(errors == 0) {
+//        show_symbol_table();
+//        show(program, 0);
+//    }
+
+    errors += check_program(program); // generate code
+    if(errors == 0)
+        codegen_program(program);
+
     return 0;
 }

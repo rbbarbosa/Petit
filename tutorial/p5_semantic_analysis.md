@@ -1,4 +1,4 @@
-# Compiler exercises V: Semantic analysis
+# Compiler tutorial V: Semantic analysis
 
 Semantic analysis is a crucial phase in the compilation process where the meaning and validity of a program's statements and expressions are examined. It involves a series of checks and transformations to ensure that the program adheres to the rules and constraints of the programming language.
 

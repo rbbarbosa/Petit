@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "ast.h"
 
+// create a node of a given category with a given lexical symbol
 struct node *newnode(enum category category, char *token) {
     struct node *new = malloc(sizeof(struct node));
     new->category = category;
@@ -13,6 +14,7 @@ struct node *newnode(enum category category, char *token) {
     return new;
 }
 
+// append a node to the list of children of the parent node
 void addchild(struct node *parent, struct node *child) {
     struct node_list *new = malloc(sizeof(struct node_list));
     new->node = child;
@@ -32,6 +34,7 @@ struct node *getchild(struct node *parent, int position) {
     return NULL;
 }
 
+// count the children of a node
 int countchildren(struct node *node) {
     int i = 0;
     while(getchild(node, i) != NULL)
@@ -41,6 +44,7 @@ int countchildren(struct node *node) {
 
 char *category_name[] = names;
 
+// print the AST
 void show(struct node *node, int depth) {
     int i;
     for(i = 0; i < depth; i++)
@@ -54,6 +58,7 @@ void show(struct node *node, int depth) {
         show(child->node, depth+1);
 }
 
+// free the AST
 void deallocate(struct node *node) {
     if(node != NULL) {
         struct node_list *child = node->children;

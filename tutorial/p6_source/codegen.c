@@ -3,8 +3,9 @@
 #include <string.h>
 #include "ast.h"
 #include "semantics.h"
+#include "codegen.h"
 
-int temporary;
+int temporary;   // sequence of temporary registers in a function
 
 extern struct symbol_list *symbol_table;
 
