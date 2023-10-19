@@ -99,7 +99,7 @@ Finally, it should be noted that the ``factorial`` function returns the value st
 
 ## The recursive code generation algorithm
 
-The input program is fully represented by an abstract syntax tree (AST) annotated with the relevant attributes. Code generation is expressed through a recursive traversal of the AST. Function ``codegen_program`` (in file [``codegen.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p6-source/codegen.c)) generates code for the root ``Program`` node by generating code for each child ``Function`` node and then emitting code for the ``main`` entry point:
+The input program is fully represented by an abstract syntax tree (AST) annotated with the relevant attributes. Code generation is expressed through a recursive traversal of the AST. Function ``codegen_program`` (in file [``codegen.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p6_source/codegen.c)) generates code for the root ``Program`` node by generating code for each child ``Function`` node and then emitting code for the ``main`` entry point:
 
     void codegen_program(struct node *program) {
         struct node_list *function = program->children;

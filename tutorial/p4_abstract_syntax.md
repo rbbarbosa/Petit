@@ -25,12 +25,12 @@ Every node has a syntactic _category_ denoting a specific programming construct 
 
 Every node also includes a pointer to the original _token_. The token is necessary because a node of category ``Identifier`` must have the name of the function or variable, a node of category ``Natural`` must have the string of digits representing the natural constant, and so on.
 
-To build an AST we only require two operations: creating a new node and adding a child node to a parent node. Two functions provide that functionality:
+To build an AST we only need two operations: creating a new node and adding a child node to a parent node. Two functions provide that functionality:
 
     struct node *newnode(enum category category, char *token);
     void addchild(struct node *parent, struct node *child);
 
-The first function allocates memory for a new node and initializes all its fields (including an empty list of children). The second function appends a node to the list of children of the parent node. They are provided in files [``ast.h``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.h) and [``ast.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.c).
+The first function returns a newly allocated node with all its fields initialized (including an empty list of children). The second function appends a node to the list of children of the parent node. They are provided in files [``ast.h``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.h) and [``ast.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.c).
 
 ## Syntax-directed translation
 
@@ -101,7 +101,7 @@ This way, the type of ``$$``, ``$1``, ``$2``, etc., is correctly handled during 
 
 Begin by carefully examining the file [``petit.y``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/petit.y) and the AST construction functions in files [``ast.h``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.h) and [``ast.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/ast.c).
 
-1. Complete the actions marked with \texttt{/* ... */} so that an AST is constructed, for each program, using the supplied functions \texttt{newnode} and \texttt{addchild}.
+1. Complete the actions marked with ``/* ... */`` so that an AST is constructed, for each program, using the supplied functions ``newnode(...)`` and ``addchild(...)``.
 
 2. Write a function to recursively traverse the AST and show its content. The goal is to call that function immediately after ``yyparse()`` to check that the AST is correct. Consider the following pseudocode:
 
@@ -114,24 +114,26 @@ Begin by carefully examining the file [``petit.y``](https://github.com/rbbarbosa
 
 Taking ``factorial(integer n) = if n then n * factorial(n-1) else 1`` as input, the solution to exercises 1 and 2 should have the following output:
 
-    Program
-    __Function
-    ____Identifier(factorial)
-    ____Parameters
-    ______Parameter
-    ________Integer
-    ________Identifier(n)
-    ____If
-    ______Identifier(n)
-    ______Mul
-    ________Identifier(n)
-    ________Call
-    __________Identifier(factorial)
-    __________Arguments
-    ____________Sub
-    ______________Identifier(n)
-    ______________Natural(1)
-    ______Natural(1)
+```
+  Program
+  __Function
+  ____Identifier(factorial)
+  ____Parameters
+  ______Parameter
+  ________Integer
+  ________Identifier(n)
+  ____If
+  ______Identifier(n)
+  ______Mul
+  ________Identifier(n)
+  ________Call
+  __________Identifier(factorial)
+  __________Arguments
+  ____________Sub
+  ______________Identifier(n)
+  ______________Natural(1)
+  ______Natural(1)
+```
 
 3. Modify the grammar to allow for multiple functions, using the productions that follow, and implement the necessary action to construct the AST.
 
