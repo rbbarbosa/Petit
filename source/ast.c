@@ -42,9 +42,10 @@ int countchildren(struct node *node) {
     return i;
 }
 
+// category names #defined in ast.h
 char *category_name[] = names;
 
-// print the AST
+// traverse the AST and print its content
 void show(struct node *node, int depth) {
     int i;
     for(i = 0; i < depth; i++)
