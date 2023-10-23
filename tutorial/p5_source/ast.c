@@ -23,3 +23,20 @@ void addchild(struct node *parent, struct node *child) {
         children = children->next;
     children->next = new;
 }
+
+// category names #defined in ast.h
+char *category_name[] = names;
+
+// print the AST
+void show(struct node *node, int depth) {
+    int i;
+    for(i = 0; i < depth; i++)
+        printf("__");
+    if(node->token == NULL)
+        printf("%s\n", category_name[node->category]);
+    else
+        printf("%s(%s)\n", category_name[node->category], node->token);
+    struct node_list *child = node->children;
+    while((child = child->next) != NULL)
+        show(child->node, depth+1);
+}

@@ -35,31 +35,59 @@ program: IDENTIFIER '(' parameters ')' '=' expression
                                       addchild(function, $3);
                                       addchild(function, $6);
                                       addchild($$, function); }
+    | program IDENTIFIER '(' parameters ')' '=' expression
+                                    { $$ = $1;
+                                      struct node *function = newnode(Function, NULL);
+                                      addchild(function, newnode(Identifier, $2));
+                                      addchild(function, $4);
+                                      addchild(function, $7);
+                                      addchild($$, function); }
     ;
 
-parameters: parameter               { /* ... */ }
-    | parameters ',' parameter      { /* ... */ }
+parameters: parameter               { $$ = newnode(Parameters, NULL);
+                                      addchild($$, $1); }
+    | parameters ',' parameter      { $$ = $1;
+                                      addchild($$, $3); }
     ;
 
-parameter: INTEGER IDENTIFIER       { /* ... */ }
-    | DOUBLE IDENTIFIER             { /* ... */ }
+parameter: INTEGER IDENTIFIER       { $$ = newnode(Parameter, NULL);
+                                      addchild($$, newnode(Integer, NULL));
+                                      addchild($$, newnode(Identifier, $2)); }
+    | DOUBLE IDENTIFIER             { $$ = newnode(Parameter, NULL);
+                                      addchild($$, newnode(Double, NULL));
+                                      addchild($$, newnode(Identifier, $2)); }
     ;
 
-arguments: expression               { /* ... */ }
-    | arguments ',' expression      { /* ... */ }
+arguments: expression               { $$ = newnode(Arguments, NULL);
+                                      addchild($$, $1); }
+    | arguments ',' expression      { $$ = $1;
+                                      addchild($$, $3); }
     ;
 
-expression: IDENTIFIER              { /* ... */ }
-    | NATURAL                       { /* ... */ }
-    | DECIMAL                       { /* ... */ }
-    | IDENTIFIER '(' arguments ')'  { /* ... */ }
+expression: IDENTIFIER              { $$ = newnode(Identifier, $1); }
+    | NATURAL                       { $$ = newnode(Natural, $1); }
+    | DECIMAL                       { $$ = newnode(Decimal, $1); }
+    | IDENTIFIER '(' arguments ')'  { $$ = newnode(Call, NULL);
+                                      addchild($$, newnode(Identifier, $1));
+                                      addchild($$, $3); }
     | IF expression THEN expression ELSE expression  %prec LOW
-                                    { /* ... */ }
-    | expression '+' expression     { /* ... */ }
-    | expression '-' expression     { /* ... */ }
-    | expression '*' expression     { /* ... */ }
-    | expression '/' expression     { /* ... */ }
-    | '(' expression ')'            { /* ... */ }  
+                                    { $$ = newnode(If, NULL);
+                                      addchild($$, $2);
+                                      addchild($$, $4);
+                                      addchild($$, $6); }
+    | expression '+' expression     { $$ = newnode(Add, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    | expression '-' expression     { $$ = newnode(Sub, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    | expression '*' expression     { $$ = newnode(Mul, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    | expression '/' expression     { $$ = newnode(Div, NULL);
+                                      addchild($$, $1);
+                                      addchild($$, $3); }
+    | '(' expression ')'            { $$ = $2; }  
     ;
 
 %%
