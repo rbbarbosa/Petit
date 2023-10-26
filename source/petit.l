@@ -8,7 +8,7 @@
 #include "codegen.h"
 
 #define YY_USER_ACTION { syn_line = yylloc.first_line = lex_line; syn_column = yylloc.first_column = lex_column; lex_column += yyleng; }
-#define PASS_TOKEN() yylval.token = strdup(yytext);
+#define PASS_TOKEN() yylval.lexeme = strdup(yytext);
 
 int yyparse(void);
 void yyerror(char *);

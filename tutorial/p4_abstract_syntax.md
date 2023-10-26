@@ -56,7 +56,7 @@ Consider the following _yacc_ specification (which you will complete). Notice th
         | arguments ',' expression      { /* ... */ }
         ;
     expression: IDENTIFIER              { /* ... */ }
-        | NATURAL                       { /* ... */ }
+        | NATURAL                       { $$ = newnode(Natural, $1); }
         | DECIMAL                       { /* ... */ }
         | IDENTIFIER '(' arguments ')'  { /* ... */ }
         | IF expression THEN expression ELSE expression  %prec LOW
@@ -79,17 +79,17 @@ As seen in the previous tutorial, the semantic value of a token must be stored i
 When we need to use multiple data types, the ``%union`` declaration allows us to specify the distinct types that might be stored in ``yylval``. In our case:
 
     %union{
-        char *token;
+        char *lexeme;
         struct node *node;
     }
 
-This ``%union`` declaration modifies the type of ``yylval`` so that it may hold a _token_ (``char *``) or a _node_ (``struct node *``). In other words, ``yylval`` might be a string or an AST node, and a C union encapsulates the two alternatives.
+This ``%union`` declaration modifies the type of ``yylval`` so that it may hold a _lexeme_ (``char *``) or a _node_ (``struct node *``). In other words, ``yylval`` might be a string or an AST node, and a C union encapsulates the two alternatives.
 
 Then, when we declare a token, the C type is specified as follows:
 
-    %token<token> IDENTIFIER NATURAL DECIMAL
+    %token<lexeme> IDENTIFIER NATURAL DECIMAL
 
-Identifiers, naturals and decimals require their semantic value (the ``char *`` to the original string) to be stored. The _lex_ specification should copy the semantic value by executing ``yylval.token = strdup(yytext);`` before returning any of these tokens.
+Identifiers, naturals and decimals require their semantic value (the ``char *`` to the original string) to be stored. The _lex_ specification should copy the semantic value by executing ``yylval.lexeme = strdup(yytext);`` before returning any of these tokens.
 
 Furthermore, syntactic variables (i.e., nonterminals) are specified using the ``%type`` declaration:
 

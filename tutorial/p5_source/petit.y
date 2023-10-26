@@ -12,7 +12,7 @@ struct node *program;
 %}
 
 %token INTEGER DOUBLE IF THEN ELSE
-%token<token> IDENTIFIER NATURAL DECIMAL
+%token<lexeme> IDENTIFIER NATURAL DECIMAL
 %type<node> program parameters parameter arguments expression
 
 %left LOW
@@ -20,7 +20,7 @@ struct node *program;
 %left '*' '/'
 
 %union{
-    char *token;
+    char *lexeme;
     struct node *node;
 }
 

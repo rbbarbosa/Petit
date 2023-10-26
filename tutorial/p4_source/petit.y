@@ -12,7 +12,7 @@ struct node *program;
 %}
 
 %token INTEGER DOUBLE IF THEN ELSE
-%token<token> IDENTIFIER NATURAL DECIMAL
+%token<lexeme> IDENTIFIER NATURAL DECIMAL
 %type<node> program parameters parameter arguments expression
 
 %left LOW
@@ -20,7 +20,7 @@ struct node *program;
 %left '*' '/'
 
 %union{
-    char *token;
+    char *lexeme;
     struct node *node;
 }
 
@@ -50,7 +50,7 @@ arguments: expression               { /* ... */ }
     ;
 
 expression: IDENTIFIER              { /* ... */ }
-    | NATURAL                       { /* ... */ }
+    | NATURAL                       { $$ = newnode(Natural, $1); }
     | DECIMAL                       { /* ... */ }
     | IDENTIFIER '(' arguments ')'  { /* ... */ }
     | IF expression THEN expression ELSE expression  %prec LOW
@@ -59,7 +59,7 @@ expression: IDENTIFIER              { /* ... */ }
     | expression '-' expression     { /* ... */ }
     | expression '*' expression     { /* ... */ }
     | expression '/' expression     { /* ... */ }
-    | '(' expression ')'            { /* ... */ }  
+    | '(' expression ')'            { $$ = $2; }  
     ;
 
 %%
