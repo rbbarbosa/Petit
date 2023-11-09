@@ -1,6 +1,7 @@
 #ifndef _AST_H
 #define _AST_H
 
+// the order of the enum and the #define must be exactly the same
 enum category {  Program,   Function,   Parameters,   Parameter,   Arguments,   Integer,   Double,   Identifier,   Natural,   Decimal,   Call,   If,   Add,   Sub,   Mul,   Div };
 #define names { "Program", "Function", "Parameters", "Parameter", "Arguments", "Integer", "Double", "Identifier", "Natural", "Decimal", "Call", "If", "Add", "Sub", "Mul", "Div" }
 

@@ -99,7 +99,7 @@ Finally, it should be noted that the ``factorial`` function returns the value st
 
 ## The recursive code generation algorithm
 
-The input program is fully represented by an abstract syntax tree (AST) annotated with the relevant attributes. Code generation is expressed through a recursive traversal of the AST. Function ``codegen_program`` (in file [``codegen.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p6_source/codegen.c)) generates code for the root ``Program`` node by generating code for each child ``Function`` node and then emitting code for the ``main`` entry point:
+The input program is fully represented by an AST annotated with the relevant attributes. Code generation is expressed through a recursive traversal of the AST. Function ``codegen_program`` (in file [``codegen.c``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p6_source/codegen.c)) generates code for the root ``Program`` node by generating code for each child ``Function`` node and then emitting code for the ``main`` entry point:
 
     void codegen_program(struct node *program) {
         struct node_list *function = program->children;
@@ -165,7 +165,7 @@ Notice that the function ``codegen_natural`` emits the code to load the value of
 
 ## Exercises
 
-In this tutorial we only consider the ``integer`` type and completely forget about ``double`` values (for now). Therefore, all instructions will operate on ``i32`` values exclusively.
+In this tutorial we only consider the ``integer`` type and completely forget about ``double`` values (for now). Hence, all instructions operate on ``i32`` values exclusively.
 
 1. Take the above ``factorial`` example as a starting point. Write the ``main`` function such that it reads an integer value, computes the factorial, and prints the value. Link with io.c (provide the commands to do so) write a manual implementation that reads a number, calculates its factorial, and writes the result. Notice that read() requires zero as argument, not to repeat the last value read.
 

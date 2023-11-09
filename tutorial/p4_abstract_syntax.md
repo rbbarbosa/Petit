@@ -68,7 +68,7 @@ Consider the following _yacc_ specification (which you will complete). Notice th
         | '(' expression ')'            { $$ = $2; }  
         ;
 
-When the first production is used, the right-hand side contains a _function_ with its ``parameters`` and ``expression``. Parsing will be finishing there. The corresponding action executes 6 statements, in the following order: _(1)_ the AST's root node ``Program`` is created; _(2)_ a new ``Function`` node is created; _(3)_ a new ``Identifier`` node is created, with the function name, and becomes a child of the ``Function`` node; _(4)_ the ``parameters`` node ``$3`` becomes a child of the ``Function`` node; _(5)_ the ``expression`` node ``$6`` becomes a child of the ``Function`` node; and _(6)_ the new ``Function`` node becomes a child of the ``Program`` node.
+When the first production is used, the right-hand side contains a _function_ with its ``parameters`` and ``expression``. Parsing will be finishing there. The corresponding action executes 6 statements in the following order: _(1)_ the AST's root node is created (``program`` is declared as a global variable); _(2)_ a new ``Function`` node is created; _(3)_ a new ``Identifier`` node is created, with the function name, and becomes a child of the ``Function`` node; _(4)_ the ``parameters`` node ``$3`` becomes a child of the ``Function`` node; _(5)_ the ``expression`` node ``$6`` becomes a child of the ``Function`` node; and _(6)_ the new ``Function`` node becomes a child of the ``Program`` node.
 
 # Token types and ``%union``
 
