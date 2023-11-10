@@ -9,10 +9,10 @@ A bit of theory: The usual semantic analysis algorithm performs a depth-first tr
 A _symbol table_ is constructed by the compiler to store information about about identifiers (e.g., variables, functions) and their attributes. It tracks the scope, data types, and other properties associated with each identifier.
 
     struct symbol_list {
-    	char *identifier;
-    	enum type type;
-    	struct node *node;
-    	struct symbol_list *next;
+        char *identifier;
+        enum type type;
+        struct node *node;
+        struct symbol_list *next;
     };
 
 The ``symbol_list`` structure represents a symbol table as a linked list where each entry contains: the name of the _identifier_, its _data type_, and a pointer to the _AST node_ in which it is declared. There are two data types and a special case:
@@ -85,9 +85,9 @@ We begin with a simplifying assumption: any identifier may only be used once, gl
 
 3. Revise the code to check function _calls_. Ensure that the identifier used is the name of an existing function and that the number of arguments in the call matches the number of parameters of the function. Otherwise, show appropriate error messages.
 
-4. annotate all expressions with their type; whenever a double is involved in an operation, the result is of type double; if there are ; whenever the result of an operation could be integer or double, we default to double; whenever the result is certainly of type integer. Modify the code so that \textit{expression} nodes of categories Identifier, Natural and Decimal are annotated with the type (integer\_type or double\_type). Then implement the following semantic check: assigning a double (Identifier or Decimal) to an integer variable should report a compiler warning: implicit conversion from double to integer. % Exercise: show tree with type annotations
+4. Annotate _expression_ nodes with their data type by computing the ``type`` field during the ascending phase of semantic analysis. Begin the process by annotating the leaves falling into the categories ``Natural`` (``integer_type``), ``Decimal`` (``double_type``), and ``Identifier`` (retrieved from the symbol table). Calculate the type of operations based on a simple rule: if the result of the operation involves a double, the type is set to ``double_type``; otherwise, if it involves only integers, the type becomes ``integer_type``. When displaying the content of the AST, incorporate the type information for each _expression_ node (e.g., ``Identifier(d) - double``).
 
-5. check all expressions for undeclared identifiers; you may create a new symbol table when entering function; new scope; the scope would need to be passed as argument to check_parameters (to insert the parameters in the local scope) and to check_expression (to search for parameters in the local scope). Modify the code so that undeclared symbols are reported through an error message. Final, long exercise: check that variables used in expressions are parameters of the respective function. This requires scopes... /* Exercise 3. check for usage of undeclared identifiers in expressions */
+5. Revise the code to check for undeclared identifiers. In expressions, variables are restricted to the parameters of the respective function. To implement this, we shall declare a local scope for each function, meaning a dedicated symbol table for each function. One approach is to create a new local ``struct symbol_list *scope`` within ``check_function`` and pass this scope down to both ``check_parameters`` and ``check_expression``. Subsequently, ``check_parameters`` adds the parameters to the local scope, while ``check_expression`` retrieves identifiers from the local scope.
 
 ## Author
 

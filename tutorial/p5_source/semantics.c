@@ -8,20 +8,6 @@ int semantic_errors = 0;
 
 struct symbol_list *symbol_table;
 
-/*void check_parameters(struct node *parameters) {
-    struct node_list *parameter = parameters->children;
-    while((parameter = parameter->next) != NULL) {
-        struct node *id = getchild(parameter->node, 1);
-        enum type type = category_type(getchild(parameter->node, 0)->category);
-        if(search_symbol(symbol_table, id->token) == NULL) {
-            insert_symbol(symbol_table, id->token, type, parameter->node);
-        } else {
-            printf("Identifier %s already declared\n", id->token);
-            semantic_errors++;
-        }
-    }
-}*/
-
 void check_function(struct node *function) {
     struct node *id = getchild(function, 0);
     if(search_symbol(symbol_table, id->token) == NULL) {
