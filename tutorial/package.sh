@@ -25,4 +25,7 @@ zip -j p5_semantic_analysis.zip p5_semantic_analysis.pdf p5_source/ast.c p5_sour
 
 # package exercises VI in a zip file
 pandoc p6_code_generation.md -o p6_code_generation.pdf
-zip p6_code_generation.zip p6_code_generation.pdf calc.l calc.y
+cd p6_source
+zip -j p6_code_generation.zip ../p6_code_generation.pdf ast.c build.sh codegen.h petit.l semantics.c ast.h codegen.c io.c petit.y semantics.h factorial.ll
+mv p6_code_generation.zip ..
+cd ..
