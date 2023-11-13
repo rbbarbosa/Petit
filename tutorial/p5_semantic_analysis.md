@@ -6,7 +6,7 @@ A bit of theory: The usual semantic analysis algorithm performs a depth-first tr
 
 ## Scope analysis
 
-A _symbol table_ is constructed by the compiler to store information about about identifiers (e.g., variables, functions) and their attributes. It tracks the scope, data types, and other properties associated with each identifier.
+A _symbol table_ is constructed by the compiler to store information about identifiers (e.g., variables, functions) and their attributes. It tracks the scope, data types, and other properties associated with each identifier.
 
     struct symbol_list {
         char *identifier;
