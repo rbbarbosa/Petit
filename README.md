@@ -11,12 +11,12 @@ Petit is an educational programming language for learning compilers. Here's an e
 
 ## Tutorials and exercises
 
-1. [Compilers tutorial I: Lexical analysis](/tutorial/p1_lexical_analysis.md)
-2. [Compilers tutorial II: Advanced lex features](/tutorial/p2_advanced_lex.md)
-3. [Compilers tutorial III: Syntactic analysis](/tutorial/p3_syntactic_analysis.md)
-4. [Compilers tutorial IV: Abstract syntax](/tutorial/p4_abstract_syntax.md)
-5. [Compilers tutorial V: Semantic analysis](/tutorial/p5_semantic_analysis.md)
-6. [Compilers tutorial VI: Code generation](/tutorial/p6_code_generation.md)
+1. [Tutorial I: Lexical analysis](/tutorial/p1_lexical_analysis.md)
+2. [Tutorial II: Advanced lex features](/tutorial/p2_advanced_lex.md)
+3. [Tutorial III: Syntactic analysis](/tutorial/p3_syntactic_analysis.md)
+4. [Tutorial IV: Abstract syntax](/tutorial/p4_abstract_syntax.md)
+5. [Tutorial V: Semantic analysis](/tutorial/p5_semantic_analysis.md)
+6. [Tutorial VI: Code generation](/tutorial/p6_code_generation.md)
 7. [Solutions for most exercises](/source/)
 
 ## Grammar
