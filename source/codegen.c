@@ -68,7 +68,7 @@ int codegen_call(struct node *call) {
         arguments_str = realloc(arguments_str, strlen(arguments_str) + strlen(str) + 1);
         strcat(arguments_str, str);
     }
-    printf("  %%%d = call i32 @_%s(%s)\n", temporary, getchild(call, 0)->token, arguments_str);
+    printf("  %%%d = tail call i32 @_%s(%s)\n", temporary, getchild(call, 0)->token, arguments_str);
     return temporary++;
 }
 
@@ -151,7 +151,7 @@ void codegen_function(struct node *function) {
 void codegen_program(struct node *program) {
     // predeclared functions
     printf("declare i32 @_read(i32)\n");
-    printf("declare i32 @_write(i32)\n\n");
+    printf("declare i32 @_write(i32)\n");
     printf("declare i32 @_set(i32, i32)\n");
     printf("declare i32 @_get(i32)\n\n");
 
