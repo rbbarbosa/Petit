@@ -92,7 +92,7 @@ void check_function(struct node *function) {
 int check_program(struct node *program) {
     symbol_table = (struct symbol_list *) malloc(sizeof(struct symbol_list));
     symbol_table->next = NULL;
-    insert_symbol(symbol_table, "write", integer_type, newnode(Function, NULL)); /* no children means predefined functions */
+    insert_symbol(symbol_table, "write", integer_type, newnode(Function, NULL));/* predeclared functions (no children) */
     insert_symbol(symbol_table, "read", integer_type, newnode(Function, NULL));
     struct node_list *child = program->children;
     while((child = child->next) != NULL)

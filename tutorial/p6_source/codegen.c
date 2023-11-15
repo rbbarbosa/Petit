@@ -48,7 +48,7 @@ void codegen_function(struct node *function) {
 
 // code generation begins here, with the AST root node
 void codegen_program(struct node *program) {
-    // pre-declared I/O functions
+    // predeclared I/O functions
     printf("declare i32 @_read(i32)\n");
     printf("declare i32 @_write(i32)\n\n");
 
