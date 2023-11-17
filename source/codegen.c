@@ -91,6 +91,33 @@ int codegen_ifthenelse(struct node *ifthenelse) {
     return temporary++;
 }
 
+#define OPTIMIZE_IFS
+
+#ifdef OPTIMIZE_IFS
+// if-then-else at the top level should 'ret' to benefit from tail call elimination
+int codegen_ifthenelse_ret(struct node *ifthenelse) {
+    int e = codegen_expression(getchild(ifthenelse, 0));
+    int label_id = temporary;
+    printf("  %%%d = icmp ne i32 %%%d, 0\n", temporary, e);
+    printf("  br i1 %%%d, label %%L%dthen, label %%L%delse\n", temporary++, label_id, label_id);
+    printf("L%dthen:\n", label_id);
+    if(getchild(ifthenelse, 1)->category == If) {
+        codegen_ifthenelse_ret(getchild(ifthenelse, 1));
+    } else {
+        int e1 = codegen_expression(getchild(ifthenelse, 1));
+        printf("  ret i32 %%%d\n", e1);
+    }
+    printf("L%delse:\n", label_id);
+    if(getchild(ifthenelse, 2)->category == If) {
+        codegen_ifthenelse_ret(getchild(ifthenelse, 2));
+    } else {
+        int e2 = codegen_expression(getchild(ifthenelse, 2));
+        printf("  ret i32 %%%d\n", e2);
+    }
+    return temporary;
+}
+#endif
+
 int codegen_expression(struct node *expression) {
     int tmp = -1;
     switch(expression->category) {
@@ -142,7 +169,12 @@ void codegen_function(struct node *function) {
     printf("define i32 @_%s(", getchild(function, 0)->token);
     codegen_parameters(getchild(function, 1));
     printf(") {\n");
-    codegen_expression(getchild(function, 2));
+#ifdef OPTIMIZE_IFS
+    if(getchild(function, 2)->category == If)
+        codegen_ifthenelse_ret(getchild(function, 2));  // optimized if-then-else
+    else
+#endif
+        codegen_expression(getchild(function, 2));      // usual if-then-else
     printf("  ret i32 %%%d\n", temporary-1);
     printf("}\n\n");
 }
