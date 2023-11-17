@@ -50,7 +50,7 @@ else                        { return ELSE; }
 \n|\r|\r\n                  { lex_line++; lex_column = 1; }
 [()=,*/+-]                  { return yytext[0]; }
 .                           { yyerror("unrecognized character"); }
-<<EOF>>                     { return 0; }
+<<EOF>>                     { YY_USER_ACTION; return 0; }
 
 %%
 

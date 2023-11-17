@@ -5,6 +5,7 @@
 #include "y.tab.h"
 #include "ast.h"
 
+// macro YY_USER_ACTION, which updates 'lex_column', is executed before every action
 #define YY_USER_ACTION { syn_line = lex_line; syn_column = lex_column; lex_column += yyleng; }
 #define PASS_TOKEN() yylval.lexeme = strdup(yytext);
 
@@ -49,7 +50,7 @@ else                        { return ELSE; }
 \n|\r|\r\n                  { lex_line++; lex_column = 1; }
 [()=,*/+-]                  { return yytext[0]; }
 .                           { yyerror("unrecognized character"); }
-<<EOF>>                     { return 0; }
+<<EOF>>                     { YY_USER_ACTION; return 0; }
 
 %%
 
