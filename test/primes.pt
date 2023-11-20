@@ -1,19 +1,19 @@
 mod(integer a, integer b) = a-a/b*b
 
 prime(integer n, integer divisor) =
-    if n-1 then
-        if n-divisor then
-            if mod(n, divisor) then
-                prime(n, divisor+1)
+     if n-1
+     then if n-divisor
+          then if mod(n, divisor)
+               then prime(n, divisor+1)
+               else 0
+          else 1
+     else 0
+
+list(integer c) =
+     if c + if prime(c, 2)
+            then write(c)
             else 0
-        else 1
-    else 0
+     then list(c-1)
+     else 0
 
-list(integer m) =
-    if m then
-        if prime(m, 2) then
-            list(m-1) + write(m)
-        else list(m-1)
-    else 0
-
-main(integer i) = list(100)
+main(integer i) = list(10000)

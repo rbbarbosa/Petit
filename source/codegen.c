@@ -94,8 +94,8 @@ int codegen_ifthenelse(struct node *ifthenelse) {
 #define OPTIMIZE_IFS
 
 #ifdef OPTIMIZE_IFS
-// if-then-else at the top level should 'ret' to benefit from tail call elimination
-int codegen_ifthenelse_ret(struct node *ifthenelse) {
+// at the top level, an if-then-else will 'ret' to benefit from tail call elimination
+void codegen_ifthenelse_ret(struct node *ifthenelse) {
     int e = codegen_expression(getchild(ifthenelse, 0));
     int label_id = temporary;
     printf("  %%%d = icmp ne i32 %%%d, 0\n", temporary, e);
@@ -114,7 +114,6 @@ int codegen_ifthenelse_ret(struct node *ifthenelse) {
         int e2 = codegen_expression(getchild(ifthenelse, 2));
         printf("  ret i32 %%%d\n", e2);
     }
-    return temporary;
 }
 #endif
 

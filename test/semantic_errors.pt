@@ -1,3 +1,0 @@
-func(double var, integer func) = func + var(func(var))
-
-func(double func, integer var) = if func(func, var, 1) then uNkNoWn else func
