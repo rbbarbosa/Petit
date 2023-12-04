@@ -41,8 +41,8 @@ void codegen_function(struct node *function) {
     printf("define i32 @_%s(", getchild(function, 0)->token);
     codegen_parameters(getchild(function, 1));
     printf(") {\n");
-    codegen_expression(getchild(function, 2));
-    printf("  ret i32 %%%d\n", temporary-1);
+    int tmp = codegen_expression(getchild(function, 2));
+    printf("  ret i32 %%%d\n", tmp);
     printf("}\n\n");
 }
 
