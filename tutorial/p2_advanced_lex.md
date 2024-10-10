@@ -49,6 +49,7 @@ For reference, the following table summarises the most relevant features of _lex
 | ``yylval``           | Semantic value associated with a token            |
 | ``YY_USER_ACTION``   | Macro executed before every matched rule's action |
 | ``ECHO``             | Print the matched string                          |
+| ``<<EOF>>``          | Special rule to match an end-of-file              |
 | ``int yywrap(void)`` | Called on end-of-file, return 1 to stop           |
 | ``BEGIN condition``  | Switch to a specific start condition              |
 | ``INITIAL``          | The default initial start condition (same as 0)   |
