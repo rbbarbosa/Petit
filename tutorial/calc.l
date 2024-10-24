@@ -6,6 +6,7 @@ digit   [0-9]
 %%
 {digit}+                { yylval = atoi(yytext); return NATURAL; }
 [()=,*/+-]              { return yytext[0]; }
+[\t ]+                  {;}
 \n                      { return 0; }
 .                       { printf("Unrecognized character\n"); }
 %%
