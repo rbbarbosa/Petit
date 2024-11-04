@@ -2,6 +2,7 @@
 
 %{
 
+#include <stdio.h>
 #include "ast.h"
 
 int yylex(void);
