@@ -21,7 +21,9 @@ zip -j p4_abstract_syntax.zip p4_abstract_syntax.pdf p4_source/ast.c p4_source/a
 
 # package exercises V in a zip file
 pandoc p5_semantic_analysis.md -o p5_semantic_analysis.pdf
-zip -j p5_semantic_analysis.zip p5_semantic_analysis.pdf p5_source/ast.c p5_source/build.sh p5_source/petit.y p5_source/semantics.h p5_source/ast.h p5_source/petit.l p5_source/semantics.c ../test/factorial.pt
+head -n 1 ../test/factorial.pt > factorial.pt
+zip -j p5_semantic_analysis.zip p5_semantic_analysis.pdf p5_source/ast.c p5_source/build.sh p5_source/petit.y p5_source/semantics.h p5_source/ast.h p5_source/petit.l p5_source/semantics.c factorial.pt
+rm factorial.pt
 
 # package exercises VI in a zip file
 pandoc p6_code_generation.md -o p6_code_generation.pdf

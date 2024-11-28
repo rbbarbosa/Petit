@@ -56,7 +56,7 @@ Suppose we want an LLVM IR program to call external functions [``_read``](https:
     declare i32 @_read(i32)
     declare i32 @_write(i32)
 
-It then becomes possible to call those functions just like any local function, for example using the instruction ``%1 = call i32 @_write(i32 123)`` to write number 123 to the standard output.
+It then becomes possible to call those functions, for example using the instruction ``%1 = call i32 @_write(i32 123)`` to write number 123 to the standard output, or ``%3 = call i32 @_write(i32 %2)`` to write the value of temporary ``%2``.
 
 ## Control flow
 
