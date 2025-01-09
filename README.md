@@ -21,8 +21,12 @@ Petit is an educational programming language for learning compilers. Here's an e
 
 ## Grammar
 
-    program: IDENTIFIER '(' parameters ')' '=' expression
-           | program IDENTIFIER '(' parameters ')' '=' expression
+    program: functions
+
+    functions: function
+             | functions function
+
+    function: IDENTIFIER '(' parameters ')' '=' expression
 
     parameters: parameter
               | parameters ',' parameter

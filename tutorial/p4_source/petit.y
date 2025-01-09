@@ -35,7 +35,7 @@ program: IDENTIFIER '(' parameters ')' '=' expression
                                       addchild(function, newnode(Identifier, $1));
                                       addchild(function, $3);
                                       addchild(function, $6);
-                                      addchild($$, function); /*reorder this for readability?*/}
+                                      addchild($$, function); }
     ;
 
 parameters: parameter               { /* ... */ }
