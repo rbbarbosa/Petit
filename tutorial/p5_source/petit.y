@@ -14,7 +14,8 @@ struct node *program;
 
 %token INTEGER DOUBLE IF THEN ELSE
 %token<lexeme> IDENTIFIER NATURAL DECIMAL
-%type<node> program parameters parameter arguments expression
+%type<node> program function parameters parameter arguments expression
+%type<node_list> functions
 
 %left LOW
 %left '+' '-'
@@ -23,26 +24,27 @@ struct node *program;
 %union{
     char *lexeme;
     struct node *node;
+    struct node_list *node_list;
 }
 
 /* START grammar rules section -- BNF grammar */
 
 %%
 
-program: IDENTIFIER '(' parameters ')' '=' expression
-                                    { $$ = program = newnode(Program, NULL);
-                                      struct node *function = newnode(Function, NULL);
-                                      addchild(function, newnode(Identifier, $1));
-                                      addchild(function, $3);
-                                      addchild(function, $6);
-                                      addchild($$, function); }
-    | program IDENTIFIER '(' parameters ')' '=' expression
-                                    { $$ = $1;
-                                      struct node *function = newnode(Function, NULL);
-                                      addchild(function, newnode(Identifier, $2));
-                                      addchild(function, $4);
-                                      addchild(function, $7);
-                                      addchild($$, function); }
+program: functions                  { $$ = program = newnode(Program, NULL);
+                                      addchildren($$, $1); }
+    ;
+
+functions: function                 { $$ = newlist();
+                                      append($$, $1); }
+    | functions function            { append($$, $2); }
+    ;
+
+function: IDENTIFIER '(' parameters ')' '=' expression
+                                    { $$ = newnode(Function, NULL);
+                                      addchild($$, newnode(Identifier, $1));
+                                      addchild($$, $3);
+                                      addchild($$, $6); }
     ;
 
 parameters: parameter               { $$ = newnode(Parameters, NULL);

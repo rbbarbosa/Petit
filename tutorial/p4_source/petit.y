@@ -14,7 +14,7 @@ struct node *program;
 
 %token INTEGER DOUBLE IF THEN ELSE
 %token<lexeme> IDENTIFIER NATURAL DECIMAL
-%type<node> program parameters parameter arguments expression
+%type<node> program function parameters parameter arguments expression
 
 %left LOW
 %left '+' '-'
@@ -29,13 +29,15 @@ struct node *program;
 
 %%
 
-program: IDENTIFIER '(' parameters ')' '=' expression
-                                    { $$ = program = newnode(Program, NULL);
-                                      struct node *function = newnode(Function, NULL);
-                                      addchild(function, newnode(Identifier, $1));
-                                      addchild(function, $3);
-                                      addchild(function, $6);
-                                      addchild($$, function); }
+program: function                   { $$ = program = newnode(Program, NULL);
+                                      addchild($$, $1); }
+    ;
+
+function: IDENTIFIER '(' parameters ')' '=' expression
+                                    { $$ = newnode(Function, NULL);
+                                      addchild($$, newnode(Identifier, $1));
+                                      addchild($$, $3);
+                                      addchild($$, $6); }
     ;
 
 parameters: parameter               { /* ... */ }

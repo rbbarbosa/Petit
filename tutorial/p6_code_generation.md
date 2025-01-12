@@ -209,7 +209,7 @@ https://mapping-high-level-constructs-to-llvm-ir.readthedocs.io
 
 Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
 
-Barbosa, R. (2023). Petit programming language and compiler.  
+Barbosa, R. (2025). Petit programming language and compiler.  
 https://github.com/rbbarbosa/Petit
 
 LLVM Project (2023). LLVM Language Reference Manual.  

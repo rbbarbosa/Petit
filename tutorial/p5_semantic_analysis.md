@@ -97,7 +97,7 @@ Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844)
 
 Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
 
-Barbosa, R. (2023). Petit programming language and compiler.  
+Barbosa, R. (2025). Petit programming language and compiler.  
 https://github.com/rbbarbosa/Petit
 
 Free Software Foundation (2021). GNU Bison Manual, Tracking Locations.

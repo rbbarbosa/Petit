@@ -38,13 +38,14 @@ During bottom-up parsing, an action ``{...}`` is executed when the corresponding
 
 Consider the following _yacc_ specification (which you will complete). Notice that it is included in file [``petit.y``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/petit.y), that you should carefully analyze.
 
-    program: IDENTIFIER '(' parameters ')' '=' expression
-                    { $$ = program = newnode(Program, NULL);
-                      struct node *function = newnode(Function, NULL);
-                      addchild(function, newnode(Identifier, $1));
-                      addchild(function, $3);
-                      addchild(function, $6);
-                      addchild($$, function); }
+    program: function         { $$ = program = newnode(Program, NULL);
+                                addchild($$, $1); }
+        ;
+    function: IDENTIFIER '(' parameters ')' '=' expression
+                              { $$ = newnode(Function, NULL);
+                                addchild($$, newnode(Identifier, $1));
+                                addchild($$, $3);
+                                addchild($$, $6); }
         ;
     parameters: parameter               { /* ... */ }
         | parameters ',' parameter      { /* ... */ }
@@ -67,8 +68,8 @@ Consider the following _yacc_ specification (which you will complete). Notice th
         | expression '/' expression     { /* ... */ }
         | '(' expression ')'            { $$ = $2; }  
         ;
-
-When the first production is used, the right-hand side contains a _function_ with its ``parameters`` and ``expression``. Parsing will be finishing there. The corresponding action executes 6 statements in the following order: _(1)_ the AST's root node is created (``program`` is declared as a global variable); _(2)_ a new ``Function`` node is created; _(3)_ a new ``Identifier`` node is created, with the function name, and becomes a child of the ``Function`` node; _(4)_ the ``parameters`` node ``$3`` becomes a child of the ``Function`` node; _(5)_ the ``expression`` node ``$6`` becomes a child of the ``Function`` node; and _(6)_ the new ``Function`` node becomes a child of the ``Program`` node.
+ 
+When the production for ``function`` is used, the right-hand side contains grammar symbols representing the function's components. The action executes four statements: _(1)_ a new ``Function`` node is created; _(2)_ a new ``Identifier`` node is created, holding the function name, and becomes a child of the ``Function`` node; _(3)_ the ``parameters`` node ``$3`` becomes a child of the ``Function`` node; and _(4)_ the ``expression`` node ``$6`` becomes a child of the ``Function`` node. Then, parsing will complete at the rule for ``program``, where the AST's root node is created with a child function (``program`` is declared as a global variable).
 
 ## Token types and ``%union``
 
@@ -89,9 +90,9 @@ Then, when we declare a token, the C type is specified as follows:
 
     %token<lexeme> IDENTIFIER NATURAL DECIMAL
 
-Identifiers, naturals and decimals require their semantic value (the ``char *`` to the original string) to be stored. The _lex_ specification should copy the semantic value by executing ``yylval.lexeme = strdup(yytext);`` before returning any of these tokens.
+Identifiers, naturals and decimals require their semantic value (the ``char *`` to their string) to be stored. The _lex_ specification should copy their value by executing ``yylval.lexeme = strdup(yytext);`` before returning any such tokens.
 
-Furthermore, syntactic variables (i.e., nonterminals) are specified using the ``%type`` declaration:
+Syntactic variables (i.e., nonterminals) are specified using the ``%type`` declaration:
 
     %type<node> program parameters parameter arguments expression
 
@@ -112,7 +113,7 @@ Begin by carefully examining the file [``petit.y``](https://github.com/rbbarbosa
      }
 ```
 
-Taking ``factorial(integer n) = if n then n * factorial(n-1) else 1`` as input, the solution to exercises 1 and 2 should have the following output:
+Taking ``factorial(integer n) = if n then n * factorial(n-1) else 1`` as input, the solution to exercises 1 and 2 should have the output that follows.
 
 ```
   Program
@@ -135,12 +136,17 @@ Taking ``factorial(integer n) = if n then n * factorial(n-1) else 1`` as input, 
   ______Natural(1)
 ```
 
-3. Modify the grammar to allow for multiple functions, using the productions that follow, and implement the necessary action to construct the AST.
+3. Modify the grammar to allow for multiple functions, using these rules:
 
 ```
-     program: IDENTIFIER '(' parameters ')' '=' expression
-            | program IDENTIFIER '(' parameters ')' '=' expression
+    program: functions
+        ;
+    functions: function
+        | functions function
+        ;
 ```
+
+In this case, we need to create a _list_ of ``Function`` nodes. There are many solutions. First, we can create an ``Auxiliary`` node (a new category) to hold the intended list. We can later assign ``$1->category = Program`` to change its category. Second, declaring ``%type<node_list> functions`` makes it explicitly a node list. We will need the list operations ``newlist``, ``append`` and ``addchildren``.
 
 Test your solution with the following example, found in file [``factorial.pt``](https://github.com/rbbarbosa/Petit/blob/main/test/factorial.pt):
 
@@ -155,11 +161,5 @@ Raul Barbosa ([University of Coimbra](https://apps.uc.pt/mypage/faculty/uc26844)
 
 ## References
 
-Aho, A. V. (2006). Compilers: Principles, techniques and tools, 2nd edition. Pearson Education.
-
-Levine, J. (2009). Flex & Bison: Text processing tools. O'Reilly Media.
-
-Niemann, T. (2016) Lex & Yacc. https://epaperpress.com/lexandyacc
-
-Barbosa, R. (2023). Petit programming language and compiler.  
+Barbosa, R. (2025). Petit programming language and compiler.  
 https://github.com/rbbarbosa/Petit

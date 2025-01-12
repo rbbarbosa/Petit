@@ -34,6 +34,33 @@ struct node *getchild(struct node *parent, int position) {
     return NULL;
 }
 
+// create an empty list
+struct node_list *newlist() {
+    struct node_list *new = malloc(sizeof(struct node_list));
+    new->node = NULL;
+    new->next = NULL;
+    return new;
+}
+
+// append a node to a list of nodes
+void append(struct node_list *list, struct node *node) {
+    struct node_list *new = malloc(sizeof(struct node_list));
+    new->node = node;
+    new->next = NULL;
+    while(list->next != NULL)
+        list = list->next;
+    list->next = new;
+}
+
+// append a list of nodes as children of the given node
+void addchildren(struct node *node, struct node_list *list) {
+    struct node_list *children = node->children;
+    while(children->next != NULL)
+        children = children->next;
+    children->next = list->next;
+    free(list);
+}
+
 // category names #defined in ast.h
 char *category_name[] = names;
 

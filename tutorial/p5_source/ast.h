@@ -24,6 +24,9 @@ struct node_list {
 struct node *newnode(enum category category, char *token);
 void addchild(struct node *parent, struct node *child);
 struct node *getchild(struct node *parent, int position);
+struct node_list *newlist();
+void append(struct node_list *list, struct node *node);
+void addchildren(struct node *node, struct node_list *list);
 void show(struct node *root, int depth);
 
 #endif
