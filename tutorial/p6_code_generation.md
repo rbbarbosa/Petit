@@ -179,7 +179,7 @@ In this tutorial we only consider the ``integer`` type and completely forget abo
 
 2. The code generator already compiles functions like ``func(integer i) = 10`` where the expression consists of a single ``Natural`` value. Modify the code generator to support the ``Identifier`` case of expressions. It should then be able to compile the program ``identity(integer n) = n`` by generating code that reads a variable into a temporary register.
 
-3. Implement code generation for the multiplication operation. The code generation process for this operation can be outlined with the following pseudocode:
+3. Implement code generation for the multiplication operation. The generation process for this operation can be outlined with the following pseudocode:
     * ``t1 = codegen_expression(left child)``
     * ``t2 = codegen_expression(right child)``
     * ``new_temporary =`` result of multiplying ``t1 * t2``
@@ -197,6 +197,8 @@ Finally, test your solution with the following Petit program:
     main(integer i) = write(factorial(read(0)))
 
 By following the link in the references below, you can find other Petit programs such as [``primes.pt``](https://github.com/rbbarbosa/Petit/blob/main/test/primes.pt) to test your solution with more advanced programs.
+
+A hint is to use ``clang -S -emit-llvm`` to see what the compiler generates.
 
 ## Author
 
