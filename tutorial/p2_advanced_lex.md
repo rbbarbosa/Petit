@@ -55,7 +55,7 @@ For reference, the following table summarises the most relevant features of _lex
 | ``INITIAL``          | The default initial start condition (same as 0)   |
 | ``%X condition(s)``  | Declare the names of exclusive start conditions   |
 
-All of these features should be familiar to _lex_ users. An advanced feature that can simplify _lex_ specifications is the ``YY_USER_ACTION`` macro: if we ``#define`` this macro, the corresponding code will be executed before every single action. Therefore, it is useful when the same code is repeated in all actions.
+All of these features should be familiar to _lex_ users. An advanced feature that can simplify _lex_ specifications is the ``YY_USER_ACTION`` macro: if we ``#define`` this macro, its code will be executed before every action associated with a matched token, except for the special ``<<EOF>>`` token. Therefore, it is useful when the same code is repeated in all actions.
 
 ## Exercises
 
