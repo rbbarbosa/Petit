@@ -17,7 +17,7 @@ int lex_line = 1, lex_column = 1;
 int syn_line = -1, syn_column = -1;
 int errors = 0;
 
-extern struct node *program;
+extern struct node *ast;
 
 %}
 
@@ -65,21 +65,21 @@ void yyerror(char *error) {
 int main(int argc, char *argv[]) {
     yyparse();
     if(argc >= 2 && strcmp(argv[1], "-t") == 0 && errors == 0) {   /* "-t" prints the AST */
-        show(program, 0);
+        show(ast, 0);
     }
     if(argc >= 2 && strcmp(argv[1], "-s") == 0 && errors == 0) {   /* "-s" prints the AST and symbol table */
-        errors += check_program(program);
+        errors += check_program(ast);
         if(errors == 0) {
             show_symbol_table();
-            show(program, 0);
+            show(ast, 0);
         }
     }
     if(argc <= 1 && errors == 0) {
-        errors += check_program(program);
+        errors += check_program(ast);
         if(errors == 0)
-            codegen_program(program);
+            codegen_program(ast);
     }
-    deallocate(program);
+    deallocate(ast);
     yylex_destroy();
     return 0;
 }

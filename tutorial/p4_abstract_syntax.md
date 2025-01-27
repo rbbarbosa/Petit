@@ -38,7 +38,7 @@ During bottom-up parsing, an action ``{...}`` is executed when the corresponding
 
 Consider the following _yacc_ specification (which you will complete). Notice that it is included in file [``petit.y``](https://github.com/rbbarbosa/Petit/blob/main/tutorial/p4_source/petit.y), that you should carefully analyze.
 
-    program: function         { $$ = program = newnode(Program, NULL);
+    program: function         { ast = $$ = newnode(Program, NULL);
                                 addchild($$, $1); }
         ;
     function: IDENTIFIER '(' parameters ')' '=' expression
@@ -69,7 +69,7 @@ Consider the following _yacc_ specification (which you will complete). Notice th
         | '(' expression ')'            { $$ = $2; }  
         ;
  
-When the production for ``function`` is used, the right-hand side contains grammar symbols representing the function's components. The action executes four statements: _(1)_ a new ``Function`` node is created; _(2)_ a new ``Identifier`` node is created, holding the function name, and becomes a child of the ``Function`` node; _(3)_ the ``parameters`` node ``$3`` becomes a child of the ``Function`` node; and _(4)_ the ``expression`` node ``$6`` becomes a child of the ``Function`` node. Then, parsing will complete at the rule for ``program``, where the AST's root node is created with a child function (``program`` is declared as a global variable).
+When the production for ``function`` is used, the right-hand side contains grammar symbols representing the function's components. The action executes four statements: _(1)_ a new ``Function`` node is created; _(2)_ a new ``Identifier`` node is created, holding the function name, and becomes a child of the ``Function`` node; _(3)_ the ``parameters`` node ``$3`` becomes a child of the ``Function`` node; and _(4)_ the ``expression`` node ``$6`` becomes a child of the ``Function`` node. Then, parsing will complete at the rule for ``program``, where the AST's root node is created with a child function (``ast`` is declared as a global variable).
 
 ## Token types and ``%union``
 
@@ -108,7 +108,7 @@ Begin by carefully examining the file [``petit.y``](https://github.com/rbbarbosa
 
 ```
      show(struct node *node, int depth) {
-         print(node->category, node->token, depth)
+         print(node->category, node->token)
          foreach child in node->children show(child, depth+1)
      }
 ```
