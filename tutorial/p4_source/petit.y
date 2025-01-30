@@ -8,7 +8,7 @@
 int yylex(void);
 void yyerror(char *);
 
-struct node *program;
+struct node *ast;
 
 %}
 
@@ -29,7 +29,7 @@ struct node *program;
 
 %%
 
-program: function                   { $$ = program = newnode(Program, NULL);
+program: function                   { ast = $$ = newnode(Program, NULL);
                                       addchild($$, $1); }
     ;
 

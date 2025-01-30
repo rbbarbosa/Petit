@@ -16,7 +16,7 @@ int lex_line = 1, lex_column = 1;
 int syn_line = -1, syn_column = -1;
 int errors = 0;
 
-extern struct node *program;
+extern struct node *ast;
 
 %}
 
@@ -63,6 +63,6 @@ void yyerror(char *error) {
 
 int main(int argc, char *argv[]) {
     yyparse();
-    //show(program, 0);
+    //show(ast, 0);
     return 0;
 }
