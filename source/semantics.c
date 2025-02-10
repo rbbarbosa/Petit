@@ -45,6 +45,17 @@ void check_expression(struct node *expression, struct symbol_list *scope) {
             check_expression(getchild(expression, 0), scope);
             check_expression(getchild(expression, 1), scope);
             check_expression(getchild(expression, 2), scope);
+            
+            if (getchild(expression, 1)->type == no_type) {
+                expression->type = getchild(expression, 2)->type;
+            } else if (getchild(expression, 2)->type == no_type) {
+                expression->type = getchild(expression, 1)->type;
+            } else if (getchild(expression, 1)->type != getchild(expression, 2)->type) {
+                printf("If (%d:%d) with different types\n", getchild(expression, 1)->token_line, getchild(expression, 1)->token_column);
+                semantic_errors++;
+            } else {
+                expression->type = getchild(expression, 1)->type;
+            }
             break;
         case Add:
         case Sub:
@@ -52,6 +63,17 @@ void check_expression(struct node *expression, struct symbol_list *scope) {
         case Div:
             check_expression(getchild(expression, 0), scope);
             check_expression(getchild(expression, 1), scope);
+            
+            if (getchild(expression, 0)->type == no_type) {
+                expression->type = getchild(expression, 1)->type;
+            } else if (getchild(expression, 1)->type == no_type) {
+                expression->type = getchild(expression, 0)->type;
+            } else if (getchild(expression, 0)->type != getchild(expression, 1)->type) {
+                printf("Operation (%d:%d) with different types\n", getchild(expression, 0)->token_line, getchild(expression, 0)->token_column);
+                semantic_errors++;
+            } else {
+                expression->type = getchild(expression, 0)->type;
+            }
             break;
         default:
             break;
