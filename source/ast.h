@@ -30,6 +30,5 @@ struct node_list *newlist();
 void append(struct node_list *list, struct node *node);
 void addchildren(struct node *node, struct node_list *list);
 void show(struct node *root, int depth);
-void deallocate(struct node *root);
 
 #endif

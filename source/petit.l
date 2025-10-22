@@ -79,7 +79,6 @@ int main(int argc, char *argv[]) {
         if(errors == 0)
             codegen_program(ast);
     }
-    deallocate(ast);
     yylex_destroy();
     return 0;
 }

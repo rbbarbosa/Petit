@@ -85,19 +85,3 @@ void show(struct node *node, int depth) {
     while((child = child->next) != NULL)
         show(child->node, depth+1);
 }
-
-// free the AST
-void deallocate(struct node *node) {
-    if(node != NULL) {
-        struct node_list *child = node->children;
-        while(child != NULL) {
-            deallocate(child->node);
-            struct node_list *tmp = child;
-            child = child->next;
-            free(tmp);
-        }
-        if(node->token != NULL)
-            free(node->token);
-        free(node);
-    }
-}
