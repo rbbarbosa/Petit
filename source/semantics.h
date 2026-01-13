@@ -1,3 +1,6 @@
+// This file is part of the Petit compiler.
+// SPDX-License-Identifier: BSD-3-Clause
+
 #ifndef _SEMANTICS_H
 #define _SEMANTICS_H
 

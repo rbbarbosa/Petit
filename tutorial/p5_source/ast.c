@@ -1,3 +1,6 @@
+// This file is part of the Petit compiler.
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "ast.h"
@@ -64,7 +67,7 @@ void addchildren(struct node *node, struct node_list *list) {
 // category names #defined in ast.h
 char *category_name[] = names;
 
-// print the AST
+// traverse the AST and print its content
 void show(struct node *node, int depth) {
     int i;
     for(i = 0; i < depth; i++)

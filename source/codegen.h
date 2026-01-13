@@ -1,3 +1,6 @@
+// This file is part of the Petit compiler.
+// SPDX-License-Identifier: BSD-3-Clause
+
 #ifndef _CODEGEN_H
 #define _CODEGEN_H
 

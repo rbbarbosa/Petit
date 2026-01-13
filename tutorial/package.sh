@@ -27,7 +27,4 @@ rm factorial.pt
 
 # package exercises VI in a zip file
 pandoc p6_code_generation.md -o p6_code_generation.pdf
-cd p6_source
-zip -j p6_code_generation.zip ../p6_code_generation.pdf ast.c build.sh codegen.h petit.l semantics.c ast.h codegen.c io.c petit.y semantics.h factorial.ll ../test/factorial.pt
-mv p6_code_generation.zip ..
-cd ..
+zip -j p6_code_generation.zip p6_code_generation.pdf ../source/petit.y ../source/ast.c ../source/ast.h p6_source/build.sh p6_source/codegen.h p6_source/petit.l p6_source/semantics.c p6_source/codegen.c p6_source/io.c p6_source/semantics.h p6_source/factorial.ll ../test/factorial.pt

@@ -1,3 +1,6 @@
+// This file is part of the Petit compiler.
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

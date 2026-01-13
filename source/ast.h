@@ -1,3 +1,6 @@
+// This file is part of the Petit compiler.
+// SPDX-License-Identifier: BSD-3-Clause
+
 #ifndef _AST_H
 #define _AST_H
 
