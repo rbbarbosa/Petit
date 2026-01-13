@@ -2,12 +2,16 @@
 
 Petit programming language and compiler
 
-## Example
+## Overview
 
 Petit is an educational programming language for learning compilers. Here's an example:
 
     factorial(integer n) =
         if n then n * factorial(n-1) else 1
+
+Programs are written in an expression-oriented, functional style:
+
+    main(integer i) = write(factorial(read(0)))
 
 ## Tutorials and exercises
 
