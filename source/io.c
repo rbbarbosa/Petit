@@ -5,12 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-int input = -1;
-
-int _read(int reread) {
-    if(!reread)
-        scanf("%d", &input);
-    return input;
+int _read(int i) {
+    scanf("%d", &i);
+    return i;
 }
 
 int _write(int i) {

@@ -20,8 +20,8 @@ llc gcd.ll -o gcd.s
 clang gcd.s ../source/io.c -o gcd
 ./gcd
 
-#echo "[factorial]"
+echo "[factorial]"
 ../source/petit < factorial.pt > factorial.ll
 llc factorial.ll -o factorial.s
 clang factorial.s ../source/io.c -o factorial
-#./factorial
+echo 7 | ./factorial
