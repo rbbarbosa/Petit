@@ -22,7 +22,7 @@ int _set(int address, int value) {
     if(address >= size)
         memory = (int *) realloc(memory, (size = address+1) * sizeof(int *));
     memory[address] = value;
-    return value;
+    return 0;
 }
 
 int _get(int address) {

@@ -1,0 +1,17 @@
+turing(integer head) =
+	if get(head)
+	then turing(head+1 + set(head, 1))
+	else 0
+
+init(integer from, integer to) =
+	if to-from + set(from, to-from)
+	then init(from+1, to)
+	else 0
+
+show(integer k) =
+	if get(k) + write(get(k))
+	then show(k+1)
+	else 0
+
+main(integer i) =
+	init(0, 10) + show(0) + turing(0) + show(0)

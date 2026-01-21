@@ -4,14 +4,21 @@ Petit programming language and compiler
 
 ## Overview
 
-Petit is an educational programming language for learning compilers. Here's an example:
+Petit is an educational programming language for learning compilers. Functions can be defined recursively:
 
     factorial(integer n) =
         if n then n * factorial(n-1) else 1
 
 Programs are written in an expression-oriented, functional style:
 
-    main(integer i) = write(factorial(read(0)))
+    main(integer i) = write(factorial(7))
+
+The language is expressive enough to encode Turing machines:
+
+    turing(integer head) =
+	    if get(head)
+	    then turing(head+1 + set(head, 1))
+	    else 0
 
 ## Tutorials and exercises
 

@@ -25,3 +25,9 @@ echo "[factorial]"
 llc factorial.ll -o factorial.s
 clang factorial.s ../source/io.c -o factorial
 echo 7 | ./factorial
+
+echo "[turing]"
+../source/petit < turing.pt > turing.ll
+llc turing.ll -o turing.s
+clang turing.s ../source/io.c -o turing
+./turing
