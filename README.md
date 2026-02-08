@@ -13,14 +13,9 @@ Programs are written in an expression-oriented, functional style:
 
     main(integer i) = write(factorial(7))
 
-The language is expressive enough to encode Turing machines:
+## Tutorials
 
-    turing(integer head) =
-	    if get(head)
-	    then turing(head+1 + set(head, 1))
-	    else 0
-
-## Tutorials and exercises
+A six-part tutorial series that builds progressively from lexical analysis to LLVM IR code generation:
 
 1. [Tutorial I: Lexical analysis](/tutorial/p1_lexical_analysis.md)
 2. [Tutorial II: Advanced lex features](/tutorial/p2_advanced_lex.md)
@@ -28,7 +23,7 @@ The language is expressive enough to encode Turing machines:
 4. [Tutorial IV: Abstract syntax](/tutorial/p4_abstract_syntax.md)
 5. [Tutorial V: Semantic analysis](/tutorial/p5_semantic_analysis.md)
 6. [Tutorial VI: Code generation](/tutorial/p6_code_generation.md)
-7. [Solutions for most exercises](/source/)
+7. [Solutions to most exercises](/source/)
 
 ## Grammar
 
