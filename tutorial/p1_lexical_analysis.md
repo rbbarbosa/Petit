@@ -105,7 +105,7 @@ The following exercises start with the above code in file ``lexer.l`` and the fi
 
 6. A final rule is included to match any other character that could not be recognized. This rule must necessarily be the last one. Modify the code to show an error message whenever an unrecognized character is found. The key is to add a rule for `` . { printf("error..."); } `` that will match _any single character that has not been matched by other rules_. The error message should show the line and column numbers. For this, you will need to add variables to the declarations section, which may include C code delimited by ``%{ ... %}``, and update the column according to the external variable ``yyleng`` that stores the length of the token pointed to by ``yytext``.
 
-Finally, test the complete lexical analyzer using the input provided below, which is a factorial program written in Petit. You may write this input to a file and use ``./lexer < factorial.pt`` to pass it to the analyser via standard input.
+Finally, test the lexical analyser using the input provided below, which is a factorial program written in Petit. Write this input to a file named ``factorial.pt`` and use ``./lexer < factorial.pt`` to pass it to the analyser via ``stdin``.
 
     factorial(integer n) =
        if n then n * factorial(n-1) else 1
