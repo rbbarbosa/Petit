@@ -66,7 +66,7 @@ The following exercises start with _your_ solution to the previous exercises in 
 Test the lexical analyser on the following input:
 
     factorial(integer n) =
-        if n then n * factorial(n-1) else 1  /* recursive factorial
+        if n then n * factorial(n-1) else 1  /* factorial
      */ #
 
 The lexer should output the 19 tokens, followed by an error message on line 3, column 5, because ``#`` is an invalid character.
