@@ -95,7 +95,7 @@ The following exercises start with the above code in file ``lexer.l`` and the fi
 
 1. Modify the above code to print the token _value_ along with the token class. It should, for example, print ``NATURAL(10)`` when given ``10`` as input (and similarly for decimals). Notice that _lex_ provides an external variable named ``yytext`` that points to the current string matched by the lexer.
 
-2. In programming languages, the names of variables and functions are generically referred to as _identifiers_. Modify the code to print ``IDENTIFIER(xyz)`` whenever some identifier ``xyz`` is found. Identifiers consist of non-empty sequences of letters and digits, starting with a letter.
+2. In programming languages, the names of variables and functions are generically referred to as _identifiers_, which consist of non-empty sequences of letters and digits, starting with a letter. Modify the code to print ``IDENTIFIER(IdName)`` whenever some identifier ``IdName`` is found.
 
 3. _Keywords_ are reserved and cannot be used as identifiers. Modify the code to recognize the following tokens: ``integer``, ``double``, ``if``, ``then`` and ``else``. It should output ``INTEGER``, ``DOUBLE``, and so on. The key is to understand that _lex_ always looks for the longest match and, in case there is a tie, it chooses the rule that comes first.
 
