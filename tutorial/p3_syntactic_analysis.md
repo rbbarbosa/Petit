@@ -88,7 +88,7 @@ The conflicts are due to the unspecified _associativity_ and _precedence_ of ope
 
 2. The grammar is ambiguous and the calculations are often incorrect. Test the program with ``4*3-2``, for example. Solve all of the shift/reduce conflicts by specifying the precedence and associativity of operators.
 
-We can specify the _precedence_ and _associativity_ of operators, simultaneously, using the keywords ``%left``, ``%right`` and ``%nonassoc`` in the definitions section. For instance, ``%left '+' '-'`` states that the operators ``'+'`` and ``'-'`` are left associative and have equal precedence. Right associative operators use ``%right`` and non-associative operators use ``%nonassoc``. Consider this example:
+It is possible to specify the _precedence_ and _associativity_ of operators, simultaneously, using the keywords ``%left``, ``%right`` and ``%nonassoc`` in the definitions section. For instance, ``%left '+' '-'`` states that the operators ``'+'`` and ``'-'`` are left associative and have equal precedence. Right associative operators use ``%right`` and non-associative operators use ``%nonassoc``. Consider this example:
 
     %left LOW
     %left '+' '-'
