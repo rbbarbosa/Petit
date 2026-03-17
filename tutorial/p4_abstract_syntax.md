@@ -146,7 +146,10 @@ Taking ``factorial(integer n) = if n then n * factorial(n-1) else 1`` as input, 
         ;
 ```
 
-In this case, we need to create a _list_ of ``Function`` nodes. There are many solutions. First, we can create an ``Auxiliary`` node (a new category) to hold the intended list. We can later assign ``$1->category = Program`` to change its category. Second, declaring ``%type<node_list> functions`` makes it explicitly a node list. We will need the list operations ``newlist``, ``append`` and ``addchildren``.
+In this case, we need to create a _list_ of ``Function`` nodes. Two possible solutions:
+
+* Declaring ``%type<node_list> functions`` makes it explicitly a node list. We will need the list operations ``newlist``, ``append`` and ``addchildren``.
+* We can create an ``Auxiliary`` node (a new category) to hold the intended list. We can later assign ``$1->category = Program`` to change its category.
 
 Test your solution with the following example, found in file [``factorial.pt``](https://github.com/rbbarbosa/Petit/blob/main/test/factorial.pt):
 
