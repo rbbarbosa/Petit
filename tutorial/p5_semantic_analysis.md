@@ -80,7 +80,7 @@ We begin with a simplifying assumption: any identifier may only be used once, gl
 1. Modify the code to check function _parameters_. Ensure that a semantic error is displayed when a parameter's identifier has already been declared, using the same error message as for functions.
 
 2. Enhance the code to provide the line and column numbers where semantic errors are detected. To achieve this, you need to store the line and column of lexemes (tokens) in the AST. Two effective approaches for this are:
-    * Modify the lexical analyzer to pass a new ``struct`` that includes the ``char *token`` along with its corresponding line and column.
+    * Modify the lexical analyzer to pass a ``struct`` that includes the ``char *token`` along with its corresponding line and column.
     * Enable ``%locations`` in _yacc_, update ``yylloc.first_line`` and ``yylloc.first_column`` for each token processed by the lexical analyzer, and utilize, for instance, ``@2.first_line`` and ``@2.first_column`` to reference the location of ``$2`` in a semantic action.
 
 3. Revise the code to check function _calls_. Ensure that the identifier used is the name of an existing function and that the number of arguments in the call matches the number of parameters of the function. Otherwise, show appropriate error messages.
